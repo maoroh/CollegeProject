@@ -1,4 +1,4 @@
-package com.HandRehab;
+package com.main;
 
 /**
  * Hello world!
