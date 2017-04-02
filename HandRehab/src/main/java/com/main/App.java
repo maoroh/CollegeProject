@@ -1,5 +1,7 @@
 package com.main;
 
+import com.leap.SampleBuilder;
+
 /**
  * Hello world!
  *
@@ -10,6 +12,7 @@ public class App
     {
     	
         System.out.println( "Hello World!" );
-     
+        SampleBuilder sb = new SampleBuilder();
+        sb.recordNewSample();
     }
 }

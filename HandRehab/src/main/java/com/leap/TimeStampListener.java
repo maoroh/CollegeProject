@@ -10,7 +10,8 @@ import com.leapmotion.leap.Pointable;
 import com.leapmotion.leap.PointableList;
 import com.leapmotion.leap.Vector;
 
-public class LeapListener extends Listener {
+public class TimeStampListener extends Listener {
+	private Frame currentFrame;
 	Controller controller;
 	int counter = 0;
 	boolean isOver = false;
@@ -18,10 +19,9 @@ public class LeapListener extends Listener {
 	boolean check2 = false;
 	Timer t;
 	int numOfFrames=0;
-	public LeapListener(Controller controller,Timer t)
+	public TimeStampListener(Controller controller)
 	{
 		this.controller = controller;
-		this.t = t;
 	}
 	 @Override
 	public void onInit(Controller controller) {
@@ -48,9 +48,12 @@ public class LeapListener extends Listener {
         System.out.println("Exited");
     }
 
-    @Override
+
     public void onFrame(Controller controller) {
     	
+    	Frame frame = controller.frame();
+    	this.setCurrentFrame(frame);
+    	/*/
     	numOfFrames++;
     	Frame frame =  controller.frame();
         PointableList pointableList = frame.pointables();
@@ -70,12 +73,12 @@ public class LeapListener extends Listener {
         	
         }
        
-     /*/  System.out.println("Frame id: " + frame.id()
+       System.out.println("Frame id: " + frame.id()
        + ", timestamp: " + frame.timestamp()
        + ", hands: " + frame.hands().count()
        + ", fingers: " + frame.fingers().count()
        + ", tools: " + frame.tools().count()
-       + ", gestures " + frame.gestures().count());/*/
+       + ", gestures " + frame.gestures().count());
       if(check)
       {
        if(speed.size() == 5 && stopMotion(speed) ) 
@@ -90,7 +93,7 @@ public class LeapListener extends Listener {
        }
       }
       if(speed.size() > 0)
-       System.out.println(speed.get(0).getX() +" "+ isOver + " "+ counter+" " +numOfFrames);
+       System.out.println(speed.get(0).getX() +" "+ isOver + " "+ counter+" " +numOfFrames);/*/
     }
 	private boolean stopMotion(ArrayList<Vector> speed) {
 		// TODO Auto-generated method stub
@@ -116,6 +119,12 @@ public class LeapListener extends Listener {
 			 }
 		 }
 		return true;
+	}
+	public Frame getCurrentFrame() {
+		return currentFrame;
+	}
+	public void setCurrentFrame(Frame currentFrame) {
+		this.currentFrame = currentFrame;
 	}
 
 }
