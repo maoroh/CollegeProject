@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.controller.MainController;
 import com.leapmotion.leap.Bone;
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Finger;
-import com.leapmotion.leap.FingerList;
 import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Hand;
 import com.leapmotion.leap.HandList;
@@ -21,38 +21,48 @@ public class SampleBuilder {
  	private SampleData sampleData;
 	private int numOfFrames = 0;
 	
+	
 	public SampleBuilder()
 	{
+		
 	 	controller = new Controller();
 		listener = new TimeStampListener(controller);
 		sampleSet = new SampleSet();
 	}
 	
-	public void recordNewSample()
+	public void startRecording()
 	{
 		
 		 sampleData = new SampleData();
 		 Timer t = new Timer();
-	        t.scheduleAtFixedRate(new TimerTask() {
+	     t.scheduleAtFixedRate(new TimerTask() {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					numOfFrames++;
+					
 			        listener.onFrame(controller);
-			        handleFrame(listener.getCurrentFrame());
+			        if(listener.getCurrentFrame() != null)
+			        {
+			        	numOfFrames++;
+			        	handleFrame(listener.getCurrentFrame());
+			        }
 			        if(numOfFrames == 20)
 			        {
 			        	//t.cancel();
 			        	sampleSet.addSample(sampleData);
+			        	
 			        	sampleData = new SampleData();
 			        	numOfFrames = 0;
 			        }
 			        
-			        if(sampleSet.getSize() == 10) 
+			        if(sampleSet.getSize() == 1) 
+			        {
 			        	t.cancel();
+			        	
+			        }
 			        
 				}
-			},100, 100);
+			},50, 50);
 	}
 
 	protected void handleFrame(Frame currentFrame) {
@@ -81,5 +91,19 @@ public class SampleBuilder {
         
         TimeStampData timeStamp = new TimeStampData(numOfFrames,fingersData,hand.palmNormal());
         sampleData.addTimeStamp(timeStamp);
+	}
+	
+	public Vector getVec ()
+	{
+		   listener.onFrame(controller);
+	        if(listener.getCurrentFrame() != null)
+	        {
+	        	 HandList hands = listener.getCurrentFrame().hands();
+	 			Hand hand = hands.get(0);
+	 			return hand.palmNormal();
+	        }
+	        return new Vector(0,0,0);
+	       
+				
 	}
 }

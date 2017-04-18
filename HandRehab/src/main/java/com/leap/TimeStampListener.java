@@ -10,6 +10,7 @@ import com.leapmotion.leap.Pointable;
 import com.leapmotion.leap.PointableList;
 import com.leapmotion.leap.Vector;
 
+
 public class TimeStampListener extends Listener {
 	private Frame currentFrame;
 	Controller controller;
@@ -52,7 +53,8 @@ public class TimeStampListener extends Listener {
     public void onFrame(Controller controller) {
     	
     	Frame frame = controller.frame();
-    	this.setCurrentFrame(frame);
+    	if(frame.hands().count() >= 1) 
+    		this.setCurrentFrame(frame);
     	/*/
     	numOfFrames++;
     	Frame frame =  controller.frame();

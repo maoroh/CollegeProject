@@ -12,7 +12,6 @@ public class App
     {
     	
         System.out.println( "Hello World!" );
-        SampleBuilder sb = new SampleBuilder();
-        sb.recordNewSample();
+      
     }
 }

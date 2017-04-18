@@ -11,20 +11,20 @@ import com.leapmotion.leap.Bone;
  *
  */
 public class FingerData {
-	private Map <Bone.Type, Vector> bonesDirectionToPalm;
+	private Map <Bone.Type, Vector> bonesDirection;
 	
 	public FingerData( Map <Bone.Type, Vector> bonesDirectionToPalm)
 	{
 		this.setBonesDirectionToPalm(bonesDirectionToPalm);
 	
 	}
-	public Map <Bone.Type, Vector> getBonesDirectionToPalm() {
-		return bonesDirectionToPalm;
+	public Map <Bone.Type, Vector> getBonesDirection() {
+		return bonesDirection;
 	}
 	
 	
 	public void setBonesDirectionToPalm(Map <Bone.Type, Vector> bonesDirectionToPalm) {
-		this.bonesDirectionToPalm = bonesDirectionToPalm;
+		this.bonesDirection = bonesDirectionToPalm;
 	}
 	
 	
