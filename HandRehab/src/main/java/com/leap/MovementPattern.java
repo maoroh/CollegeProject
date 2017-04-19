@@ -11,9 +11,9 @@ public class MovementPattern {
 		this.meanFrames = new ArrayList<AnglesVector>();
 	}
 	
-	public void getVector(int index)
+	public AnglesVector getVector(int index)
 	{
-		
+		return this.meanFrames.get(index);
 	}
 	
 	public void addVector(AnglesVector frame)
