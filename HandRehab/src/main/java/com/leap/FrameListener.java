@@ -11,7 +11,7 @@ import com.leapmotion.leap.PointableList;
 import com.leapmotion.leap.Vector;
 
 
-public class TimeStampListener extends Listener {
+public class FrameListener extends Listener {
 	private Frame currentFrame;
 	Controller controller;
 	int counter = 0;
@@ -20,7 +20,7 @@ public class TimeStampListener extends Listener {
 	boolean check2 = false;
 	Timer t;
 	int numOfFrames=0;
-	public TimeStampListener(Controller controller)
+	public FrameListener(Controller controller)
 	{
 		this.controller = controller;
 	}

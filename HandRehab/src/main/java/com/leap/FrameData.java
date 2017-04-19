@@ -5,16 +5,18 @@ import java.util.Map;
 import com.leapmotion.leap.Finger;
 import com.leapmotion.leap.Vector;
 
-public class TimeStampData {
+public class FrameData {
 	private int timeID;
 	private Map<Finger.Type,FingerData> fingersData;
 	private Vector palmDirection;
+	private AnglesVector anglesVector;
 	
-	public TimeStampData(int timeID, Map<Finger.Type,FingerData> fingersData, Vector palmDirection)
+	public FrameData(int timeID, Map<Finger.Type,FingerData> fingersData, Vector palmDirection)
 	{
 		this.setTimeID(timeID);
 		this.setFingersData(fingersData);
 		this.setPalmDirection(palmDirection);
+		this.anglesVector = null;
 	}
 
 	public Map<Finger.Type,FingerData> getFingersData() {
@@ -40,5 +42,14 @@ public class TimeStampData {
 	public void setTimeID(int timeID) {
 		this.timeID = timeID;
 	}
+	
+	public void setAnglesVector() {
+		anglesVector = VecTools.getAnglesVector(this);
+	}
+
+	public AnglesVector getAnglesVector() {
+		return anglesVector;
+	}
+	
 	
 }

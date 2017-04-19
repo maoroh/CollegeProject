@@ -3,21 +3,21 @@ package com.leap;
 import java.util.ArrayList;
 
 public class SampleData {
-	ArrayList <TimeStampData> timeStampsData;
+	ArrayList <FrameData> framesData;
 	
 	public SampleData()
 	{
-		this.timeStampsData = new ArrayList<TimeStampData>();
+		this.framesData = new ArrayList<FrameData>();
 	}
 	
-	public void addTimeStamp(TimeStampData data)
+	public void addFrame(FrameData data)
 	{
-		this.timeStampsData.add(data);
+		this.framesData.add(data);
 	}
 	
-	public TimeStampData getTimeStamp(int index)
+	public FrameData getFrame(int index)
 	{
-		return this.timeStampsData.get(index);
+		return this.framesData.get(index);	
 	}
 	
 }

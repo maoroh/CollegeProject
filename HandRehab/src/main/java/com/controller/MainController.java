@@ -23,6 +23,7 @@ public class MainController {
 	
 	@FXML
 	Button button;
+	
 	@FXML
 	ImageView bg;
 	

@@ -15,7 +15,7 @@ import com.leapmotion.leap.HandList;
 import com.leapmotion.leap.Vector;
 
 public class SampleBuilder {
-	private TimeStampListener listener;
+	private FrameListener listener;
  	private Controller controller;
  	private SampleSet sampleSet ;
  	private SampleData sampleData;
@@ -26,7 +26,7 @@ public class SampleBuilder {
 	{
 		
 	 	controller = new Controller();
-		listener = new TimeStampListener(controller);
+		listener = new FrameListener(controller);
 		sampleSet = new SampleSet();
 	}
 	
@@ -89,8 +89,8 @@ public class SampleBuilder {
             
         }
         
-        TimeStampData timeStamp = new TimeStampData(numOfFrames,fingersData,hand.palmNormal());
-        sampleData.addTimeStamp(timeStamp);
+        FrameData timeStamp = new FrameData(numOfFrames,fingersData,hand.palmNormal());
+        sampleData.addFrame(timeStamp);
 	}
 	
 	public Vector getVec ()

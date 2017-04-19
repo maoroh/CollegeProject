@@ -16,6 +16,7 @@ public class FingerData {
 	public FingerData( Map <Bone.Type, Vector> bonesDirectionToPalm)
 	{
 		this.setBonesDirectionToPalm(bonesDirectionToPalm);
+		
 	
 	}
 	public Map <Bone.Type, Vector> getBonesDirection() {
