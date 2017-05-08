@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.leap.AnglesVector;
+import com.leap.Files;
 import com.leap.AnalyzeData;
 import com.leap.SampleBuilder;
 import com.leapmotion.leap.Vector;
@@ -17,7 +18,12 @@ public class App
 {
     public static void main( String[] args )
     {
-      AnglesVector mean=null;
+    	
+    	SampleBuilder sm = new SampleBuilder();
+    	sm.startRecording();
+    
+    	
+      /*/AnglesVector mean=null;
       AnglesVector a = new AnglesVector();
       a.addCoordinate(1);
       a.addCoordinate(2);
@@ -53,5 +59,6 @@ public class App
 	}
       
         System.out.println(mean);
+    }/*/
     }
 }

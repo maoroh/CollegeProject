@@ -88,13 +88,24 @@ public class AnglesVector implements Comparable<AnglesVector> {
 	public String toString()
 	{
 		String res = "";
+		res = res + "(";
 		for(int i=0; i<this.getSize(); i++)
 		{
 			if(i<this.getSize()-1)
 			res = res + this.getCoordinate(i) + ',';
 			else res = res + this.getCoordinate(i);
 		}
+		
+		res = res + ")";
 		return res;
+	}
+	
+	public void toDegrees()
+	{
+		for(int i = 0 ; i < this.coordinates.size(); i++)
+		{
+			this.setCoordinate(i, this.getCoordinate(i) * (180/Math.PI));
+		}
 	}
 	
 	
