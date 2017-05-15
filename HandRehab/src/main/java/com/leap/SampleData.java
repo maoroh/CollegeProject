@@ -47,4 +47,14 @@ public class SampleData {
 	{
 		return this.framesData.size();
 	}
+
+	public void setFrame(FrameData frame, int index) {
+		// TODO Auto-generated method stub
+		this.framesData.set(index, frame);
+	}
+	
+	public void deleteFrame(int index) {
+		// TODO Auto-generated method stub
+		this.framesData.remove(index);
+	}
 }

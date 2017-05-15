@@ -3,6 +3,9 @@ package com.leap;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.leapmotion.leap.Bone;
+import com.leapmotion.leap.Finger;
+
 public class AnalyzeData
 {
 	private static final int K = 10;
@@ -76,20 +79,15 @@ public class AnalyzeData
 		
 				while(index < sample.getNumOfFrames())
 				{
-					FrameData avgFrame = FrameData.framesAvg(sample.getFrame(index),sample.getFrame(index + 1));
+					FrameData avgFrame;
+					if(index != sample.getNumOfFrames() - 1) 
+						avgFrame = FrameData.framesAvg(sample.getFrame(index),sample.getFrame(index + 1));
+					else avgFrame = sample.getFrame(index);
 					avgFramesData.add(avgFrame);
 					index += 2;
-				}
-			
-			
-			
-				//size not divide by 2
-				if(sample.getNumOfFrames() % 2 != 0)
-				{
 					
-					index++;
-					avgFramesData.add(sample.getFrame(index));
 				}
+			
 				
 				sample = new SampleData(new ArrayList<FrameData>(avgFramesData));
 				avgFramesData.clear();
@@ -98,6 +96,14 @@ public class AnalyzeData
 			
 
 			else if(sample.getNumOfFrames() == numOfFrames) return sample;
+			
+			//This case handles sample size of numOfFrames + 1 
+			else if(sample.getNumOfFrames() == numOfFrames + 1)
+			{
+				FrameData avgFrame = FrameData.framesAvg(sample.getFrame(numOfFrames - 1),sample.getFrame(numOfFrames - 2));
+				sample.setFrame(avgFrame,numOfFrames - 1);
+				return sample;
+			}
 			
 			else
 			{
@@ -111,7 +117,7 @@ public class AnalyzeData
 					size -- ;
 				}
 			
-				for(int i = index + 1; i < sample.getNumOfFrames(); i++)
+				for(int i = index ; i < sample.getNumOfFrames(); i++)
 				{
 					avgFramesData.add(sample.getFrame(index));
 				}

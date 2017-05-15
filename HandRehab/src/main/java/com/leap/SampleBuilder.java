@@ -13,6 +13,8 @@ import com.leapmotion.leap.Finger;
 import com.leapmotion.leap.Frame;
 import com.leapmotion.leap.Hand;
 import com.leapmotion.leap.HandList;
+import com.leapmotion.leap.Pointable;
+import com.leapmotion.leap.PointableList;
 import com.leapmotion.leap.Vector;
 
 public class SampleBuilder {
@@ -23,6 +25,9 @@ public class SampleBuilder {
 	private int numOfFrames = 0;
 	private AnglesVector initVec;
 	int s = 0;
+	private boolean isStopped = false;
+	private boolean isStatic = false;
+	boolean startMotion = false;
 	public SampleBuilder()
 	{
 		
@@ -34,7 +39,8 @@ public class SampleBuilder {
 	
 	public void startRecording()
 	{
-		
+		 isStopped = false;
+		 numOfFrames = 0;
 		 sampleData = new SampleData();
 		 Timer t = new Timer();
 	     t.scheduleAtFixedRate(new TimerTask() {
@@ -44,33 +50,39 @@ public class SampleBuilder {
 				
 			        listener.onFrame(controller);
 			        Frame frame = listener.getCurrentFrame();
-			        if(frame != null)
+			        if(checkFrame(frame))
 			        {
 			        	numOfFrames++;
 			        	FrameData fr = handleFrame(listener.getCurrentFrame());
 			        	fr.setAnglesVector();
-			        	
 			        	AnglesVector frameAngles = fr.getAnglesVector();
 			        
 			        	try {
 			        		System.out.println(frameAngles.distanceTo(initVec));
-							if(frameAngles.distanceTo(initVec) < 0.7)
+			        		System.out.println("Current Angles : " + frameAngles);
+			        		System.out.println("KNN Angles : " + initVec);
+							if(frameAngles.distanceTo(initVec) < 0.8)
 							{
 								s++;
 								if(s>=2)
 								{
 									try {
+										/*/
 										System.out.println("begin Test");
 										SampleData avg = AnalyzeData.avgSample(sampleData);
-										System.out.println(avg.getFrame(0).getFingersData().get(Finger.Type.TYPE_INDEX).getBonesDirection().get(Bone.Type.TYPE_INTERMEDIATE));
-										System.out.println(sampleData.getFrame(0).getFingersData().get(Finger.Type.TYPE_INDEX).getBonesDirection().get(Bone.Type.TYPE_INTERMEDIATE));
-										System.out.println(avg.getNumOfFrames());
+										System.out.println(avg.getFrame(6).getFingersData().get(Finger.Type.TYPE_INDEX).getBonesDirection().get(Bone.Type.TYPE_INTERMEDIATE));
+										System.out.println(sampleData.getFrame(9).getFingersData().get(Finger.Type.TYPE_INDEX).getBonesDirection().get(Bone.Type.TYPE_INTERMEDIATE));
+										System.out.println(sampleData.getFrame(10).getFingersData().get(Finger.Type.TYPE_INDEX).getBonesDirection().get(Bone.Type.TYPE_INTERMEDIATE));
+										System.out.println(sampleData.getFrame(11).getFingersData().get(Finger.Type.TYPE_INDEX).getBonesDirection().get(Bone.Type.TYPE_INTERMEDIATE));
+										System.out.println(sampleData.getFrame(12).getFingersData().get(Finger.Type.TYPE_INDEX).getBonesDirection().get(Bone.Type.TYPE_INTERMEDIATE));
+										System.out.println(avg.getNumOfFrames());/*/
 										//return;
 									} catch (Exception e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
 									}
 								t.cancel();
+								isStopped = true;
 								System.out.println("Finished " + numOfFrames);
 								}
 							}
@@ -81,46 +93,60 @@ public class SampleBuilder {
 			        	
 			        
 			        }
-			        if(numOfFrames == 200)
-			        {
-			        	
-			        	//t.cancel();
-			        	sampleSet.addSample(sampleData);
-			        	//testData(sampleData);
-			        	sampleData = new SampleData();
-			        	numOfFrames = 0;
-			        }
-			        
-			        if(sampleSet.getSize() == 100000000) 
-			        {
-			        	t.cancel();
-			        	
-			        }
+		
 			        
 				}
 
-				private void testData(SampleData sampleData) {
-					// TODO Auto-generated method stub
-					ArrayList<AnglesVector> vectors = sampleData.getSamplesVector();
-					AnglesVector a=null;
-					try {
-						a = AnalyzeData.KNNRegression(vectors.get(100), vectors);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				//	a.toDegrees();
-					System.out.println(a.getSize());
-					System.out.println(a);
-					try {
-						System.out.println(a.distanceTo(vectors.get(150)));
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-				}
+	
 			},50, 50);
+	}
+
+	
+	public void recognizeHand()
+	{
+		isStopped = false;
+		numOfFrames = 0;
+		 sampleData = new SampleData();
+		 Timer t = new Timer();
+	     t.scheduleAtFixedRate(new TimerTask() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+				
+			        listener.onFrame(controller);
+			        Frame frame = listener.getCurrentFrame();
+			        if(checkFrame2(frame))
+			        {
+			        	isStatic = true;
+			        	numOfFrames++;
+			        	if(numOfFrames >= 20)
+			        		handleFrame(listener.getCurrentFrame());
+			        	//fr.setAnglesVector();
+			        	if(numOfFrames == 120)
+			        	{
+			        		numOfFrames++;
+			        		isStopped = true;
+			        		t.cancel();
+			        		buildInitial();
+			        	}
+			        	
+			        } 
+				}
+
+	
+			},50, 50);
+	}
+
+	protected void buildInitial() {
+		// TODO Auto-generated method stub
+		ArrayList<AnglesVector> vectors = sampleData.getSamplesVector();
+		try {
+			this.initVec = AnalyzeData.KNNRegression(vectors.get(50), vectors);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	protected FrameData handleFrame(Frame currentFrame) {
@@ -165,5 +191,105 @@ public class SampleBuilder {
 	        return new Vector(0,0,0);
 	       
 				
+	}
+	
+	public boolean isStopped()
+	{
+		return this.isStopped ;
+	}
+	
+	private boolean staticMovement(ArrayList<Vector> speed) {
+		// TODO Auto-generated method stub
+		 double speedInterval = 100;
+		 for(int i=0; i<speed.size(); i++)
+		 {
+			 double currentSpeed = Math.sqrt(Math.pow(speed.get(i).getX(), 2) + Math.pow(speed.get(i).getY(), 2) + Math.pow(speed.get(i).getZ(), 2));
+			// System.out.println("Speed : " + currentSpeed);
+			 if(currentSpeed > speedInterval)
+			 {
+				 return false;
+			 }
+		 }
+		return true;
+	}
+	
+	private boolean checkFrame(Frame frame)
+	{
+
+   	 PointableList pointableList = frame.pointables();
+   	 
+   	 ArrayList <Vector> speed = new  ArrayList<Vector>();
+   	  for(Pointable pointable : pointableList)
+         {
+         if(pointable.isFinger() && pointable.isValid())
+         speed.add(pointable.tipVelocity());
+        
+         }
+   	 
+   	 if(frame.hands().count() >= 1 && !startMotion) 
+   	 {
+   		 if(staticMovement(speed))
+   		 {
+   			
+   			 System.out.println("STATI");
+   			 
+   			 return false;
+   		 }
+   		
+   		 else startMotion = true;
+   		 
+   	 }
+   	 
+   	  if(frame.hands().count() >= 1 && startMotion) 
+   	 {
+   		 return true;
+   	 }
+   	  
+   	  return false;
+   	  
+	}
+	
+	
+	private boolean checkFrame2(Frame frame)
+	{
+
+   	 PointableList pointableList = frame.pointables();
+   	 
+   	 ArrayList <Vector> speed = new  ArrayList<Vector>();
+   	  for(Pointable pointable : pointableList)
+         {
+         if(pointable.isFinger() && pointable.isValid())
+         speed.add(pointable.tipVelocity());
+        
+         }
+   	 
+   	 if(frame.hands().count() >= 1) 
+   	 {
+   		 if(staticMovement(speed))
+   		 {
+   			 System.out.println("STATI");
+   			 return true;
+   		 }
+   		 
+   		 else return false;
+   		 
+   	 }
+   	 
+   	  
+   	  return false;
+   	  
+	}
+
+	public boolean isStatic() {
+		return isStatic;
+	}
+
+	public void setStatic(boolean isStatic) {
+		this.isStatic = isStatic;
+	}
+	
+	public int getNumOfFrames()
+	{
+		return this.numOfFrames;
 	}
 }

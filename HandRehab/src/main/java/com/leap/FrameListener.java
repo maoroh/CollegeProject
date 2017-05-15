@@ -56,34 +56,7 @@ public class FrameListener extends Listener {
     public void onFrame(Controller controller) {
     	
     	Frame frame = controller.frame();
-
-    	 PointableList pointableList = frame.pointables();
-    	 
-    	 ArrayList <Vector> speed = new  ArrayList<Vector>();
-    	  for(Pointable pointable : pointableList)
-          {
-          if(pointable.isFinger() && pointable.isValid())
-          speed.add(pointable.tipVelocity());
-         
-          }
-    	 
-    	 if(frame.hands().count() >= 1 && !startMotion) 
-    	 {
-    		 if(staticMovement(speed))
-    		 {
-    			 System.out.println("STATI");
-        		 this.setCurrentFrame(null); 
-        		
-    		 }
-    		
-    		 else startMotion = true;
-    		 
-    	 }
-    	 
-    	  if(frame.hands().count() >= 1 && startMotion) 
-    	 {
-    		 this.setCurrentFrame(frame);
-    	 }
+    	this.setCurrentFrame(frame);
 
     }
 	private boolean staticMovement(ArrayList<Vector> speed) {

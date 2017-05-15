@@ -66,8 +66,8 @@ public class MainController implements Initializable {
 		 Stage stage = (Stage) button.getScene().getWindow();
 		 Parent root = FXMLLoader.load(getClass().getResource("TrainingView.fxml"));
 		 Scene scene = new Scene(root);
-	      stage.setScene(scene);
-	      stage.show();
+	     stage.setScene(scene);
+	     stage.show();
 		
 	 }
 
