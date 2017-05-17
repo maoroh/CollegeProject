@@ -87,30 +87,7 @@ public class TrainingController implements Initializable{
 	            timeline.play(); 
 	            isExerciseShowed = true;
 	           
-	            
-			/*/
-			isExerciseShowed = true;
-		  	Group popup = new Group();
-			ImageView im=new ImageView(new Image("file:handAnim.gif"));
-			im.setRotate(90);
-			popup.getChildren().add(im);
-			final Stage dialog = new Stage();
-	        dialog.initModality(Modality.WINDOW_MODAL);
-	        dialog.initOwner(button.getScene().getWindow());
-	        Scene dialogScene = new Scene(popup);
-	        dialogScene.setFill(Color.TRANSPARENT);
-	        dialog.setScene(dialogScene);
-	        dialog.initStyle(StageStyle.TRANSPARENT); 
-	        dialog.setX(button.getScene().getWindow().getWidth() / 2 + 200);
-	        dialog.setY(button.getScene().getWindow().getHeight() / 2 - 160 );
-	        dialog.show();
-	        
-	        Timeline timeline = new Timeline();
-            KeyFrame key = new KeyFrame(Duration.millis(4700),
-                           new KeyValue (dialog.getScene().getRoot().opacityProperty(), 0.5)); 
-            timeline.getKeyFrames().add(key);   
-            timeline.setOnFinished((ae) -> dialog.hide()); 
-            timeline.play();  /*/
+	       
 		 }
 	  
 	  	@FXML
@@ -220,7 +197,7 @@ public class TrainingController implements Initializable{
 	  
 	 	progressIndicator.progressProperty().bind(taskRecognize.progressProperty());
 	
-	  	//new Thread(taskRecognize).start();
+	  	new Thread(taskRecognize).start();
 		
 	  	}
 	  	
