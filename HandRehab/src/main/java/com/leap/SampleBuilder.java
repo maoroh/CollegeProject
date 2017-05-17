@@ -148,6 +148,7 @@ public class SampleBuilder {
 									{
 										t.cancel();
 										isStopped = true;
+										MovementPattern pattern = AnalyzeData.buildMovementPattern(sampleSet);
 									}
 								
 								//t.cancel();
