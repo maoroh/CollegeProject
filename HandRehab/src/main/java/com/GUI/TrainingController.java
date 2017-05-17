@@ -41,8 +41,8 @@ public class TrainingController implements Initializable{
 	
 	@FXML
 	private Button startRecordBtn;
-	
-	
+	private Object lock = new Object();
+	private boolean a = false;
 	@FXML
 	private ImageView exerciseImg;
 	
@@ -120,27 +120,26 @@ public class TrainingController implements Initializable{
             timeline.setAutoReverse(true); 
             //Play animation
             timeline.play();
-            
+           
      	   
     	  	Task<Void> taskRecording = new Task<Void>() {
 
     			@Override
     			public void run() {
     				// TODO Auto-generated method stub
-    				boolean a = false;
     				sb.startRecordingFull();
-    				 while(!a)
-    	        	   {
-    	        		   a = sb.isStopped();
-    	        		   try {
-    						Thread.yield();
-    					} catch (Exception e) {
-    						// TODO Auto-generated catch block
-    						e.printStackTrace();
-    					}
-    	        	   }
-	   
-    			}
+    				synchronized (sb) {
+   			         while (!sb.isStopped())
+   						try {
+   							sb.wait();
+   						} catch (InterruptedException e) {
+   							// TODO Auto-generated catch block
+   							e.printStackTrace();
+   						
+   						}
+    				}
+   			         
+   			     }
 
     			@Override
     			protected Void call() throws Exception {
@@ -156,23 +155,25 @@ public class TrainingController implements Initializable{
 
 			@Override
 			public void run() {
+				
 				// TODO Auto-generated method stub
-				boolean a = false;
-				sb.recognizeHand();
-				 while(!a)
-	        	   {
-	        		   a = sb.isStatic();
-	        		   try {
-						Thread.yield();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-	        	   }
+				 sb.recognizeHand();
+				 synchronized (sb) {
+			         while (!sb.isStatic())
+						try {
+							sb.wait();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			         
+			     }
+			 
 				   changeUi(()->{exerciseImg.setOpacity(1);});
 	        	   timeline.stop();
-	        	   while(!sb.isStopped())
-	        		   updateProgress(sb.getNumOfFrames(), 119);
+	        	   
+	        	  // while(!sb.isStopped())
+	        		//   updateProgress(sb.getNumOfFrames(), 119);
 	        	   
 	        	   //Start Record
 	        	   System.out.println("Start Recording");
@@ -182,7 +183,7 @@ public class TrainingController implements Initializable{
 	        			   		 });
 	        	   
 	        	   
-	        	   new Thread(taskRecording).start();
+	        	  // new Thread(taskRecording).start();
 			}
 
 			@Override
