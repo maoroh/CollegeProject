@@ -45,7 +45,7 @@ public class SampleData {
 		for(FrameData data : this.framesData)
 		{
 			data.setAnglesTipVector();
-			vectors.add(data.getAnglesVector());
+			vectors.add(data.getAnglesTipVector());
 		}
 		
 		return vectors;
