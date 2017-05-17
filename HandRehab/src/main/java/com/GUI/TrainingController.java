@@ -17,6 +17,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
@@ -32,39 +34,46 @@ import javafx.util.Duration;
 public class TrainingController implements Initializable{
 	
 	@FXML
-	Button button;
+	private Button button;
 	
 	@FXML
-	TextArea textArea;
+	private TextArea textArea;
 	
 	@FXML
-	Button startRecordBtn;
+	private Button startRecordBtn;
 	
 	@FXML
-	ProgressBar progressBar;
+	private ProgressBar progressBar;
 	
 	@FXML
-	ImageView exerciseImg;
+	private ImageView exerciseImg;
 	
-	SampleBuilder sb;
+	private SampleBuilder sb;
+	
+	private boolean isExerciseShowed;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		
+		isExerciseShowed = true;
 		//textArea.appendText("TEST");
 		sb = new SampleBuilder();
-		
+		sb.getIntegerProperty().addListener((ov,oldVal,newVal)->
+        {
+        	if(sb.isStopped())
+        		changeUi(()->{textArea.appendText("The training phase has completed successfully!");});
+         	changeUi(()->{textArea.appendText("Sample num : " + newVal +"\n");});
+        });
 		//exerciseImg.setImage(new Image("file:a.gif"));
 		//exerciseImg.setRotate(90);
-      
 	}
 	
 		@FXML
 		 public void buttonClicked(ActionEvent event) throws IOException
 		 {
+			isExerciseShowed = true;
 		  	Group popup = new Group();
-			ImageView im=new ImageView(new Image("file:a.gif"));
+			ImageView im=new ImageView(new Image("file:handAnim.gif"));
 			im.setRotate(90);
 			popup.getChildren().add(im);
 			final Stage dialog = new Stage();
@@ -74,25 +83,38 @@ public class TrainingController implements Initializable{
 	        dialogScene.setFill(Color.TRANSPARENT);
 	        dialog.setScene(dialogScene);
 	        dialog.initStyle(StageStyle.TRANSPARENT); 
+	        dialog.setX(button.getScene().getWindow().getWidth() / 2 + 200);
+	        dialog.setY(button.getScene().getWindow().getHeight() / 2 - 160 );
 	        dialog.show();
 	        
 	        Timeline timeline = new Timeline();
-            KeyFrame key = new KeyFrame(Duration.millis(5000),
-                           new KeyValue (dialog.getScene().getRoot().opacityProperty(), 0.7)); 
+            KeyFrame key = new KeyFrame(Duration.millis(4700),
+                           new KeyValue (dialog.getScene().getRoot().opacityProperty(), 0.5)); 
             timeline.getKeyFrames().add(key);   
             timeline.setOnFinished((ae) -> dialog.hide()); 
-            timeline.setCycleCount(Timeline.INDEFINITE);
-            timeline.setAutoReverse(true); 
-            timeline.play();
-          
-           
+            timeline.play();  
 		 }
 	  
 	  	@FXML
 		 public void startRecord(ActionEvent event) 
 		 {
+	  		if (!isExerciseShowed)
+	  		{
+	  		Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText("You must view the exercise first!");
+            alert.setContentText("Ooops, there was an error!");
+            alert.showAndWait();
+	  		}
+	  		
+	  		else recording();
+	  		
+		 }
+	  	
+	  	public void recording()
+	  	{
 	  		Group popup = new Group();
-			ImageView im=new ImageView(new Image("file:hand.jpg"));
+			ImageView im=new ImageView(new Image("file:hand.gif"));
 			//final ProgressBar pb = new ProgressBar(0.5);
 		    final ProgressIndicator pi = new ProgressIndicator(0);
 			popup.getChildren().addAll(im,pi);
@@ -103,6 +125,10 @@ public class TrainingController implements Initializable{
 	        dialogScene.setFill(Color.TRANSPARENT);
 	        dialog.setScene(dialogScene);
 	        dialog.initStyle(StageStyle.TRANSPARENT); 
+	        pi.setTranslateY(30);
+	        pi.setTranslateX(30);
+	        dialog.setX(button.getScene().getWindow().getWidth() / 2 + 200);
+	        dialog.setY(button.getScene().getWindow().getHeight() / 2 - 160 );
 	        dialog.show();
 	        
 	        Timeline timeline = new Timeline();
@@ -115,10 +141,6 @@ public class TrainingController implements Initializable{
             //Play animation
             timeline.play();
             
-            sb.getIntegerProperty().addListener((ov,oldVal,newVal)->
-            {
-            	changeUi(()->{textArea.appendText("Sample num : " + newVal +"\n");});
-            });
      	   
     	  	Task<Void> taskRecording = new Task<Void>() {
 
@@ -178,7 +200,15 @@ public class TrainingController implements Initializable{
 	        	   changeUi(()->{exerciseImg.setImage(new Image("file:a.gif"));
 	       					     exerciseImg.setRotate(90);
 	        			   		 dialog.hide();});
-  
+	        	   
+	        	   Alert alert = new Alert(AlertType.INFORMATION);
+	               alert.setTitle("Next Step");
+	               alert.initStyle(StageStyle.TRANSPARENT);
+	               alert.setHeaderText("Now you need to perform a set of repetitions of the exercise...");
+	               //alert.setContentText("Ooops, there was an error!");
+	               alert.getButtonTypes().set(0,null);
+	               alert.showAndWait();
+	               
 	        	   new Thread(taskRecording).start();
 			}
 
@@ -195,7 +225,8 @@ public class TrainingController implements Initializable{
 	  	pi.progressProperty().bind(taskRecognize.progressProperty());
 	
 	  	new Thread(taskRecognize).start();
-		}
+		
+	  	}
 	  	
 	  	
 	  	public void changeUi(Runnable runnable)
