@@ -144,10 +144,11 @@ public class SampleBuilder {
 										sampleCount.set(sampleSet.getSize());
 									}
 									sampleData = new SampleData();
-									if(sampleSet.getSize() == 10)
+									if(sampleSet.getSize() == 5)
 									{
 										t.cancel();
 										isStopped = true;
+										MovementPattern pattern = AnalyzeData.buildMovementPattern(sampleSet);
 									}
 								
 								//t.cancel();

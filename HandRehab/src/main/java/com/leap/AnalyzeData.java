@@ -52,7 +52,7 @@ public class AnalyzeData
 				anglesVectorOfFrame.add(sampleData.getFrame(i).getAnglesVector());
 			}
 			
-			AnglesVector testingPoint = anglesVectorOfFrame.get(anglesVectorOfFrame.size()/2);
+			AnglesVector testingPoint = anglesVectorOfFrame.get(0);
 			
 			//Add the mean frame after KNNRegression to the pattern
 			mPattern.addVector(KNNRegression(testingPoint, anglesVectorOfFrame));
