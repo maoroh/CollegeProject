@@ -123,8 +123,8 @@ public class SampleBuilder {
 			        {
 			        	numOfFrames++;
 			        	FrameData fr = handleFrame(listener.getCurrentFrame());
-			        	fr.setAnglesTipVector();
-			        	AnglesVector frameAngles = fr.getAnglesTipVector();
+			        	fr.setAnglesVector();
+			        	AnglesVector frameAngles = fr.getAnglesVector();
 			        
 			        	try {
 			        		System.out.println(frameAngles.distanceTo(initVec));
@@ -205,7 +205,7 @@ public class SampleBuilder {
 
 	protected void buildInitial() {
 		// TODO Auto-generated method stub
-		ArrayList<AnglesVector> vectors = sampleData.getSamplesTipVectors();
+		ArrayList<AnglesVector> vectors = sampleData.getSamplesVector();
 		try {
 			this.initVec = AnalyzeData.KNNRegression(vectors.get(50), vectors);
 		} catch (Exception e) {
