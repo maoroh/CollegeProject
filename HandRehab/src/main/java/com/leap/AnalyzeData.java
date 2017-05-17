@@ -48,7 +48,7 @@ public class AnalyzeData
 			for(int j=0; j<samples.getSize(); j++)
 			{
 				SampleData sampleData = samples.getSample(j);
-				//sampleData.getFrame(i).setAnglesVector();
+				sampleData.getFrame(i).setAnglesVector();
 				anglesVectorOfFrame.add(sampleData.getFrame(i).getAnglesVector());
 			}
 			
