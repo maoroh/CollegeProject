@@ -13,6 +13,7 @@ public class FrameData {
 	private Map<Finger.Type,FingerData> fingersData;
 	private Vector palmDirection;
 	private AnglesVector anglesVector;
+	private double distance;
 	
 	public FrameData(int timeID, Map<Finger.Type,FingerData> fingersData, Vector palmDirection)
 	{
@@ -136,6 +137,14 @@ public class FrameData {
 			  avgFingersMapData.put(fingerType, new FingerData(avgBonesDirections)); 
 		}
 		return new FrameData(f1.getTimeID(), avgFingersMapData , avgPalmDirection);
+	}
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
 	}
 	
 	
