@@ -43,14 +43,20 @@ public class TrainingController implements Initializable{
 	@FXML
 	ProgressBar progressBar;
 	
+	@FXML
+	ImageView exerciseImg;
+	
 	SampleBuilder sb;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 		
-		textArea.appendText("TEST");
+		//textArea.appendText("TEST");
 		sb = new SampleBuilder();
+		
+		//exerciseImg.setImage(new Image("file:a.gif"));
+		//exerciseImg.setRotate(90);
       
 	}
 	
@@ -108,14 +114,18 @@ public class TrainingController implements Initializable{
             timeline.setAutoReverse(true); 
             //Play animation
             timeline.play();
-        	
+            
+            sb.getIntegerProperty().addListener((ov,oldVal,newVal)->
+            {
+            	changeUi(()->{textArea.appendText("Sample num : " + newVal +"\n");});
+            });
+     	   
     	  	Task<Void> taskRecording = new Task<Void>() {
 
     			@Override
     			public void run() {
     				// TODO Auto-generated method stub
     				boolean a = false;
-    				  updateProgress(0, 100);
     				sb.startRecordingFull();
     				 while(!a)
     	        	   {
@@ -127,11 +137,7 @@ public class TrainingController implements Initializable{
     						e.printStackTrace();
     					}
     	        	   }
-    	        	 
-    				 updateProgress(100, 100);
-    	        		 
-    	        	  
-    	        	   
+	   
     			}
 
     			@Override
@@ -161,32 +167,18 @@ public class TrainingController implements Initializable{
 						e.printStackTrace();
 					}
 	        	   }
-	        	   Platform.runLater(new Runnable() {
-					
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						dialog.getScene().getRoot().setOpacity(1);
-					}
-				});
+				   changeUi(()->{dialog.getScene().getRoot().setOpacity(1);});
 	        	   timeline.stop();
-	        	   
 	        	   while(!sb.isStopped())
 	        		   updateProgress(sb.getNumOfFrames(), 119);
 	        	   
-	        	   
+	        	   //Start Record
 	        	   System.out.println("Start Recording");
 	        	   
-	        	   Platform.runLater(new Runnable() {
-	        	   @Override
-					public void run() {
-						// TODO Auto-generated method stub
-	        		   im.setImage(new Image("file:a.gif"));
-					}
-				});
-	        	   
+	        	   changeUi(()->{exerciseImg.setImage(new Image("file:a.gif"));
+	       					     exerciseImg.setRotate(90);});
+  
 	        	   new Thread(taskRecording).start();
-	        	   
 			}
 
 			@Override
@@ -203,4 +195,12 @@ public class TrainingController implements Initializable{
 	
 	  	new Thread(taskRecognize).start();
 		}
+	  	
+	  	
+	  	public void changeUi(Runnable runnable)
+	  	{
+	 	   Platform.runLater(runnable);
+	  	}
+	  	
+	  	
 }

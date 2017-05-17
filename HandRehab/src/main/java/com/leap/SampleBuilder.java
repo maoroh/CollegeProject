@@ -17,8 +17,8 @@ import com.leapmotion.leap.Pointable;
 import com.leapmotion.leap.PointableList;
 import com.leapmotion.leap.Vector;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class SampleBuilder {
 	private FrameListener listener;
@@ -31,7 +31,7 @@ public class SampleBuilder {
 	private boolean isStopped = false;
 	private boolean isStatic = false;
 	boolean startMotion = false;
-	
+	private IntegerProperty sampleCount = new SimpleIntegerProperty();
 	public SampleBuilder()
 	{
 		
@@ -139,7 +139,10 @@ public class SampleBuilder {
 								{
 									s = 0;
 									if(sampleData.getNumOfFrames()>20)
+									{
 										sampleSet.addSample(sampleData);
+										sampleCount.set(sampleSet.getSize());
+									}
 									sampleData = new SampleData();
 									if(sampleSet.getSize() == 5)
 									{
@@ -372,5 +375,10 @@ public class SampleBuilder {
 	public int getNumOfFrames()
 	{
 		return this.numOfFrames;
+	}
+	
+	public IntegerProperty getIntegerProperty()
+	{
+		return this.sampleCount;
 	}
 }
