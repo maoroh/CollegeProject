@@ -176,7 +176,15 @@ public class TrainingController implements Initializable{
 	        	   
 	        	   
 	        	   System.out.println("Start Recording");
-	        	
+	        	   
+	        	   Platform.runLater(new Runnable() {
+	        	   @Override
+					public void run() {
+						// TODO Auto-generated method stub
+	        		   im.setImage(new Image("file:a.gif"));
+					}
+				});
+	        	   
 	        	   new Thread(taskRecording).start();
 	        	   
 			}

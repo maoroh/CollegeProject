@@ -200,7 +200,7 @@ public class SampleBuilder {
 				}
 
 	
-			},10, 10);
+			},50, 50);
 	}
 
 	protected void buildInitial() {
