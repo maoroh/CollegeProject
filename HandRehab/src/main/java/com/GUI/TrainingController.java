@@ -161,11 +161,19 @@ public class TrainingController implements Initializable{
 						e.printStackTrace();
 					}
 	        	   }
-	        	   System.out.println("NOT");
+	        	   Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						dialog.getScene().getRoot().setOpacity(1);
+					}
+				});
 	        	   timeline.stop();
 	        	   
 	        	   while(!sb.isStopped())
 	        		   updateProgress(sb.getNumOfFrames(), 119);
+	        	   
 	        	   
 	        	   System.out.println("Start Recording");
 	        	
