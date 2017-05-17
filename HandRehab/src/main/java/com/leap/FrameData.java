@@ -11,9 +11,20 @@ import com.leapmotion.leap.Finger.Type;
 public class FrameData {
 	private int timeID;
 	private Map<Finger.Type,FingerData> fingersData;
+	private Map<Finger.Type, Vector> tipDirections;
 	private Vector palmDirection;
 	private AnglesVector anglesVector;
+	private AnglesVector anglesTipVector;
 	private double distance;
+	
+	public FrameData(int timeID, Map<Finger.Type,FingerData> fingersData, Vector palmDirection, Map<Finger.Type, Vector> tipDirections)
+	{
+		this.setTimeID(timeID);
+		this.setFingersData(fingersData);
+		this.setPalmDirection(palmDirection);
+		this.setTipDirections(tipDirections);
+		this.anglesVector = null;
+	}
 	
 	public FrameData(int timeID, Map<Finger.Type,FingerData> fingersData, Vector palmDirection)
 	{
@@ -47,6 +58,17 @@ public class FrameData {
 		this.timeID = timeID;
 	}
 	
+	public void setAnglesTipVector() {
+		AnglesVector anglesTipVec = new AnglesVector();
+		for(Finger.Type type: Finger.Type.values())
+		{
+			double angle =  this.tipDirections.get(type).angleTo(palmDirection);
+			anglesTipVec.addCoordinate(angle);
+		}
+		
+		this.anglesTipVector = anglesTipVec;
+	}
+	
 	public void setAnglesVector() {
 		
 			Map<Type, FingerData> fingersData = this.getFingersData();
@@ -61,7 +83,8 @@ public class FrameData {
 				Map <Bone.Type, Vector> bonesDirection = fingerData.getBonesDirection();
 				
 				//Bones
-				  for(Bone.Type boneType : Bone.Type.values()) {
+				  for(Bone.Type boneType : Bone.Type.values())
+				  {
 					  Vector boneDirection = bonesDirection.get(boneType);
 					  double angle =  boneDirection.angleTo(palmDirection);
 					  anglesVector.addCoordinate(angle);
@@ -145,6 +168,22 @@ public class FrameData {
 
 	public void setDistance(double distance) {
 		this.distance = distance;
+	}
+
+	public Map<Finger.Type, Vector> getTipDirections() {
+		return tipDirections;
+	}
+
+	public void setTipDirections(Map<Finger.Type, Vector> tipDirections) {
+		this.tipDirections = tipDirections;
+	}
+
+	public AnglesVector getAnglesTipVector() {
+		return anglesTipVector;
+	}
+
+	public void setAnglesTipVector(AnglesVector anglesTipVector) {
+		this.anglesTipVector = anglesTipVector;
 	}
 	
 	

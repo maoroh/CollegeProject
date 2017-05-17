@@ -38,6 +38,19 @@ public class SampleData {
 		return vectors;
 	}
 	
+	public ArrayList <AnglesVector> getSamplesTipVectors()
+	{
+		ArrayList<AnglesVector> vectors = new ArrayList<AnglesVector>();
+		
+		for(FrameData data : this.framesData)
+		{
+			data.setAnglesTipVector();
+			vectors.add(data.getAnglesVector());
+		}
+		
+		return vectors;
+	}
+	
 	public void setFrames(ArrayList<FrameData> framesData)
 	{
 		this.framesData = framesData;

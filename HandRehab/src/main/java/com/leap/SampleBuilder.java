@@ -123,8 +123,8 @@ public class SampleBuilder {
 			        {
 			        	numOfFrames++;
 			        	FrameData fr = handleFrame(listener.getCurrentFrame());
-			        	fr.setAnglesVector();
-			        	AnglesVector frameAngles = fr.getAnglesVector();
+			        	fr.setAnglesTipVector();
+			        	AnglesVector frameAngles = fr.getAnglesTipVector();
 			        
 			        	try {
 			        		System.out.println(frameAngles.distanceTo(initVec));
@@ -205,7 +205,7 @@ public class SampleBuilder {
 
 	protected void buildInitial() {
 		// TODO Auto-generated method stub
-		ArrayList<AnglesVector> vectors = sampleData.getSamplesVector();
+		ArrayList<AnglesVector> vectors = sampleData.getSamplesTipVectors();
 		try {
 			this.initVec = AnalyzeData.KNNRegression(vectors.get(50), vectors);
 		} catch (Exception e) {
@@ -218,8 +218,21 @@ public class SampleBuilder {
 	protected FrameData handleFrame(Frame currentFrame) {
 		// TODO Auto-generated method stub
 		 // Get fingers
-	
+		Map <Finger.Type, Vector> tipDirections = new HashMap<Finger.Type, Vector>();
+		PointableList pointableList = currentFrame.pointables();
+
+	   	  for(Pointable pointable : pointableList)
+	      {
+	         if(pointable.isFinger() && pointable.isValid())
+	         {
+	        	 Finger finger = new Finger(pointable);
+	        	 tipDirections.put(finger.type() , pointable.direction());
+	         }
+
+	      }
+	   	  
 		Map <Finger.Type, FingerData> fingersData = new HashMap<Finger.Type, FingerData>();
+		
 		HandList hands = currentFrame.hands();
 		Hand hand = hands.get(0);
 		
@@ -240,7 +253,7 @@ public class SampleBuilder {
             
         }
         
-        FrameData timeStamp = new FrameData(numOfFrames,fingersData,hand.palmNormal());
+        FrameData timeStamp = new FrameData(numOfFrames,fingersData,hand.palmNormal(),tipDirections);
         sampleData.addFrame(timeStamp);
         return timeStamp;
 	}
