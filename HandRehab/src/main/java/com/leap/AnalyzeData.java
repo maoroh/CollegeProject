@@ -9,7 +9,7 @@ import com.leapmotion.leap.Finger;
 public class AnalyzeData
 {
 	private static final int K = 10;
-	private static final int numOfFrames = 20;
+	private static final int numOfFrames = 30;
 
 	
 	public static AnglesVector KNNRegression(AnglesVector testingPoint , ArrayList<AnglesVector> points) throws Exception
@@ -33,8 +33,9 @@ public class AnalyzeData
 		return mean;
 	}
 	
-	public static MovementPattern buildMovementPattern(SampleSet samples) throws Exception
+	public static MovementPattern buildMovementPattern(SampleSet recordedSamples) throws Exception
 	{
+		SampleSet samples = fixSampleSet(recordedSamples);
 		MovementPattern mPattern = new MovementPattern();
 		ArrayList<AnglesVector> anglesVectorOfFrame = new ArrayList<AnglesVector>();
 		
@@ -87,14 +88,12 @@ public class AnalyzeData
 					index += 2;
 					
 				}
-			
-				
+
 				sample = new SampleData(new ArrayList<FrameData>(avgFramesData));
 				avgFramesData.clear();
 				index = 0;
 			}
-			
-
+		
 			else if(sample.getNumOfFrames() == numOfFrames) return sample;
 			
 			//This case handles sample size of numOfFrames + 1 
@@ -124,11 +123,22 @@ public class AnalyzeData
 			
 				return new SampleData(new ArrayList<FrameData>(avgFramesData));
 			}
-			
-		
-		
 		}
 	
+	}
+	
+	
+	
+	public static SampleSet fixSampleSet(SampleSet samplesSet) throws Exception
+	{
+	   SampleSet fixedSampleSet  = new SampleSet();
+	   
+	   for(int i = 0; i<samplesSet.getSize(); i++)
+	   {
+		   fixedSampleSet.addSample(avgSample(samplesSet.getSample(i)));
+	   }
+	   
+	   return fixedSampleSet;
 	}
 	
 	
