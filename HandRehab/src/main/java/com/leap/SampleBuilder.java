@@ -17,6 +17,9 @@ import com.leapmotion.leap.Pointable;
 import com.leapmotion.leap.PointableList;
 import com.leapmotion.leap.Vector;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 public class SampleBuilder {
 	private FrameListener listener;
  	private Controller controller;
@@ -28,6 +31,7 @@ public class SampleBuilder {
 	private boolean isStopped = false;
 	private boolean isStatic = false;
 	boolean startMotion = false;
+	
 	public SampleBuilder()
 	{
 		
@@ -134,7 +138,7 @@ public class SampleBuilder {
 				}
 
 	
-			},50, 50);
+			},10, 10);
 	}
 
 	protected void buildInitial() {
@@ -283,6 +287,8 @@ public class SampleBuilder {
 	public boolean isStatic() {
 		return isStatic;
 	}
+	
+
 
 	public void setStatic(boolean isStatic) {
 		this.isStatic = isStatic;
