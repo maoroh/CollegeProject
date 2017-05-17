@@ -176,7 +176,8 @@ public class TrainingController implements Initializable{
 	        	   System.out.println("Start Recording");
 	        	   
 	        	   changeUi(()->{exerciseImg.setImage(new Image("file:a.gif"));
-	       					     exerciseImg.setRotate(90);});
+	       					     exerciseImg.setRotate(90);
+	        			   		 dialog.hide();});
   
 	        	   new Thread(taskRecording).start();
 			}
