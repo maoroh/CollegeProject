@@ -117,7 +117,7 @@ public class TrainingController implements Initializable{
             
             sb.getIntegerProperty().addListener((ov,oldVal,newVal)->
             {
-            	textArea.appendText("Sample num : " + newVal +"\n");
+            	changeUi(()->{textArea.appendText("Sample num : " + newVal +"\n");});
             });
      	   
     	  	Task<Void> taskRecording = new Task<Void>() {
