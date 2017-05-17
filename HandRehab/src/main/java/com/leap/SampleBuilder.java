@@ -68,7 +68,7 @@ public class SampleBuilder {
 							if(frameAngles.distanceTo(initVec) < 0.8)
 							{
 								s++;
-								if(s>=2)
+								if(s>=4)
 								{
 									try {
 										/*/
@@ -87,7 +87,69 @@ public class SampleBuilder {
 									}
 								t.cancel();
 								isStopped = true;
-								System.out.println("Finished " + numOfFrames);
+								System.out.println("Finished  "+ + numOfFrames +  " s= " +s );
+								}
+							}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        	
+			        
+			        }
+		
+			        
+				}
+
+	
+			},50, 50);
+	}
+	 
+	public void startRecordingFull()
+	{
+		 isStopped = false;
+		 numOfFrames = 0;
+		 sampleData = new SampleData();
+		
+		 Timer t = new Timer();
+	     t.scheduleAtFixedRate(new TimerTask() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+				
+			        listener.onFrame(controller);
+			        Frame frame = listener.getCurrentFrame();
+			        if(checkFrame(frame))
+			        {
+			        	numOfFrames++;
+			        	FrameData fr = handleFrame(listener.getCurrentFrame());
+			        	fr.setAnglesVector();
+			        	AnglesVector frameAngles = fr.getAnglesVector();
+			        
+			        	try {
+			        		System.out.println(frameAngles.distanceTo(initVec));
+			        		System.out.println("Current Angles : " + frameAngles);
+			        		System.out.println("KNN Angles : " + initVec);
+			        		double distance = frameAngles.distanceTo(initVec) ;
+			        		fr.setDistance(distance);
+							if(distance < 0.8)
+							{
+								s++;
+								if(s>=4)
+								{
+									s = 0;
+									if(sampleData.getNumOfFrames()>20)
+										sampleSet.addSample(sampleData);
+									sampleData = new SampleData();
+									if(sampleSet.getSize() == 10)
+									{
+										t.cancel();
+										isStopped = true;
+									}
+								
+								//t.cancel();
+								//isStopped = true;
+								//System.out.println("Finished " + numOfFrames);
 								}
 							}
 						} catch (Exception e) {

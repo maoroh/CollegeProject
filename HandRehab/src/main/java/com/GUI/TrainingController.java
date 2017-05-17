@@ -116,7 +116,7 @@ public class TrainingController implements Initializable{
     				// TODO Auto-generated method stub
     				boolean a = false;
     				  updateProgress(0, 100);
-    				sb.startRecording();
+    				sb.startRecordingFull();
     				 while(!a)
     	        	   {
     	        		   a = sb.isStopped();
