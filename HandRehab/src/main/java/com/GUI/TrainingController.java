@@ -197,7 +197,7 @@ public class TrainingController implements Initializable{
 	        	   //Start Record
 	        	   System.out.println("Start Recording");
 	        	   
-	        	   changeUi(()->{exerciseImg.setImage(new Image("file:a.gif"));
+	        	   changeUi(()->{exerciseImg.setImage(new Image("file:handAnim.gif"));
 	       					     exerciseImg.setRotate(90);
 	        			   		 dialog.hide();});
 	        	   
