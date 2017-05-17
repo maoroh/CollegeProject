@@ -132,7 +132,7 @@ public class SampleBuilder {
 			        		System.out.println("KNN Angles : " + initVec);
 			        		double distance = frameAngles.distanceTo(initVec) ;
 			        		fr.setDistance(distance);
-							if(distance < 0.8)
+							if(distance < 0.45)
 							{
 								s++;
 								if(s>=4)
@@ -141,7 +141,7 @@ public class SampleBuilder {
 									if(sampleData.getNumOfFrames()>20)
 										sampleSet.addSample(sampleData);
 									sampleData = new SampleData();
-									if(sampleSet.getSize() == 10)
+									if(sampleSet.getSize() == 5)
 									{
 										t.cancel();
 										isStopped = true;
@@ -200,7 +200,7 @@ public class SampleBuilder {
 				}
 
 	
-			},10, 10);
+			},50, 50);
 	}
 
 	protected void buildInitial() {
