@@ -201,18 +201,7 @@ public class TrainingController implements Initializable{
 	       					     exerciseImg.setRotate(90);
 	        			   		 dialog.hide();});
 	        	   
-	        	   changeUi(()->
-	        	   {
-	        		   Alert alert = new Alert(AlertType.INFORMATION);
-		               alert.setTitle("Next Step");
-		               alert.initStyle(StageStyle.TRANSPARENT);
-		               alert.setHeaderText("Now you need to perform a set of repetitions of the exercise...");
-		               //alert.setContentText("Ooops, there was an error!");
-		               alert.getButtonTypes().set(0,null);
-		               alert.showAndWait();
-		                
-	        	   });
-	        	  
+	        	   
 	        	   new Thread(taskRecording).start();
 			}
 
