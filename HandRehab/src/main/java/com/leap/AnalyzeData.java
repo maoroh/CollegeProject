@@ -8,7 +8,7 @@ import com.leapmotion.leap.Finger;
 
 public class AnalyzeData
 {
-	private static final int K = 10;
+	private static final int K = 3;
 	private static final int numOfFrames = 30;
 
 	
