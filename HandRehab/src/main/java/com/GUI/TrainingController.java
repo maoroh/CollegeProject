@@ -41,12 +41,13 @@ public class TrainingController implements Initializable{
 	
 	@FXML
 	private Button startRecordBtn;
-	
-	@FXML
-	private ProgressBar progressBar;
-	
+	private Object lock = new Object();
+	private boolean a = false;
 	@FXML
 	private ImageView exerciseImg;
+	
+	@FXML
+	private ProgressIndicator progressIndicator;
 	
 	private SampleBuilder sb;
 	
@@ -55,7 +56,8 @@ public class TrainingController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		isExerciseShowed = true;
+		isExerciseShowed = false;
+		startRecordBtn.setDisable(true);
 		//textArea.appendText("TEST");
 		sb = new SampleBuilder();
 		sb.getIntegerProperty().addListener((ov,oldVal,newVal)->
@@ -64,35 +66,28 @@ public class TrainingController implements Initializable{
         		changeUi(()->{textArea.appendText("The training phase has completed successfully!");});
          	changeUi(()->{textArea.appendText("Sample num : " + newVal +"\n");});
         });
-		//exerciseImg.setImage(new Image("file:a.gif"));
+		//exerciseImg.setImage(new Image("file:handAnim.gif"));
 		//exerciseImg.setRotate(90);
 	}
 	
 		@FXML
 		 public void buttonClicked(ActionEvent event) throws IOException
 		 {
-			isExerciseShowed = true;
-		  	Group popup = new Group();
-			ImageView im=new ImageView(new Image("file:handAnim.gif"));
-			im.setRotate(90);
-			popup.getChildren().add(im);
-			final Stage dialog = new Stage();
-	        dialog.initModality(Modality.WINDOW_MODAL);
-	        dialog.initOwner(button.getScene().getWindow());
-	        Scene dialogScene = new Scene(popup);
-	        dialogScene.setFill(Color.TRANSPARENT);
-	        dialog.setScene(dialogScene);
-	        dialog.initStyle(StageStyle.TRANSPARENT); 
-	        dialog.setX(button.getScene().getWindow().getWidth() / 2 + 200);
-	        dialog.setY(button.getScene().getWindow().getHeight() / 2 - 160 );
-	        dialog.show();
-	        
-	        Timeline timeline = new Timeline();
-            KeyFrame key = new KeyFrame(Duration.millis(4700),
-                           new KeyValue (dialog.getScene().getRoot().opacityProperty(), 0.5)); 
-            timeline.getKeyFrames().add(key);   
-            timeline.setOnFinished((ae) -> dialog.hide()); 
-            timeline.play();  
+			exerciseImg.setImage(new Image("file:handAnim.gif"));
+			exerciseImg.setRotate(90);
+			 Timeline timeline = new Timeline();
+	            KeyFrame key = new KeyFrame(Duration.millis(4700),
+	                           new KeyValue (exerciseImg.opacityProperty(), 0.8)); 
+	            timeline.getKeyFrames().add(key);   
+	            timeline.setOnFinished((ae) -> {
+	            	exerciseImg.setImage(null);
+	            	startRecordBtn.setDisable(false);
+	            	}
+	            );
+	            timeline.play(); 
+	            isExerciseShowed = true;
+	           
+	       
 		 }
 	  
 	  	@FXML
@@ -113,54 +108,38 @@ public class TrainingController implements Initializable{
 	  	
 	  	public void recording()
 	  	{
-	  		Group popup = new Group();
-			ImageView im=new ImageView(new Image("file:hand.gif"));
-			//final ProgressBar pb = new ProgressBar(0.5);
-		    final ProgressIndicator pi = new ProgressIndicator(0);
-			popup.getChildren().addAll(im,pi);
-			final Stage dialog = new Stage();
-	        dialog.initModality(Modality.WINDOW_MODAL);
-	        dialog.initOwner(button.getScene().getWindow());
-	        Scene dialogScene = new Scene(popup);
-	        dialogScene.setFill(Color.TRANSPARENT);
-	        dialog.setScene(dialogScene);
-	        dialog.initStyle(StageStyle.TRANSPARENT); 
-	        pi.setTranslateY(30);
-	        pi.setTranslateX(30);
-	        dialog.setX(button.getScene().getWindow().getWidth() / 2 + 200);
-	        dialog.setY(button.getScene().getWindow().getHeight() / 2 - 160 );
-	        dialog.show();
-	        
+	  		progressIndicator.setVisible(true);
+	  		
+	  		exerciseImg.setImage(new Image("file:hand.gif"));
+	  		exerciseImg.setRotate(0);
 	        Timeline timeline = new Timeline();
-            KeyFrame key = new KeyFrame(Duration.millis(500),
-                           new KeyValue (dialog.getScene().getRoot().opacityProperty(), 0)); 
+            KeyFrame key = new KeyFrame(Duration.millis(800),
+                           new KeyValue (exerciseImg.opacityProperty(), 0)); 
             timeline.getKeyFrames().add(key);   
-            timeline.setOnFinished((ae) -> dialog.hide()); 
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.setAutoReverse(true); 
             //Play animation
             timeline.play();
-            
+           
      	   
     	  	Task<Void> taskRecording = new Task<Void>() {
 
     			@Override
     			public void run() {
     				// TODO Auto-generated method stub
-    				boolean a = false;
     				sb.startRecordingFull();
-    				 while(!a)
-    	        	   {
-    	        		   a = sb.isStopped();
-    	        		   try {
-    						Thread.yield();
-    					} catch (Exception e) {
-    						// TODO Auto-generated catch block
-    						e.printStackTrace();
-    					}
-    	        	   }
-	   
-    			}
+    				synchronized (sb) {
+   			         while (!sb.isStopped())
+   						try {
+   							sb.wait();
+   						} catch (InterruptedException e) {
+   							// TODO Auto-generated catch block
+   							e.printStackTrace();
+   						
+   						}
+    				}
+   			         
+   			     }
 
     			@Override
     			protected Void call() throws Exception {
@@ -176,33 +155,35 @@ public class TrainingController implements Initializable{
 
 			@Override
 			public void run() {
+				
 				// TODO Auto-generated method stub
-				boolean a = false;
-				sb.recognizeHand();
-				 while(!a)
-	        	   {
-	        		   a = sb.isStatic();
-	        		   try {
-						Thread.yield();
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-	        	   }
-				   changeUi(()->{dialog.getScene().getRoot().setOpacity(1);});
+				 sb.recognizeHand();
+				 synchronized (sb) {
+			         while (!sb.isStatic())
+						try {
+							sb.wait();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			         
+			     }
+			 
+				   changeUi(()->{exerciseImg.setOpacity(1);});
 	        	   timeline.stop();
-	        	   while(!sb.isStopped())
-	        		   updateProgress(sb.getNumOfFrames(), 119);
+	        	   
+	        	  // while(!sb.isStopped())
+	        		//   updateProgress(sb.getNumOfFrames(), 119);
 	        	   
 	        	   //Start Record
 	        	   System.out.println("Start Recording");
 	        	   
 	        	   changeUi(()->{exerciseImg.setImage(new Image("file:handAnim.gif"));
 	       					     exerciseImg.setRotate(90);
-	        			   		 dialog.hide();});
+	        			   		 });
 	        	   
 	        	   
-	        	   new Thread(taskRecording).start();
+	        	  // new Thread(taskRecording).start();
 			}
 
 			@Override
@@ -215,7 +196,7 @@ public class TrainingController implements Initializable{
 	  	};
 	  	
 	  
-	  	pi.progressProperty().bind(taskRecognize.progressProperty());
+	 	progressIndicator.progressProperty().bind(taskRecognize.progressProperty());
 	
 	  	new Thread(taskRecognize).start();
 		

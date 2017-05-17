@@ -147,7 +147,11 @@ public class SampleBuilder {
 									if(sampleSet.getSize() == 5)
 									{
 										t.cancel();
-										isStopped = true;
+										//Notify thread
+							        	synchronized (this) {
+							    			isStopped = true;
+							    			this.notify();
+							    		}
 										MovementPattern pattern = AnalyzeData.buildMovementPattern(sampleSet);
 										System.out.println("Finished");
 									}
@@ -188,7 +192,11 @@ public class SampleBuilder {
 			        Frame frame = listener.getCurrentFrame();
 			        if(checkFrame2(frame))
 			        {
-			        	isStatic = true;
+			        	//Notify thread
+			        	synchronized (this) {
+			    			isStatic = true;
+			    			this.notify();
+			    		}
 			        	numOfFrames++;
 			        	if(numOfFrames >= 20)
 			        		handleFrame(listener.getCurrentFrame());
