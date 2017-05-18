@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
@@ -41,10 +42,12 @@ public class TrainingController implements Initializable{
 	
 	@FXML
 	private Button startRecordBtn;
-	private Object lock = new Object();
-	private boolean a = false;
+
 	@FXML
 	private ImageView exerciseImg;
+	
+	@FXML
+	private Label trainingStatusLbl;
 	
 	@FXML
 	private ProgressIndicator progressIndicator;
@@ -53,11 +56,16 @@ public class TrainingController implements Initializable{
 	
 	private boolean isExerciseShowed;
 
+	private final String calibrateMsg = "Waiting for Calibration...";
+	
+	private final String recordMsg = "Recording has started...";
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 		isExerciseShowed = false;
 		startRecordBtn.setDisable(true);
+		
 		//textArea.appendText("TEST");
 		sb = new SampleBuilder();
 		sb.getIntegerProperty().addListener((ov,oldVal,newVal)->
@@ -82,6 +90,16 @@ public class TrainingController implements Initializable{
 	            timeline.setOnFinished((ae) -> {
 	            	exerciseImg.setImage(null);
 	            	startRecordBtn.setDisable(false);
+	            	 Timeline timeline2 = new Timeline();
+	            	KeyFrame key2 = new KeyFrame(Duration.millis(450),
+	                           new KeyValue (trainingStatusLbl.opacityProperty(), 0)); 
+	            	 timeline2.getKeyFrames().add(key2);   
+	 	            timeline2.setOnFinished((as) -> {
+	 	            	trainingStatusLbl.setTextFill(Color.BLUE);
+	 	            	trainingStatusLbl.setOpacity(1);
+	 	            	trainingStatusLbl.setText(calibrateMsg);
+	 	            });
+	 	           timeline2.play(); 
 	            	}
 	            );
 	            timeline.play(); 
@@ -138,6 +156,13 @@ public class TrainingController implements Initializable{
    						
    						}
     				}
+    				
+    				changeUi(()->{
+    					Alert alert = new Alert(AlertType.CONFIRMATION);
+    		            alert.setTitle("Message");
+    		            alert.setHeaderText("Training has completed successfully ! now you can start your rehablitation.");
+    		            alert.showAndWait();
+    					});
    			         
    			     }
 
@@ -174,13 +199,25 @@ public class TrainingController implements Initializable{
 	        	   timeline.stop();
 	        	   
 	        	  while(!sb.isStopped())
-	        		  updateProgress(sb.getNumOfFrames(), 219);
+	        		  updateProgress(sb.getNumOfFrames(), 200);
 	        	   
 	        	   //Start Record
 	        	   System.out.println("Start Recording");
 	        	   
 	        	   changeUi(()->{exerciseImg.setImage(new Image("file:handAnim.gif"));
 	       					     exerciseImg.setRotate(90);
+	       					  Timeline timeline = new Timeline();
+	      	            	KeyFrame key = new KeyFrame(Duration.millis(450),
+	      	                           new KeyValue (trainingStatusLbl.opacityProperty(), 0)); 
+	      	            	 timeline.getKeyFrames().add(key);   
+	      	 	            timeline.setOnFinished((as) -> {
+	      	 	            	trainingStatusLbl.setOpacity(1);
+	      	 	            	trainingStatusLbl.setTextFill(Color.web("#16d713"));
+	      	 	            	trainingStatusLbl.setText(recordMsg);
+	      	 	            	
+	      	 	            });
+	      	 	           timeline.play();
+	      	 	           progressIndicator.setVisible(false);
 	        			   		 });
 	        	   
 	        	   
@@ -208,6 +245,8 @@ public class TrainingController implements Initializable{
 	  	{
 	 	   Platform.runLater(runnable);
 	  	}
+	  	
+	  	//public void createAnimation()
 	  	
 	  	
 }

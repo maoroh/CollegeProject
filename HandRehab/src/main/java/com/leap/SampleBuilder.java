@@ -148,9 +148,9 @@ public class SampleBuilder {
 									{
 										t.cancel();
 										//Notify thread
-							        	synchronized (this) {
+										synchronized (SampleBuilder.this) {
 							    			isStopped = true;
-							    			this.notify();
+							    			SampleBuilder.this.notify();
 							    		}
 										//MovementPattern pattern = AnalyzeData.buildMovementPattern(sampleSet);
 										System.out.println("Finished");
@@ -221,7 +221,7 @@ public class SampleBuilder {
 		// TODO Auto-generated method stub
 		ArrayList<AnglesVector> vectors = sampleData.getSamplesVector();
 		try {
-			this.initVec = AnalyzeData.KNNRegression(vectors.get(50), vectors,180);
+			this.initVec = AnalyzeData.KNNRegression(vectors.get(50), vectors,100);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
