@@ -33,7 +33,7 @@ import javafx.stage.Stage;
 public class MainController implements Initializable {
 	
 	@FXML
-	Button button;
+	Button rehabButton;
 	
 	@FXML
 	ImageView bg;
@@ -47,29 +47,25 @@ public class MainController implements Initializable {
 		
 	}
 	  
-	 //Test method
+	 
 	  @FXML
-	 public void buttonClicked(ActionEvent event) throws IOException
+	 public void trainingButton(ActionEvent event) throws IOException
 	 {
-		 /*/
-		Group popup = new Group();
-		ImageView im=new ImageView(new Image("file:a.gif"));
-		im.setRotate(90);
-		popup.getChildren().add(im);
-		final Stage dialog = new Stage();
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(button.getScene().getWindow());
-        Scene dialogScene = new Scene(popup);
-        dialog.setScene(dialogScene);
-        dialog.show();
-        /*/
-		 Stage stage = (Stage) button.getScene().getWindow();
+		 Stage stage = (Stage) rehabButton.getScene().getWindow();
 		 Parent root = FXMLLoader.load(getClass().getResource("TrainingView.fxml"));
 		 Scene scene = new Scene(root);
 	     stage.setScene(scene);
-	     stage.show();
-		
+
 	 }
+	  
+	  @FXML
+	  public void RehabButton(ActionEvent event) throws IOException
+	  {
+		 Stage stage = (Stage) rehabButton.getScene().getWindow();
+		 Parent root = FXMLLoader.load(getClass().getResource("RehabView.fxml"));
+		 Scene scene = new Scene(root);
+		 stage.setScene(scene);
+	  }
 
 
 

@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="533.0" prefWidth="777.0" style="-fx-background-color: white;" stylesheets="file:style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.GUI.TrainingController">
+<AnchorPane prefHeight="533.0" prefWidth="777.0" style="-fx-background-color: white;" stylesheets="file:style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.GUI.RehabController">
    <children>
       <MenuBar layoutX="1.0" layoutY="1.0" prefHeight="29.0" prefWidth="777.0">
         <menus>
@@ -50,7 +50,7 @@
          <children>
             <SplitPane dividerPositions="0.07017543859649122, 0.5" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="333.0" prefWidth="159.0" style="-fx-background-color: transparent;">
                <items>
-                  <Label text="Training Log" SplitPane.resizableWithParent="false">
+                  <Label text="Rehab Log" SplitPane.resizableWithParent="false">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -75,8 +75,8 @@
                               </SplitPane>
                               <SplitPane dividerPositions="0.5" prefWidth="341.0">
                                  <items>
-                                    <Label text="Training Status:  " />
-                                    <Label fx:id="trainingStatusLbl" prefWidth="175.0" text="Show Exercise..." textFill="RED" />
+                                    <Label text="Rehabilitation Status:  " />
+                                    <Label fx:id="trainingStatusLbl" prefWidth="175.0" text="Show Exercise..." textFill="#d41313" />
                                  </items>
                               </SplitPane>
                            </items>

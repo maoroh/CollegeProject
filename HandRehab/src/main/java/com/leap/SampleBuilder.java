@@ -17,11 +17,12 @@ import com.leapmotion.leap.Pointable;
 import com.leapmotion.leap.PointableList;
 import com.leapmotion.leap.Vector;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class SampleBuilder {
-	private FrameListener listener;
+	private LeapListener listener;
  	private Controller controller;
  	private SampleSet sampleSet ;
  	private SampleData sampleData;
@@ -32,196 +33,136 @@ public class SampleBuilder {
 	private boolean isStatic = false;
 	boolean startMotion = false;
 	private IntegerProperty sampleCount = new SimpleIntegerProperty();
+	private final double recThreshold = 0.8;
+	private final int numOfSamples = 5;
+	private boolean recording = false;
+	private boolean recognize = false;
+	
 	public SampleBuilder()
 	{
-		
 	 	controller = new Controller();
-		listener = new FrameListener(controller);
+		listener = new LeapListener(this);
+		controller.addListener(listener);
 		sampleSet = new SampleSet();
-		initVec = Files.ReadVector();
 	}
 	
-	public void startRecording()
+	public void initRecording()
 	{
 		 isStopped = false;
 		 numOfFrames = 0;
 		 sampleData = new SampleData();
-		 Timer t = new Timer();
-	     t.scheduleAtFixedRate(new TimerTask() {
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-				
-			        listener.onFrame(controller);
-			        Frame frame = listener.getCurrentFrame();
-			        if(checkFrame(frame))
-			        {
-			        	numOfFrames++;
-			        	FrameData fr = handleFrame(listener.getCurrentFrame());
-			        	fr.setAnglesVector();
-			        	AnglesVector frameAngles = fr.getAnglesVector();
-			        
-			        	try {
-			        		System.out.println(frameAngles.distanceTo(initVec));
-			        		System.out.println("Current Angles : " + frameAngles);
-			        		System.out.println("KNN Angles : " + initVec);
-							if(frameAngles.distanceTo(initVec) < 0.8)
-							{
-								s++;
-								if(s>=4)
-								{
-									try {
-										/*/
-										System.out.println("begin Test");
-										SampleData avg = AnalyzeData.avgSample(sampleData);
-										System.out.println(avg.getFrame(6).getFingersData().get(Finger.Type.TYPE_INDEX).getBonesDirection().get(Bone.Type.TYPE_INTERMEDIATE));
-										System.out.println(sampleData.getFrame(9).getFingersData().get(Finger.Type.TYPE_INDEX).getBonesDirection().get(Bone.Type.TYPE_INTERMEDIATE));
-										System.out.println(sampleData.getFrame(10).getFingersData().get(Finger.Type.TYPE_INDEX).getBonesDirection().get(Bone.Type.TYPE_INTERMEDIATE));
-										System.out.println(sampleData.getFrame(11).getFingersData().get(Finger.Type.TYPE_INDEX).getBonesDirection().get(Bone.Type.TYPE_INTERMEDIATE));
-										System.out.println(sampleData.getFrame(12).getFingersData().get(Finger.Type.TYPE_INDEX).getBonesDirection().get(Bone.Type.TYPE_INTERMEDIATE));
-										System.out.println(avg.getNumOfFrames());/*/
-										//return;
-									} catch (Exception e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-								t.cancel();
-								isStopped = true;
-								System.out.println("Finished  "+ + numOfFrames +  " s= " +s );
-								}
-							}
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-			        	
-			        
-			        }
+		 recording = true;
+		 controller.addListener(listener);
 		
-			        
-				}
-
-	
-			},50, 50);
 	}
-	 
-	public void startRecordingFull()
-	{
-		 isStopped = false;
-		 numOfFrames = 0;
-		 sampleData = new SampleData();
-		
-		 Timer t = new Timer();
-	     t.scheduleAtFixedRate(new TimerTask() {
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-				
-			        listener.onFrame(controller);
-			        Frame frame = listener.getCurrentFrame();
-			        if(checkFrame(frame))
-			        {
-			        	numOfFrames++;
-			        	FrameData fr = handleFrame(listener.getCurrentFrame());
-			        	fr.setAnglesVector();
-			        	AnglesVector frameAngles = fr.getAnglesVector();
-			        
-			        	try {
-			        		System.out.println(frameAngles.distanceTo(initVec));
-			        		System.out.println("Current Angles : " + frameAngles);
-			        		System.out.println("KNN Angles : " + initVec);
-			        		double distance = frameAngles.distanceTo(initVec) ;
-			        		fr.setDistance(distance);
-							if(distance < 0.9)
-							{
-								s++;
-								if(s>=4)
-								{
-									s = 0;
-									if(sampleData.getNumOfFrames()>20)
-									{
-										sampleSet.addSample(sampleData);
-										sampleCount.set(sampleSet.getSize());
-									}
-									sampleData = new SampleData();
-									if(sampleSet.getSize() == 5)
-									{
-										t.cancel();
-										//Notify thread
-										synchronized (SampleBuilder.this) {
-							    			isStopped = true;
-							    			SampleBuilder.this.notify();
-							    		}
-										//MovementPattern pattern = AnalyzeData.buildMovementPattern(sampleSet);
-										System.out.println("Finished");
-									}
-								
-								//t.cancel();
-								//isStopped = true;
-								//System.out.println("Finished " + numOfFrames);
-								}
-							}
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-			        	
-			        
-			        }
-		
-			        
-				}
-
 	
-			},40, 40);
-	}
-
-	
-	public void recognizeHand()
+	public void initRecognize()
 	{
-		
+		recognize = true;
 		isStopped = false;
 		numOfFrames = 0;
-		 sampleData = new SampleData();
-		 Timer t = new Timer();
-	     t.scheduleAtFixedRate(new TimerTask() {
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-				
-			        listener.onFrame(controller);
-			        Frame frame = listener.getCurrentFrame();
-			        if(checkFrame2(frame))
-			        {
-			        	//Notify thread
-			        	synchronized (SampleBuilder.this) {
-			    			isStatic = true;
-			    			SampleBuilder.this.notify();
-			    		}
-			        	numOfFrames++;
-			        	if(numOfFrames >= 20)
-			        		handleFrame(listener.getCurrentFrame());
-			        	//fr.setAnglesVector();
-			        	if(numOfFrames == 200)
-			        	{
-			        		numOfFrames++;
-			        		isStopped = true;
-			        		t.cancel();
-			        		buildInitial();
-			        	}
-			        	
-			        } 
-				}
-
-	
-			},50, 50);
+		sampleData = new SampleData();
+		recording = false;
 	}
+	
+	
+	public void newFrame(Frame frame)
+	{
+		if(recording)
+		{
+			recordNewFrame(frame);
+		}
+		else if(recognize)
+		{
+			recordNewFrameRecognize(frame);
+		}
+	}
+	
+	private void recordNewFrameRecognize(Frame frame) {
+		// TODO Auto-generated method stub
+		  
+	        if(checkFrame2(frame))
+	        {
+	        	//Notify thread
+	        	synchronized (SampleBuilder.this) {
+	    			isStatic = true;
+	    			SampleBuilder.this.notify();
+	    		}
+	        	numOfFrames++;
+	        	if(numOfFrames >= 20)
+	        		handleFrame(frame);
+	        	//fr.setAnglesVector();
+	        	if(numOfFrames == 200)
+	        	{
+	        		numOfFrames++;
+	        		isStopped = true;
+	        		System.out.println("stopp");
+	        		controller.removeListener(listener);
+	        		buildInitial();
+	        	}
+	        }
+	        	
+	}
+
+	public void recordNewFrame(Frame frame)
+	{
+		
+        if(checkFrame(frame))
+        {
+        	numOfFrames++;
+        	FrameData fr = handleFrame(frame);
+        	fr.setAnglesVector();
+        	AnglesVector frameAngles = fr.getAnglesVector();
+        
+        	try {
+        		System.out.println(frameAngles.distanceTo(initVec));
+        		//System.out.println("Current Angles : " + frameAngles);
+        		//System.out.println("KNN Angles : " + initVec);
+        		double distance = frameAngles.distanceTo(initVec) ;
+        		fr.setDistance(distance);
+				if(distance < recThreshold)
+				{
+					s++;
+					if(s>=4)
+					{
+						s = 0;
+						if(sampleData.getNumOfFrames() > 30)
+						{
+							sampleSet.addSample(sampleData);
+							sampleCount.set(sampleSet.getSize());
+						}
+						sampleData = new SampleData();
+						if(sampleSet.getSize() == numOfSamples )
+						{
+							controller.removeListener(listener);
+							 
+							//Notify thread
+							synchronized (SampleBuilder.this) {
+				    			isStopped = true;
+				    			SampleBuilder.this.notify();
+				    		}
+							//MovementPattern pattern = AnalyzeData.buildMovementPattern(sampleSet);
+							System.out.println("Finished");
+						}
+					
+					//t.cancel();
+					//isStopped = true;
+					//System.out.println("Finished " + numOfFrames);
+					}
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+	}
+	 
 
 	protected void buildInitial() {
 		// TODO Auto-generated method stub
 		ArrayList<AnglesVector> vectors = sampleData.getSamplesVector();
 		try {
-			this.initVec = AnalyzeData.KNNRegression(vectors.get(50), vectors,100);
+			this.initVec = AnalyzeData.KNNRegression(vectors.get(10), vectors,20);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -232,19 +173,6 @@ public class SampleBuilder {
 	protected FrameData handleFrame(Frame currentFrame) {
 		// TODO Auto-generated method stub
 		 // Get fingers
-		Map <Finger.Type, Vector> tipDirections = new HashMap<Finger.Type, Vector>();
-		PointableList pointableList = currentFrame.pointables();
-
-	   	  for(Pointable pointable : pointableList)
-	      {
-	         if(pointable.isFinger() && pointable.isValid())
-	         {
-	        	 Finger finger = new Finger(pointable);
-	        	 tipDirections.put(finger.type() , pointable.direction());
-	         }
-
-	      }
-	   	  
 		Map <Finger.Type, FingerData> fingersData = new HashMap<Finger.Type, FingerData>();
 		
 		HandList hands = currentFrame.hands();
@@ -267,7 +195,7 @@ public class SampleBuilder {
             
         }
         
-        FrameData timeStamp = new FrameData(numOfFrames,fingersData,hand.palmNormal(),tipDirections);
+        FrameData timeStamp = new FrameData(numOfFrames,fingersData,hand.palmNormal());
         sampleData.addFrame(timeStamp);
         return timeStamp;
 	}
@@ -321,6 +249,7 @@ public class SampleBuilder {
    	 
    	 if(frame.hands().count() >= 1 && !startMotion) 
    	 {
+   
    		 if(staticMovement(speed))
    		 {
    			
@@ -392,4 +321,11 @@ public class SampleBuilder {
 	{
 		return this.sampleCount;
 	}
+	
+	
+	public BooleanProperty getLeapProperty()
+	{
+		return listener.getLeapStatusProperty();
+	}
+	
 }

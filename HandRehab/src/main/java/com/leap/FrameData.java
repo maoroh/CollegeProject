@@ -87,12 +87,15 @@ public class FrameData {
 				  {
 					  Vector boneDirection = bonesDirection.get(boneType);
 					  double angle =  boneDirection.angleTo(palmDirection);
+					  
+					  if(boneType == Bone.Type.TYPE_DISTAL)
 					  anglesVector.addCoordinate(angle);
 				  }
 			}
 			
 			//Add angles of each bone to the another bones
 			//Fingers
+			
 			for(Finger.Type type: Finger.Type.values())
 			{
 				FingerData fingerData = fingersData.get(type);

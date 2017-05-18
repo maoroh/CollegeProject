@@ -19,8 +19,8 @@ public class App
     public static void main( String[] args )
     {
     	
-    	SampleBuilder sm = new SampleBuilder();
-    	sm.startRecording();
+    	
+    
   
     	
       /*/AnglesVector mean=null;

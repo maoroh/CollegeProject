@@ -13,9 +13,13 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -24,6 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -50,6 +55,9 @@ public class TrainingController implements Initializable{
 	private Label trainingStatusLbl;
 	
 	@FXML
+	private Label leapStatusLbl;
+	
+	@FXML
 	private ProgressIndicator progressIndicator;
 	
 	private SampleBuilder sb;
@@ -62,90 +70,88 @@ public class TrainingController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		isExerciseShowed = false;
-		startRecordBtn.setDisable(true);
+		System.out.println("Controller");
 		
-		//textArea.appendText("TEST");
+		isExerciseShowed = false;
+		//startRecordBtn.setDisable(true);
 		sb = new SampleBuilder();
+		
+		if(sb.getLeapProperty().getValue())
+		{
+			leapStatusLbl.setTextFill(Color.web("#16d713"));
+			leapStatusLbl.setText("Connected");	
+		}
+		
 		sb.getIntegerProperty().addListener((ov,oldVal,newVal)->
         {
         	if(sb.isStopped())
         		changeUi(()->{textArea.appendText("The training phase has completed successfully!");});
-         	changeUi(()->{textArea.appendText("Sample num : " + newVal +"\n");});
+         	changeUi(()->{textArea.appendText("Sample #" + newVal + " is recorded successfully..."+"\n");});
         });
-		//exerciseImg.setImage(new Image("file:handAnim.gif"));
-		//exerciseImg.setRotate(90);
+		
+		sb.getLeapProperty().addListener((ov,b,newB)->
+        {
+        	if(newB == true)
+        		changeUi(()->{
+        			leapStatusLbl.setTextFill(Color.web("#16d713"));
+        			leapStatusLbl.setText("Connected");	
+        		});
+        	else
+        		changeUi(()->{
+        			leapStatusLbl.setTextFill(Color.RED);
+        			leapStatusLbl.setText("Disconnected");	
+        		});
+        });
+
 	}
 	
 		@FXML
-		 public void buttonClicked(ActionEvent event) throws IOException
+		 protected void showExercise(ActionEvent event) throws IOException
 		 {
 			exerciseImg.setImage(new Image("file:handAnim.gif"));
 			exerciseImg.setRotate(90);
-			 Timeline timeline = new Timeline();
-	            KeyFrame key = new KeyFrame(Duration.millis(4700),
-	                           new KeyValue (exerciseImg.opacityProperty(), 0.8)); 
-	            timeline.getKeyFrames().add(key);   
-	            timeline.setOnFinished((ae) -> {
-	            	exerciseImg.setImage(null);
-	            	startRecordBtn.setDisable(false);
-	            	 Timeline timeline2 = new Timeline();
-	            	KeyFrame key2 = new KeyFrame(Duration.millis(450),
-	                           new KeyValue (trainingStatusLbl.opacityProperty(), 0)); 
-	            	 timeline2.getKeyFrames().add(key2);   
-	 	            timeline2.setOnFinished((as) -> {
-	 	            	trainingStatusLbl.setTextFill(Color.BLUE);
-	 	            	trainingStatusLbl.setOpacity(1);
-	 	            	trainingStatusLbl.setText(calibrateMsg);
-	 	            });
-	 	           timeline2.play(); 
-	            	}
-	            );
-	            timeline.play(); 
-	            isExerciseShowed = true;
-	           
-	       
+			createTextAnimation(exerciseImg, 4700 , 0.8, 
+					(ae)->{
+						exerciseImg.setImage(null);
+		            	startRecordBtn.setDisable(false);
+						createTextAnimation(trainingStatusLbl,450,0,(a)->{
+						trainingStatusLbl.setTextFill(Color.BLUE);
+		 	            trainingStatusLbl.setOpacity(1);
+		 	            trainingStatusLbl.setText(calibrateMsg);
+						});
+					});
+					
+			isExerciseShowed = true;
 		 }
 	  
 	  	@FXML
-		 public void startRecord(ActionEvent event) 
+	  	protected void startRecord(ActionEvent event) 
 		 {
 	  		if (!isExerciseShowed)
 	  		{
-	  		Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error Dialog");
-            alert.setHeaderText("You must view the exercise first!");
-            alert.setContentText("Ooops, there was an error!");
-            alert.showAndWait();
+	  			Alert alert = new Alert(AlertType.ERROR);
+	            alert.setTitle("Message");
+	            alert.setHeaderText("You must view the exercise first.");
+	            alert.showAndWait();
 	  		}
 	  		
-	  		else recording();
+	  		else recordSamples();
 	  		
 		 }
 	  	
-	  	public void recording()
+	  	protected void recordSamples()
 	  	{
 	  		progressIndicator.setVisible(true);
-	  		
 	  		exerciseImg.setImage(new Image("file:hand.gif"));
 	  		exerciseImg.setRotate(0);
-	        Timeline timeline = new Timeline();
-            KeyFrame key = new KeyFrame(Duration.millis(800),
-                           new KeyValue (exerciseImg.opacityProperty(), 0)); 
-            timeline.getKeyFrames().add(key);   
-            timeline.setCycleCount(Timeline.INDEFINITE);
-            timeline.setAutoReverse(true); 
-            //Play animation
-            timeline.play();
-           
-     	   
-    	  	Task<Void> taskRecording = new Task<Void>() {
+	  		
+	  		Timeline timeline = createImgAnimation(exerciseImg, 800, 0, null);
 
+    	  	Task<Void> taskRecording = new Task<Void>() {
     			@Override
-    			public void run() {
+    			protected Void call() throws Exception {
     				// TODO Auto-generated method stub
-    				sb.startRecordingFull();
+    				sb.initRecording();
     				synchronized (sb) {
    			         while (!sb.isStopped())
    						try {
@@ -153,36 +159,29 @@ public class TrainingController implements Initializable{
    						} catch (InterruptedException e) {
    							// TODO Auto-generated catch block
    							e.printStackTrace();
-   						
    						}
     				}
-    				
     				changeUi(()->{
     					Alert alert = new Alert(AlertType.CONFIRMATION);
     		            alert.setTitle("Message");
     		            alert.setHeaderText("Training has completed successfully ! now you can start your rehablitation.");
     		            alert.showAndWait();
+    		            try {
+							BackToMenu();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
     					});
-   			         
-   			     }
-
-    			@Override
-    			protected Void call() throws Exception {
-    				// TODO Auto-generated method stub
-    				
-    				return null;
+					return null;
     			}
-
     	  	};
-    	  	
 		
 	  	Task<Void> taskRecognize = new Task<Void>() {
-
 			@Override
-			public void run() {
-				
+			protected Void call() throws Exception {
 				// TODO Auto-generated method stub
-				 sb.recognizeHand();
+				 sb.initRecognize();
 				 synchronized (sb) {
 			         while (!sb.isStatic())
 						try {
@@ -193,7 +192,6 @@ public class TrainingController implements Initializable{
 						}
 			         
 			     }
-				   
 				   
 				   changeUi(()->{exerciseImg.setOpacity(1);});
 	        	   timeline.stop();
@@ -206,28 +204,14 @@ public class TrainingController implements Initializable{
 	        	   
 	        	   changeUi(()->{exerciseImg.setImage(new Image("file:handAnim.gif"));
 	       					     exerciseImg.setRotate(90);
-	       					  Timeline timeline = new Timeline();
-	      	            	KeyFrame key = new KeyFrame(Duration.millis(450),
-	      	                           new KeyValue (trainingStatusLbl.opacityProperty(), 0)); 
-	      	            	 timeline.getKeyFrames().add(key);   
-	      	 	            timeline.setOnFinished((as) -> {
-	      	 	            	trainingStatusLbl.setOpacity(1);
-	      	 	            	trainingStatusLbl.setTextFill(Color.web("#16d713"));
-	      	 	            	trainingStatusLbl.setText(recordMsg);
-	      	 	            	
-	      	 	            });
-	      	 	           timeline.play();
-	      	 	           progressIndicator.setVisible(false);
-	        			   		 });
-	        	   
-	        	   
+	       					  createTextAnimation(trainingStatusLbl, 450, 0, (as) -> {
+		      	 	            	trainingStatusLbl.setOpacity(1);
+		      	 	            	trainingStatusLbl.setTextFill(Color.web("#16d713"));
+		      	 	            	trainingStatusLbl.setText(recordMsg);
+		      	 	            	progressIndicator.setVisible(false);
+		      	 	            });
+	       					 	});
 	        	  new Thread(taskRecording).start();
-			}
-
-			@Override
-			protected Void call() throws Exception {
-				// TODO Auto-generated method stub
-				
 				return null;
 			}
 
@@ -241,12 +225,41 @@ public class TrainingController implements Initializable{
 	  	}
 	  	
 	  	
-	  	public void changeUi(Runnable runnable)
+	  	protected void BackToMenu() throws IOException {
+	  		 Stage stage = (Stage) button.getScene().getWindow();
+			 Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
+			 Scene scene = new Scene(root);
+			 stage.setScene(scene);
+			 sb = null ;
+		}
+
+		protected void changeUi(Runnable runnable)
 	  	{
 	 	   Platform.runLater(runnable);
 	  	}
 	  	
-	  	//public void createAnimation()
+	  	protected void createTextAnimation(Node node, int time, double opacityVal , EventHandler <ActionEvent> handler)
+	  	{
+	  		    Timeline timeline = new Timeline();
+	            KeyFrame key = new KeyFrame(Duration.millis(time),
+	                           new KeyValue (node.opacityProperty(), opacityVal)); 
+	            timeline.getKeyFrames().add(key);   
+	            timeline.setOnFinished(handler);
+	            timeline.play();
+	  	}
+	  	
+	  	protected Timeline createImgAnimation(Node node, int time, double opacityVal , EventHandler <ActionEvent> handler)
+	  	{
+	  		    Timeline timeline = new Timeline();
+	            KeyFrame key = new KeyFrame(Duration.millis(time),
+	                           new KeyValue (node.opacityProperty(), opacityVal)); 
+	            timeline.getKeyFrames().add(key);   
+	            timeline.setOnFinished(handler);
+	            timeline.setCycleCount(Timeline.INDEFINITE);
+	            timeline.setAutoReverse(true); 
+	            timeline.play();
+	            return timeline;
+	  	}
 	  	
 	  	
 }

@@ -10,23 +10,23 @@ import com.leapmotion.leap.Pointable;
 import com.leapmotion.leap.PointableList;
 import com.leapmotion.leap.Vector;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
-public class FrameListener extends Listener {
+
+public class LeapListener extends Listener {
 	private Frame currentFrame;
-	Controller controller;
-	boolean startMotion = false;
-	boolean stopMotion = false;
-	ArrayList<Frame> frames = new ArrayList<Frame>();
-	boolean isOver = false;
-	boolean check = false;
-	boolean check2 = false;
-	Timer t;
+	private SampleBuilder sampleBuilder;
+	private BooleanProperty leapStatus = new SimpleBooleanProperty();
 	
-	int numOfFrames=0;
-	public FrameListener(Controller controller)
+	public LeapListener(SampleBuilder sample)
 	{
-		this.controller = controller;
+		this.sampleBuilder = sample;
+		 leapStatus.set(false);
 	}
+	
 	 @Override
 	public void onInit(Controller controller) {
         System.out.println("Initialized");
@@ -35,6 +35,7 @@ public class FrameListener extends Listener {
 	 @Override
     public void onConnect(Controller controller) {
         System.out.println("Connected");
+        leapStatus.set(true);
         /*/controller.enableGesture(Gesture.Type.TYPE_SWIPE);
         controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
         controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
@@ -45,6 +46,7 @@ public class FrameListener extends Listener {
     public void onDisconnect(Controller controller) {
         //Note: not dispatched when running in a debugger.
         System.out.println("Disconnected");
+        leapStatus.set(false);
     }
 
     @Override
@@ -52,26 +54,14 @@ public class FrameListener extends Listener {
         System.out.println("Exited");
     }
 
-
+    @Override
     public void onFrame(Controller controller) {
     	
     	Frame frame = controller.frame();
-    	this.setCurrentFrame(frame);
+    	//this.setCurrentFrame(frame);
+    	sampleBuilder.newFrame(frame);
 
     }
-	private boolean staticMovement(ArrayList<Vector> speed) {
-		// TODO Auto-generated method stub
-		 float speedInterval = 50;
-		 for(int i=0; i<speed.size(); i++)
-		 {
-			 if(Math.sqrt(Math.pow(speed.get(i).getX(), 2) + Math.pow(speed.get(i).getY(), 2) + Math.pow(speed.get(i).getZ(), 2))  > speedInterval)
-			 {
-				 return false;
-			 }
-		 }
-		return true;
-	}
-	
 	
 	public Frame getCurrentFrame() {
 		return currentFrame;
@@ -79,5 +69,11 @@ public class FrameListener extends Listener {
 	public void setCurrentFrame(Frame currentFrame) {
 		this.currentFrame = currentFrame;
 	}
+
+	public BooleanProperty getLeapStatusProperty() {
+		return leapStatus;
+	}
+
+
 
 }
