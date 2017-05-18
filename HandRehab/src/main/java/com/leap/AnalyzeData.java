@@ -8,11 +8,10 @@ import com.leapmotion.leap.Finger;
 
 public class AnalyzeData
 {
-	private static final int K = 3;
 	private static final int numOfFrames = 30;
 
 	
-	public static AnglesVector KNNRegression(AnglesVector testingPoint , ArrayList<AnglesVector> points) throws Exception
+	public static AnglesVector KNNRegression(AnglesVector testingPoint , ArrayList<AnglesVector> points, int K) throws Exception
 	{
 		for(AnglesVector point : points)
 			point.setDistanceToTestingPoint(testingPoint.distanceTo(point));
@@ -55,7 +54,7 @@ public class AnalyzeData
 			AnglesVector testingPoint = anglesVectorOfFrame.get(0);
 			
 			//Add the mean frame after KNNRegression to the pattern
-			mPattern.addVector(KNNRegression(testingPoint, anglesVectorOfFrame));
+			mPattern.addVector(KNNRegression(testingPoint, anglesVectorOfFrame,10));
 		}
 		
 		return mPattern;
@@ -106,6 +105,7 @@ public class AnalyzeData
 			
 			else
 			{
+				index = 0;
 				int size = sample.getNumOfFrames();
 			
 				while(size > numOfFrames)

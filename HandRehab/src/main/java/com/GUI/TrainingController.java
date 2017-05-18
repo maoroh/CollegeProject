@@ -168,12 +168,13 @@ public class TrainingController implements Initializable{
 						}
 			         
 			     }
-			 
+				   
+				   
 				   changeUi(()->{exerciseImg.setOpacity(1);});
 	        	   timeline.stop();
 	        	   
-	        	  // while(!sb.isStopped())
-	        		//   updateProgress(sb.getNumOfFrames(), 119);
+	        	  while(!sb.isStopped())
+	        		  updateProgress(sb.getNumOfFrames(), 219);
 	        	   
 	        	   //Start Record
 	        	   System.out.println("Start Recording");
@@ -183,7 +184,7 @@ public class TrainingController implements Initializable{
 	        			   		 });
 	        	   
 	        	   
-	        	  // new Thread(taskRecording).start();
+	        	  new Thread(taskRecording).start();
 			}
 
 			@Override

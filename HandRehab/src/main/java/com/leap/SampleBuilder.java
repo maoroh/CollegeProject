@@ -132,7 +132,7 @@ public class SampleBuilder {
 			        		System.out.println("KNN Angles : " + initVec);
 			        		double distance = frameAngles.distanceTo(initVec) ;
 			        		fr.setDistance(distance);
-							if(distance < 0.8)
+							if(distance < 0.9)
 							{
 								s++;
 								if(s>=4)
@@ -152,7 +152,7 @@ public class SampleBuilder {
 							    			isStopped = true;
 							    			this.notify();
 							    		}
-										MovementPattern pattern = AnalyzeData.buildMovementPattern(sampleSet);
+										//MovementPattern pattern = AnalyzeData.buildMovementPattern(sampleSet);
 										System.out.println("Finished");
 									}
 								
@@ -173,12 +173,13 @@ public class SampleBuilder {
 				}
 
 	
-			},50, 50);
+			},40, 40);
 	}
 
 	
 	public void recognizeHand()
 	{
+		
 		isStopped = false;
 		numOfFrames = 0;
 		 sampleData = new SampleData();
@@ -193,15 +194,15 @@ public class SampleBuilder {
 			        if(checkFrame2(frame))
 			        {
 			        	//Notify thread
-			        	synchronized (this) {
+			        	synchronized (SampleBuilder.this) {
 			    			isStatic = true;
-			    			this.notify();
+			    			SampleBuilder.this.notify();
 			    		}
 			        	numOfFrames++;
 			        	if(numOfFrames >= 20)
 			        		handleFrame(listener.getCurrentFrame());
 			        	//fr.setAnglesVector();
-			        	if(numOfFrames == 120)
+			        	if(numOfFrames == 200)
 			        	{
 			        		numOfFrames++;
 			        		isStopped = true;
@@ -220,7 +221,7 @@ public class SampleBuilder {
 		// TODO Auto-generated method stub
 		ArrayList<AnglesVector> vectors = sampleData.getSamplesVector();
 		try {
-			this.initVec = AnalyzeData.KNNRegression(vectors.get(50), vectors);
+			this.initVec = AnalyzeData.KNNRegression(vectors.get(50), vectors,180);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
