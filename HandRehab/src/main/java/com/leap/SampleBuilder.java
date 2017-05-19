@@ -126,7 +126,7 @@ public class SampleBuilder {
 					if(s>=4)
 					{
 						s = 0;
-						if(sampleData.getNumOfFrames() > 30)
+						if(sampleData.getNumOfFrames() > 40)
 						{
 							sampleSet.addSample(sampleData);
 							sampleCount.set(sampleSet.getSize());
