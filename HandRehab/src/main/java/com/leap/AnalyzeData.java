@@ -21,7 +21,7 @@ public class AnalyzeData
 		
 		AnglesVector mean = new AnglesVector(testingPoint.getSize());
 		
-		for(int i=0; i<K; i++)
+		for(int i=0; i < K; i++)
 			mean.plus(points.get(i));
 		mean.plus(testingPoint);
 		
