@@ -37,6 +37,7 @@ public class SampleBuilder {
 	private final int numOfSamples = 5;
 	private boolean recording = false;
 	private boolean recognize = false;
+	public static final int numOfRecognizeFrames = 100;
 	
 	public SampleBuilder()
 	{
@@ -89,10 +90,9 @@ public class SampleBuilder {
 	    			SampleBuilder.this.notify();
 	    		}
 	        	numOfFrames++;
-	        	if(numOfFrames >= 20)
-	        		handleFrame(frame);
-	        	//fr.setAnglesVector();
-	        	if(numOfFrames == 200)
+	        	handleFrame(frame);
+	        	
+	        	if(numOfFrames == numOfRecognizeFrames)
 	        	{
 	        		numOfFrames++;
 	        		isStopped = true;
