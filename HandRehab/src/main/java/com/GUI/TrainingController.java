@@ -197,7 +197,7 @@ public class TrainingController implements Initializable{
 	        	   timeline.stop();
 	        	   
 	        	  while(!sb.isStopped())
-	        		  updateProgress(sb.getNumOfFrames(), 200);
+	        		  updateProgress(sb.getNumOfFrames(), SampleBuilder.numOfRecognizeFrames);
 	        	   
 	        	   //Start Record
 	        	   System.out.println("Start Recording");
