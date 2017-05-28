@@ -3,19 +3,36 @@ package com.leap;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import com.leapmotion.leap.Bone;
 import com.leapmotion.leap.Finger;
 import com.leapmotion.leap.Vector;
 import com.leapmotion.leap.Finger.Type;
 
+@XmlRootElement
+@XmlAccessorType (XmlAccessType.FIELD)
+
 public class FrameData {
 	private int timeID;
-	private Map<Finger.Type,FingerData> fingersData;
+	private Map<Finger.Type, FingerData> fingersData;
 	private Map<Finger.Type, Vector> tipDirections;
 	private Vector palmDirection;
 	private AnglesVector anglesVector;
-	private AnglesVector anglesTipVector;
+	//private AnglesVector anglesTipVector;
 	private double distance;
+	
+	public FrameData()
+	{
+		
+		
+	}
+	
+	
 	
 	public FrameData(int timeID, Map<Finger.Type,FingerData> fingersData, Vector palmDirection, Map<Finger.Type, Vector> tipDirections)
 	{
@@ -58,25 +75,26 @@ public class FrameData {
 		this.timeID = timeID;
 	}
 	
-	public void setAnglesTipVector() {
-		AnglesVector anglesTipVec = new AnglesVector();
-		for(Finger.Type type: Finger.Type.values())
-		{
-			double angle =  this.tipDirections.get(type).angleTo(palmDirection);
-			anglesTipVec.addCoordinate(angle);
-		}
-		
-		this.anglesTipVector = anglesTipVec;
-	}
+	
 	
 	public void setAnglesVector() {
 		
+			Map<Finger.Type, Vector> fingersTip = this.getTipDirections();
 			Map<Type, FingerData> fingersData = this.getFingersData();
 			Vector palmDirection = this.getPalmDirection();
 			AnglesVector anglesVector = new AnglesVector();
 			
+			for(Finger.Type type: Finger.Type.values())
+			{
+				Vector tipDirection = fingersTip.get(type);
+				double angle = tipDirection.angleTo(palmDirection);
+				anglesVector.addCoordinate(angle);
+			}
+			
 			//Create all the angles with the palm
 			//Fingers
+			
+			/*/
 			for(Finger.Type type: Finger.Type.values())
 			{
 				FingerData fingerData = fingersData.get(type);
@@ -88,10 +106,10 @@ public class FrameData {
 					  Vector boneDirection = bonesDirection.get(boneType);
 					  double angle =  boneDirection.angleTo(palmDirection);
 					  
-					  if(boneType == Bone.Type.TYPE_DISTAL)
+					//  if(boneType == Bone.Type.TYPE_DISTAL)
 					  anglesVector.addCoordinate(angle);
 				  }
-			}
+			}/*/
 			
 			//Add angles of each bone to the another bones
 			//Fingers
@@ -99,12 +117,12 @@ public class FrameData {
 			for(Finger.Type type: Finger.Type.values())
 			{
 				FingerData fingerData = fingersData.get(type);
-				Map <Bone.Type, Vector> bonesDirection = fingerData.getBonesDirection();
+				Map <BoneType, Vector> bonesDirection = fingerData.getBonesDirection();
 				
-				Vector distalDirection = bonesDirection.get(Bone.Type.TYPE_DISTAL);
-				Vector intermediateDirection = bonesDirection.get(Bone.Type.TYPE_INTERMEDIATE);
-				Vector proximalDirection = bonesDirection.get(Bone.Type.TYPE_PROXIMAL);
-				Vector metacarpalDirection = bonesDirection.get(Bone.Type.TYPE_METACARPAL);
+				Vector distalDirection = bonesDirection.get(BoneType.TYPE_DISTAL);
+				Vector intermediateDirection = bonesDirection.get(BoneType.TYPE_INTERMEDIATE);
+				Vector proximalDirection = bonesDirection.get(BoneType.TYPE_PROXIMAL);
+				Vector metacarpalDirection = bonesDirection.get(BoneType.TYPE_METACARPAL);
 			
 				if(type != Finger.Type.TYPE_THUMB)
 				{
@@ -130,29 +148,39 @@ public class FrameData {
 	
 	public static FrameData framesAvg(FrameData f1, FrameData f2) 
 	{
-		Map<Type, FingerData> avgFingersMapData = new HashMap<Finger.Type,FingerData>();
+		Map<Finger.Type, FingerData> avgFingersMapData = new HashMap<Finger.Type,FingerData>();
 		
 		Map<Finger.Type, FingerData> firstFingersMapData = f1.getFingersData();
 		Map<Finger.Type, FingerData> secondFingersMapData = f2.getFingersData();
 		Vector firstPalmDirection = f1.getPalmDirection();
 		Vector secondPalmDirection = f2.getPalmDirection();
+		Map<Finger.Type, Vector> firstFingersTip  = f1.getTipDirections();
+		Map<Finger.Type, Vector> secondFingersTip  = f2.getTipDirections();
 		Vector avgPalmDirection = firstPalmDirection.plus(secondPalmDirection).divide(2);
+		Map<Finger.Type, Vector> avgTipDirections = new HashMap<Finger.Type,Vector>();
+		
+		for(Finger.Type fingerType: Finger.Type.values())
+		{
+			 Vector firstAvgTipDirection =  firstFingersTip.get(fingerType);
+			 Vector secondAvgTipDirection =  secondFingersTip.get(fingerType);
+			 avgTipDirections.put(fingerType, firstAvgTipDirection.plus(secondAvgTipDirection).divide(2));
+		}
 
 		for(Finger.Type fingerType: Finger.Type.values())
 		{
-			Map <Bone.Type, Vector> avgBonesDirections = new HashMap<Bone.Type,Vector>();
+			Map <BoneType, Vector> avgBonesDirections = new HashMap<BoneType,Vector>();
 			//First frame fingers data
 			FingerData firstFingerData = firstFingersMapData.get(fingerType);
 			//Second frame fingers data
 			FingerData secondFingerData = secondFingersMapData.get(fingerType);
 		
-			Map <Bone.Type, Vector> firstBonesDirections = firstFingerData.getBonesDirection();
+			Map <BoneType, Vector> firstBonesDirections = firstFingerData.getBonesDirection();
 			
-			Map <Bone.Type, Vector> secondBonesDirections = secondFingerData.getBonesDirection();
+			Map <BoneType, Vector> secondBonesDirections = secondFingerData.getBonesDirection();
 			
 			
 			//Bones
-			  for(Bone.Type boneType : Bone.Type.values()) 
+			  for(BoneType boneType : BoneType.values()) 
 			  {
 				  Vector firstBoneDirection = firstBonesDirections.get(boneType);
 				  Vector secondBoneDirection = secondBonesDirections.get(boneType);
@@ -162,7 +190,7 @@ public class FrameData {
 			  
 			  avgFingersMapData.put(fingerType, new FingerData(avgBonesDirections)); 
 		}
-		return new FrameData(f1.getTimeID(), avgFingersMapData , avgPalmDirection);
+		return new FrameData(f1.getTimeID(), avgFingersMapData , avgPalmDirection , avgTipDirections);
 	}
 
 	public double getDistance() {
@@ -181,13 +209,6 @@ public class FrameData {
 		this.tipDirections = tipDirections;
 	}
 
-	public AnglesVector getAnglesTipVector() {
-		return anglesTipVector;
-	}
-
-	public void setAnglesTipVector(AnglesVector anglesTipVector) {
-		this.anglesTipVector = anglesTipVector;
-	}
 	
 	
 }

@@ -5,10 +5,11 @@ import java.util.Collections;
 
 import com.leapmotion.leap.Bone;
 import com.leapmotion.leap.Finger;
+import com.tools.JAXBTools;
 
 public class AnalyzeData
 {
-	private static final int numOfFrames = 30;
+	private static int numOfFrames ;
 
 	
 	public static AnglesVector KNNRegression(AnglesVector testingPoint , ArrayList<AnglesVector> points, int K) throws Exception
@@ -54,7 +55,7 @@ public class AnalyzeData
 			AnglesVector testingPoint = anglesVectorOfFrame.get(0);
 			
 			//Add the mean frame after KNNRegression to the pattern
-			mPattern.addVector(KNNRegression(testingPoint, anglesVectorOfFrame,10));
+			mPattern.addVector(KNNRegression(testingPoint, anglesVectorOfFrame,3));
 		}
 		
 		return mPattern;
@@ -139,6 +140,43 @@ public class AnalyzeData
 	   }
 	   
 	   return fixedSampleSet;
+	}
+	
+	
+	public static void rehabActions(SampleSet rehabSamples) throws Exception
+	{
+		SampleSet trainingSet = JAXBTools.getTrainingFromXML();
+		MovementPattern rehabMovementPattern,trainingMovementPattern;
+		int rehabMinFrameSize = findNumOfFrames (rehabSamples);
+		int trainingMinFrameSize = findNumOfFrames(trainingSet);
+		numOfFrames = rehabMinFrameSize < trainingMinFrameSize ? rehabMinFrameSize : trainingMinFrameSize;
+		rehabMovementPattern = buildMovementPattern(rehabSamples);
+		trainingMovementPattern = buildMovementPattern(trainingSet);
+		System.out.println("Success Rehab");
+	}
+	
+	
+	public static int findNumOfFrames(SampleSet samples)
+	{
+		
+		int minFrames = samples.getSample(0).getNumOfFrames();
+		
+		for(int i = 1; i<samples.getSize(); i++)
+		{
+			
+			int currentNumOfFrames = samples.getSample(i).getNumOfFrames();
+			if(currentNumOfFrames < minFrames)
+				minFrames = currentNumOfFrames;
+		}
+		
+		return minFrames;
+		
+	}
+
+	public static void trainingActions(SampleSet sampleSet) throws Exception {
+		// TODO Auto-generated method stub
+		numOfFrames = findNumOfFrames(sampleSet);
+		JAXBTools.saveSampleSetXML(sampleSet);
 	}
 	
 	

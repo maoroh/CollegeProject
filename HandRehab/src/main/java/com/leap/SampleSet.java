@@ -2,6 +2,12 @@ package com.leap;
 
 import java.util.ArrayList;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "SampleSet")
+@XmlAccessorType (XmlAccessType.FIELD)
 public class SampleSet {
 	
 	private ArrayList <SampleData> samplesSet;
@@ -9,7 +15,6 @@ public class SampleSet {
 	public SampleSet()
 	{
 		this.samplesSet = new ArrayList<SampleData>();
-		
 	}
 	
 	public void addSample(SampleData data)

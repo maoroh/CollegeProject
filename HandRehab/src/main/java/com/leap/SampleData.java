@@ -2,6 +2,12 @@ package com.leap;
 
 import java.util.ArrayList;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "SampleData")
+@XmlAccessorType (XmlAccessType.FIELD)
 public class SampleData {
 	private ArrayList <FrameData> framesData;
 	
@@ -38,18 +44,7 @@ public class SampleData {
 		return vectors;
 	}
 	
-	public ArrayList <AnglesVector> getSamplesTipVectors()
-	{
-		ArrayList<AnglesVector> vectors = new ArrayList<AnglesVector>();
-		
-		for(FrameData data : this.framesData)
-		{
-			data.setAnglesTipVector();
-			vectors.add(data.getAnglesTipVector());
-		}
-		
-		return vectors;
-	}
+	
 	
 	public void setFrames(ArrayList<FrameData> framesData)
 	{

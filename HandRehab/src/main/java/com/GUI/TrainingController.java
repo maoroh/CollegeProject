@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.IntToDoubleFunction;
 
+import com.leap.Mode;
 import com.leap.SampleBuilder;
 
 import javafx.animation.KeyFrame;
@@ -60,18 +61,20 @@ public class TrainingController implements Initializable{
 	@FXML
 	private ProgressIndicator progressIndicator;
 	
-	private SampleBuilder sb;
+	protected SampleBuilder sb;
 	
 	private boolean isExerciseShowed;
 
 	private final String calibrateMsg = "Waiting for Calibration...";
 	
 	private final String recordMsg = "Recording has started...";
+	
+	private Mode mode;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("Controller");
-		
+		this.setMode(Mode.Training);
 		isExerciseShowed = false;
 		//startRecordBtn.setDisable(true);
 		sb = new SampleBuilder();
@@ -84,8 +87,6 @@ public class TrainingController implements Initializable{
 		
 		sb.getIntegerProperty().addListener((ov,oldVal,newVal)->
         {
-        	if(sb.isStopped())
-        		changeUi(()->{textArea.appendText("The training phase has completed successfully!");});
          	changeUi(()->{textArea.appendText("Sample #" + newVal + " is recorded successfully..."+"\n");});
         });
 		
@@ -104,6 +105,8 @@ public class TrainingController implements Initializable{
         });
 
 	}
+	
+	
 	
 		@FXML
 		 protected void showExercise(ActionEvent event) throws IOException
@@ -141,6 +144,7 @@ public class TrainingController implements Initializable{
 	  	
 	  	protected void recordSamples()
 	  	{
+	  		
 	  		progressIndicator.setVisible(true);
 	  		exerciseImg.setImage(new Image("file:hand.gif"));
 	  		exerciseImg.setRotate(0);
@@ -151,7 +155,7 @@ public class TrainingController implements Initializable{
     			@Override
     			protected Void call() throws Exception {
     				// TODO Auto-generated method stub
-    				sb.initRecording();
+    				sb.initRecording(mode);
     				synchronized (sb) {
    			         while (!sb.isStopped())
    						try {
@@ -162,9 +166,13 @@ public class TrainingController implements Initializable{
    						}
     				}
     				changeUi(()->{
+    					String message = new String();
+    					if(mode == Mode.Training)
+    						message = "Training has completed successfully ! now you can start your rehablitation.";
+    					else message = "Rehab has completed successfully ! now you can start your rehablitation.";
     					Alert alert = new Alert(AlertType.CONFIRMATION);
     		            alert.setTitle("Message");
-    		            alert.setHeaderText("Training has completed successfully ! now you can start your rehablitation.");
+    		            alert.setHeaderText(message);
     		            alert.showAndWait();
     		            try {
 							BackToMenu();
@@ -260,6 +268,14 @@ public class TrainingController implements Initializable{
 	            timeline.play();
 	            return timeline;
 	  	}
+
+		public Mode getMode() {
+			return mode;
+		}
+
+		public void setMode(Mode mode) {
+			this.mode = mode;
+		}
 	  	
 	  	
 }

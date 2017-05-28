@@ -3,6 +3,12 @@ package com.leap;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+@XmlAccessorType (XmlAccessType.FIELD)
 public class AnglesVector implements Comparable<AnglesVector> {
 
 	private ArrayList<Double> coordinates;

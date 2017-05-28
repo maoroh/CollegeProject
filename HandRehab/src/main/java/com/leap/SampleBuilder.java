@@ -16,6 +16,7 @@ import com.leapmotion.leap.HandList;
 import com.leapmotion.leap.Pointable;
 import com.leapmotion.leap.PointableList;
 import com.leapmotion.leap.Vector;
+import com.tools.JAXBTools;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -37,6 +38,8 @@ public class SampleBuilder {
 	private final int numOfSamples = 5;
 	private boolean recording = false;
 	private boolean recognize = false;
+	private Mode mode ;
+	
 	public static final int numOfRecognizeFrames = 100;
 	
 	public SampleBuilder()
@@ -47,9 +50,10 @@ public class SampleBuilder {
 		sampleSet = new SampleSet();
 	}
 	
-	public void initRecording()
+	public void initRecording(Mode mode)
 	{
 		 isStopped = false;
+		 this.mode = mode;
 		 numOfFrames = 0;
 		 sampleData = new SampleData();
 		 recording = true;
@@ -107,7 +111,7 @@ public class SampleBuilder {
 	public void recordNewFrame(Frame frame)
 	{
 		
-        if(checkFrame(frame))
+        if(checkFrame(frame) )
         {
         	numOfFrames++;
         	FrameData fr = handleFrame(frame);
@@ -123,16 +127,18 @@ public class SampleBuilder {
 				if(distance < recThreshold)
 				{
 					s++;
-					if(s>=4)
+					if(s >= 10)
 					{
 						s = 0;
-						if(sampleData.getNumOfFrames() > 40)
+						if(sampleData.getNumOfFrames() > 30)
 						{
 							sampleSet.addSample(sampleData);
 							sampleCount.set(sampleSet.getSize());
 						}
+						
 						sampleData = new SampleData();
-						if(sampleSet.getSize() == numOfSamples )
+						
+						if(sampleSet.getSize() == numOfSamples)
 						{
 							controller.removeListener(listener);
 							 
@@ -141,7 +147,18 @@ public class SampleBuilder {
 				    			isStopped = true;
 				    			SampleBuilder.this.notify();
 				    		}
-							//MovementPattern pattern = AnalyzeData.buildMovementPattern(sampleSet);
+							
+							if(this.mode == Mode.Training)
+							{
+							AnalyzeData.trainingActions(sampleSet);
+							
+							}
+							
+							else 
+							{
+								AnalyzeData.rehabActions(sampleSet);
+								//Call Function
+							}
 							System.out.println("Finished");
 						}
 					
@@ -162,7 +179,7 @@ public class SampleBuilder {
 		// TODO Auto-generated method stub
 		ArrayList<AnglesVector> vectors = sampleData.getSamplesVector();
 		try {
-			this.initVec = AnalyzeData.KNNRegression(vectors.get(10), vectors,20);
+			this.initVec = AnalyzeData.KNNRegression(vectors.get(40), vectors,10);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -172,7 +189,20 @@ public class SampleBuilder {
 
 	protected FrameData handleFrame(Frame currentFrame) {
 		// TODO Auto-generated method stub
-		 // Get fingers
+
+	   	 PointableList pointableList = currentFrame.pointables();
+	   	 Map<Finger.Type , Vector> tipDirections = new HashMap<Finger.Type,Vector>();
+	   	
+	   	  for(Pointable pointable : pointableList)
+	      {
+	         if(pointable.isFinger() && pointable.isValid())
+	         {
+	        	 Finger finger = new Finger(pointable);
+	        	 tipDirections.put(finger.type(), pointable.direction());
+	         }
+	      }
+
+		// Get fingers
 		Map <Finger.Type, FingerData> fingersData = new HashMap<Finger.Type, FingerData>();
 		
 		HandList hands = currentFrame.hands();
@@ -181,13 +211,12 @@ public class SampleBuilder {
 		
 		//Get fingers
         for (Finger finger : hand.fingers()) {
-        	Map <Bone.Type, Vector> bonesDirection = new HashMap<Bone.Type, Vector>();
+        	Map <BoneType, Vector> bonesDirection = new HashMap<BoneType, Vector>();
         	
             //Get Bones
             for(Bone.Type boneType : Bone.Type.values()) {
-            	
                 Bone bone = finger.bone(boneType);
-                bonesDirection.put(boneType,  bone.direction());
+                bonesDirection.put(BoneType.valueOf(boneType.name()),  bone.direction());
                
             }
            
@@ -195,7 +224,7 @@ public class SampleBuilder {
             
         }
         
-        FrameData timeStamp = new FrameData(numOfFrames,fingersData,hand.palmNormal());
+        FrameData timeStamp = new FrameData(numOfFrames,fingersData,hand.palmNormal(),tipDirections);
         sampleData.addFrame(timeStamp);
         return timeStamp;
 	}
@@ -327,5 +356,7 @@ public class SampleBuilder {
 	{
 		return listener.getLeapStatusProperty();
 	}
+
+
 	
 }

@@ -1,0 +1,5 @@
+package com.leap;
+
+public enum BoneType {
+	TYPE_DISTAL ,TYPE_INTERMEDIATE,TYPE_METACARPAL,TYPE_PROXIMAL;
+}
