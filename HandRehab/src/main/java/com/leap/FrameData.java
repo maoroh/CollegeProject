@@ -84,32 +84,32 @@ public class FrameData {
 			Vector palmDirection = this.getPalmDirection();
 			AnglesVector anglesVector = new AnglesVector();
 			
-			for(Finger.Type type: Finger.Type.values())
+		/*/	for(Finger.Type type: Finger.Type.values())
 			{
 				Vector tipDirection = fingersTip.get(type);
 				double angle = tipDirection.angleTo(palmDirection);
 				anglesVector.addCoordinate(angle);
 			}
-			
+			/*/
 			//Create all the angles with the palm
 			//Fingers
 			
-			/*/
+			
 			for(Finger.Type type: Finger.Type.values())
 			{
 				FingerData fingerData = fingersData.get(type);
-				Map <Bone.Type, Vector> bonesDirection = fingerData.getBonesDirection();
+				Map <BoneType, Vector> bonesDirection = fingerData.getBonesDirection();
 				
 				//Bones
-				  for(Bone.Type boneType : Bone.Type.values())
+				  for(BoneType boneType : BoneType.values())
 				  {
 					  Vector boneDirection = bonesDirection.get(boneType);
 					  double angle =  boneDirection.angleTo(palmDirection);
 					  
-					//  if(boneType == Bone.Type.TYPE_DISTAL)
+					  if(boneType == BoneType.TYPE_DISTAL)
 					  anglesVector.addCoordinate(angle);
 				  }
-			}/*/
+			}
 			
 			//Add angles of each bone to the another bones
 			//Fingers

@@ -9,7 +9,6 @@ import com.leap.BoneType;
 import com.leap.Files;
 import com.leap.AnalyzeData;
 import com.leap.SampleBuilder;
-import com.leap.test;
 import com.leapmotion.leap.Vector;
 import com.tools.JAXBTools;
 

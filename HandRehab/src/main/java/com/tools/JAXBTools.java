@@ -7,7 +7,7 @@ import javax.xml.bind.Unmarshaller;
 
 import com.leap.MovementPattern;
 import com.leap.SampleSet;
-import com.leap.test;
+
 
 
 public class JAXBTools {
@@ -48,23 +48,6 @@ public class JAXBTools {
  
 	}
 	
-	public static void saveSampleSetXML(test Test) 
-	{
-    	JAXBContext jaxbContext;
-    	Marshaller jaxbMarshaller;
-		try {
-			 jaxbContext = JAXBContext.newInstance(test.class);
-		     jaxbMarshaller = jaxbContext.createMarshaller();
-		     jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		     //jaxbMarshaller.marshal(sampleSet, System.out);
-		     jaxbMarshaller.marshal(Test, new File("test.xml"));
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-       
- 
-	}
 	
 	public static MovementPattern getPatternFromXML() 
 	{

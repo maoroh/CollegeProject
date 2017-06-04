@@ -34,11 +34,12 @@ public class SampleBuilder {
 	private boolean isStatic = false;
 	boolean startMotion = false;
 	private IntegerProperty sampleCount = new SimpleIntegerProperty();
-	private final double recThreshold = 0.8;
-	private final int numOfSamples = 5;
+	private static final double recThreshold = 0.8;
+	private static final int numOfSamples = 5;
 	private boolean recording = false;
 	private boolean recognize = false;
 	private Mode mode ;
+	private static final double minSpeed = 35;
 	
 	public static final int numOfRecognizeFrames = 100;
 	
@@ -127,7 +128,7 @@ public class SampleBuilder {
 				if(distance < recThreshold)
 				{
 					s++;
-					if(s >= 10)
+					if(s >= 1)
 					{
 						s = 0;
 						if(sampleData.getNumOfFrames() > 30)
@@ -250,7 +251,7 @@ public class SampleBuilder {
 	
 	private boolean staticMovement(ArrayList<Vector> speed) {
 		// TODO Auto-generated method stub
-		 double speedInterval = 100;
+		 double speedInterval = minSpeed ;
 		 for(int i=0; i<speed.size(); i++)
 		 {
 			 double currentSpeed = Math.sqrt(Math.pow(speed.get(i).getX(), 2) + Math.pow(speed.get(i).getY(), 2) + Math.pow(speed.get(i).getZ(), 2));
@@ -291,7 +292,7 @@ public class SampleBuilder {
    		 
    	 }
    	 
-   	  if(frame.hands().count() >= 1 && startMotion) 
+   	  if(frame.hands().count() >= 1 && startMotion && !staticMovement(speed)) 
    	 {
    		 return true;
    	 }
