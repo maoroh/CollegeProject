@@ -152,10 +152,19 @@ public class AnalyzeData
 		numOfFrames = rehabMinFrameSize < trainingMinFrameSize ? rehabMinFrameSize : trainingMinFrameSize;
 		rehabMovementPattern = buildMovementPattern(rehabSamples);
 		trainingMovementPattern = buildMovementPattern(trainingSet);
+		MovementPattern mp = new MovementPattern();
+		
+		for(int i=0; i<trainingMovementPattern.getSize(); i++)
+		{
+			mp.addVector(rehabMovementPattern.getVector(i).minus(trainingMovementPattern.getVector(i)));
+		}
+		
+		
 		System.out.println("Success Rehab");
 	}
 	
-	
+
+
 	public static int findNumOfFrames(SampleSet samples)
 	{
 		

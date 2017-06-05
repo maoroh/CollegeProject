@@ -131,7 +131,7 @@ public class SampleBuilder {
 					if(s >= 1)
 					{
 						s = 0;
-						if(sampleData.getNumOfFrames() > 30)
+						if(sampleData.getNumOfFrames() > 40)
 						{
 							sampleSet.addSample(sampleData);
 							sampleCount.set(sampleSet.getSize());
@@ -149,23 +149,15 @@ public class SampleBuilder {
 				    			SampleBuilder.this.notify();
 				    		}
 							
-							if(this.mode == Mode.Training)
-							{
-							AnalyzeData.trainingActions(sampleSet);
-							
-							}
-							
+							if(this.mode == Mode.Training)		
+								AnalyzeData.trainingActions(sampleSet);
 							else 
-							{
 								AnalyzeData.rehabActions(sampleSet);
-								//Call Function
-							}
+								//Call Function					
 							System.out.println("Finished");
 						}
 					
-					//t.cancel();
-					//isStopped = true;
-					//System.out.println("Finished " + numOfFrames);
+					
 					}
 				}
 			} catch (Exception e) {
@@ -180,7 +172,7 @@ public class SampleBuilder {
 		// TODO Auto-generated method stub
 		ArrayList<AnglesVector> vectors = sampleData.getSamplesVector();
 		try {
-			this.initVec = AnalyzeData.KNNRegression(vectors.get(40), vectors,10);
+			this.initVec = AnalyzeData.KNNRegression(vectors.get(20), vectors,10);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

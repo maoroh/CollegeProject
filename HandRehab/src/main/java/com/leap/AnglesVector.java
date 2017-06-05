@@ -114,5 +114,17 @@ public class AnglesVector implements Comparable<AnglesVector> {
 		}
 	}
 	
+	public AnglesVector minus(AnglesVector vec)
+	{
+		AnglesVector res = new AnglesVector();
+		
+		for(int i = 0; i<this.getSize(); i++)
+		{
+			res.addCoordinate(this.getCoordinate(i) - vec.getCoordinate(i));
+		}
+		
+		return res;
+	}
+	
 	
 }
