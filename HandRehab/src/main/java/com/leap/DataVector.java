@@ -7,19 +7,23 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.leapmotion.leap.Finger;
+import com.leapmotion.leap.Finger.Type;
+import com.leapmotion.leap.Vector;
+
 @XmlRootElement
 @XmlAccessorType (XmlAccessType.FIELD)
-public class AnglesVector implements Comparable<AnglesVector> {
-
+public class DataVector implements Comparable<DataVector> {
+	private Finger.Type name;
 	private ArrayList<Double> coordinates;
 	private double distanceToTestingPoint;
 	
-	public AnglesVector()
+	public DataVector()
 	{
 		coordinates = new ArrayList<Double>();
 	}
 	
-	public AnglesVector(int size)
+	public DataVector(int size)
 	{
 		coordinates = new ArrayList<Double>();
 		for(int i=0 ; i<size; i++)
@@ -33,7 +37,7 @@ public class AnglesVector implements Comparable<AnglesVector> {
 		this.coordinates.add(coordinate);
 	}
 	
-	public double distanceTo(AnglesVector vec) throws Exception
+	public double distanceTo(DataVector vec) throws Exception
 	{
 		if(this.getSize() != vec.getSize()) 
 			throw new InputMismatchException("Vectors are not in the same size!");
@@ -62,7 +66,7 @@ public class AnglesVector implements Comparable<AnglesVector> {
 	}
 
 	@Override
-	public int compareTo(AnglesVector o) {
+	public int compareTo(DataVector o) {
 		// TODO Auto-generated method stub
 		return (int)(this.getDistanceToTestingPoint() -o.getDistanceToTestingPoint());
 	}
@@ -75,7 +79,7 @@ public class AnglesVector implements Comparable<AnglesVector> {
 		this.distanceToTestingPoint = distanceToTestingPoint;
 	}
 	
-	public void plus(AnglesVector a)
+	public void plus(DataVector a)
 	{
 		if(this.getSize() != a.getSize()) throw new InputMismatchException("Vectors are not in the same size");
 		
@@ -114,16 +118,39 @@ public class AnglesVector implements Comparable<AnglesVector> {
 		}
 	}
 	
-	public AnglesVector minus(AnglesVector vec)
+	public DataVector minus(DataVector vec )
 	{
-		AnglesVector res = new AnglesVector();
+		DataVector res = new DataVector();
 		
-		for(int i = 0; i<this.getSize(); i++)
+		for(int i = 0 ; i< vec.getSize() ; i++)
 		{
 			res.addCoordinate(this.getCoordinate(i) - vec.getCoordinate(i));
 		}
 		
 		return res;
+	}
+	
+	public static DataVector convertToDataVector(Vector vec)
+	{
+		DataVector dataVec = new DataVector();
+		dataVec.addCoordinate(vec.getX());
+		dataVec.addCoordinate(vec.getY());
+		dataVec.addCoordinate(vec.getZ());
+		
+		return dataVec;
+	}
+
+	public Finger.Type getName() {
+		return name;
+	}
+
+	public void setName(Type name) {
+		this.name = name;
+	}
+	
+	public Vector toVector()
+	{
+		return new Vector((float)this.getCoordinate(0) , (float)this.getCoordinate(1), (float)this.getCoordinate(2));
 	}
 	
 	

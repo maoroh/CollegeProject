@@ -28,19 +28,19 @@ public class SampleBuilder {
  	private SampleSet sampleSet ;
  	private SampleData sampleData;
 	private int numOfFrames = 0;
-	private AnglesVector initVec;
-	int s = 0;
+	private boolean sampleCanSaved = false;
+	private DataVector initVec;
 	private boolean isStopped = false;
 	private boolean isStatic = false;
 	boolean startMotion = false;
 	private IntegerProperty sampleCount = new SimpleIntegerProperty();
-	private static final double recThreshold = 0.8;
-	private static final int numOfSamples = 5;
+	private static final double recThreshold = 0.9;
+	private static final int numOfSamples = 10;
 	private boolean recording = false;
 	private boolean recognize = false;
 	private Mode mode ;
 	private static final double minSpeed = 35;
-	
+	private Data avgData;
 	public static final int numOfRecognizeFrames = 100;
 	
 	public SampleBuilder()
@@ -49,6 +49,7 @@ public class SampleBuilder {
 		listener = new LeapListener(this);
 		controller.addListener(listener);
 		sampleSet = new SampleSet();
+		
 	}
 	
 	public void initRecording(Mode mode)
@@ -97,13 +98,19 @@ public class SampleBuilder {
 	        	numOfFrames++;
 	        	handleFrame(frame);
 	        	
+	        
 	        	if(numOfFrames == numOfRecognizeFrames)
 	        	{
-	        		numOfFrames++;
+	        		try {
+						buildInitial();
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 	        		isStopped = true;
 	        		System.out.println("stopp");
 	        		controller.removeListener(listener);
-	        		buildInitial();
+					
 	        	}
 	        }
 	        	
@@ -117,27 +124,23 @@ public class SampleBuilder {
         	numOfFrames++;
         	FrameData fr = handleFrame(frame);
         	fr.setAnglesVector();
-        	AnglesVector frameAngles = fr.getAnglesVector();
+        	fr.setAnglesVector2(avgData);
+        	DataVector frameAngles = fr.getAnglesVector();
         
         	try {
         		System.out.println(frameAngles.distanceTo(initVec));
-        		//System.out.println("Current Angles : " + frameAngles);
-        		//System.out.println("KNN Angles : " + initVec);
+        		//System.out.println("Degree = " +printDegree(frame));
         		double distance = frameAngles.distanceTo(initVec) ;
         		fr.setDistance(distance);
-				if(distance < recThreshold)
+				if(distance < recThreshold && sampleCanSaved )
 				{
-					s++;
-					if(s >= 1)
-					{
-						s = 0;
-						if(sampleData.getNumOfFrames() > 40)
+						sampleCanSaved = false;
+						if(sampleData.getNumOfFrames() > 30)
 						{
-							sampleSet.addSample(sampleData);
-							sampleCount.set(sampleSet.getSize());
-						}
-						
+						sampleSet.addSample(sampleData);
+						sampleCount.set(sampleSet.getSize());
 						sampleData = new SampleData();
+						}
 						
 						if(sampleSet.getSize() == numOfSamples)
 						{
@@ -156,10 +159,12 @@ public class SampleBuilder {
 								//Call Function					
 							System.out.println("Finished");
 						}
-					
-					
 					}
+				
+				else if(distance > recThreshold + 1.5 ) {
+					sampleCanSaved = true;
 				}
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -168,17 +173,63 @@ public class SampleBuilder {
 	}
 	 
 
-	protected void buildInitial() {
+	protected void buildInitial() throws Exception {
 		// TODO Auto-generated method stub
-		ArrayList<AnglesVector> vectors = sampleData.getSamplesVector();
+		ArrayList<DataVector> vectors = sampleData.getSamplesVector();
+		
 		try {
-			this.initVec = AnalyzeData.KNNRegression(vectors.get(20), vectors,10);
+			this.initVec = AnalyzeData.KNNRegression(vectors.get(vectors.size() / 2), vectors , 10);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+	
+		ArrayList <Data> fingersFramesTip = new ArrayList<Data>();
+		
+		for(int i = 0 ; i < sampleData.getNumOfFrames(); i++)
+		{
+			FrameData frameData = sampleData.getFrame(i);
+			
+			Map<Finger.Type, Vector> fingersTip = frameData.getTipDirections();
+			
+			ArrayList <DataVector> fingersTipData = new ArrayList<DataVector>();
+			
+			  for (Finger.Type finger : Finger.Type.values()) {
+				  	Vector tipDirection = fingersTip.get(finger);
+				  	DataVector tipDirectionData = DataVector.convertToDataVector(tipDirection);
+				  	tipDirectionData.setName(finger);
+				  	fingersTipData.add(tipDirectionData);
+				  }
+			  
+			  fingersFramesTip.add(new Data(fingersTipData));
+			 
+		}
+		
+		ArrayList <DataVector> points = new ArrayList <DataVector> ();
+		ArrayList <DataVector> avgTips = new ArrayList<DataVector>(); 
 
+		for(int i = 0 ; i < Finger.Type.values().length ; i++)
+		{
+			for(int j = 0 ; j < fingersFramesTip.size() ; j++)
+			{
+					ArrayList<DataVector> fingersTip = fingersFramesTip.get(j).getFingersTip();
+					points.add(fingersTip.get(i));
+			}
+			
+			DataVector fingerTipAVG = AnalyzeData.KNNRegression(points.get(0), points, 10);
+			fingerTipAVG.setName(Finger.Type.values()[i]);
+			avgTips.add(fingerTipAVG);
+			
+		}
+		
+		avgData = new Data(avgTips);
+		
+		StaticData.setInitData(avgData);
 	}
+	
+	
+	
 
 	protected FrameData handleFrame(Frame currentFrame) {
 		// TODO Auto-generated method stub
@@ -284,7 +335,7 @@ public class SampleBuilder {
    		 
    	 }
    	 
-   	  if(frame.hands().count() >= 1 && startMotion && !staticMovement(speed)) 
+   	  if(frame.hands().count() >= 1 && startMotion   ) 
    	 {
    		 return true;
    	 }
@@ -348,6 +399,11 @@ public class SampleBuilder {
 	public BooleanProperty getLeapProperty()
 	{
 		return listener.getLeapStatusProperty();
+	}
+	
+	public void stopRecord()
+	{
+		controller.removeListener(listener);
 	}
 
 

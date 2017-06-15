@@ -11,10 +11,10 @@ import java.util.Scanner;
 
 public class Files {
 	
-	public static AnglesVector ReadVector()
+	public static DataVector ReadVector()
 	{
 	
-		AnglesVector v = new AnglesVector();
+		DataVector v = new DataVector();
 		try {
 		
 			Scanner s = new Scanner(new File("vector.txt"));

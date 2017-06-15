@@ -30,7 +30,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class MainController implements Initializable {
+public class MainController extends GController implements Initializable {
 	
 	@FXML
 	Button rehabButton;
@@ -65,6 +65,15 @@ public class MainController implements Initializable {
 		 Parent root = FXMLLoader.load(getClass().getResource("RehabView.fxml"));
 		 Scene scene = new Scene(root);
 		 stage.setScene(scene);
+	  }
+	  
+	  @FXML
+	  public void feedbackButton(ActionEvent event) throws IOException
+	  {
+		  Stage stage = (Stage) rehabButton.getScene().getWindow();
+			 Parent root = FXMLLoader.load(getClass().getResource("FeedbackView.fxml"));
+			 Scene scene = new Scene(root);
+			 stage.setScene(scene);
 	  }
 
 

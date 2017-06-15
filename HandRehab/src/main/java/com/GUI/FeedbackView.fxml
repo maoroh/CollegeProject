@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="ap" prefHeight="533.0" prefWidth="777.0" style="-fx-background-color: white;" stylesheets="file:style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.GUI.FeedbackController">
+   <children>
+      <MenuBar layoutX="1.0" layoutY="1.0" prefHeight="29.0" prefWidth="777.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem fx:id="backToMenu" mnemonicParsing="false" onAction="#menuAction" text="Back To Menu" />
+              <MenuItem fx:id="closeChoice" mnemonicParsing="false" onAction="#menuAction" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <LineChart fx:id="lineChart" stylesheets="file:style.css" layoutX="56.0" layoutY="57.0" prefHeight="419.0" prefWidth="609.0">
+        <xAxis>
+          <NumberAxis label="Frame" side="BOTTOM" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxis" label="Angle" side="LEFT" />
+        </yAxis>
+      </LineChart>
+      <Button fx:id="nextFingerBtn" layoutX="566.0" layoutY="476.0" mnemonicParsing="false" onAction="#nextFingerChart" text="Next Finger" />
+      <Button fx:id="prevFingerBtn" layoutX="440.0" layoutY="476.0" mnemonicParsing="false" onAction="#prevFingerChart" text="Previous Finger" />
+   </children>
+</AnchorPane>

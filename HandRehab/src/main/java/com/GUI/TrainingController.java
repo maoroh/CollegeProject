@@ -26,6 +26,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
@@ -38,7 +39,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-public class TrainingController implements Initializable{
+public class TrainingController extends GController implements Initializable{
 	
 	@FXML
 	private Button button;
@@ -59,6 +60,9 @@ public class TrainingController implements Initializable{
 	private Label leapStatusLbl;
 	
 	@FXML
+	private MenuItem closeChoice;
+	
+	@FXML
 	private ProgressIndicator progressIndicator;
 	
 	protected SampleBuilder sb;
@@ -70,6 +74,8 @@ public class TrainingController implements Initializable{
 	private final String recordMsg = "Recording has started...";
 	
 	private Mode mode;
+	
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -151,7 +157,7 @@ public class TrainingController implements Initializable{
 	  		
 	  		Timeline timeline = createImgAnimation(exerciseImg, 800, 0, null);
 
-    	  	Task<Void> taskRecording = new Task<Void>() {
+    	  		taskRecording = new Task<Void>() {
     			@Override
     			protected Void call() throws Exception {
     				// TODO Auto-generated method stub
@@ -161,10 +167,14 @@ public class TrainingController implements Initializable{
    						try {
    							sb.wait();
    						} catch (InterruptedException e) {
-   							// TODO Auto-generated catch block
-   							e.printStackTrace();
+   							
+   							sb.stopRecord();
+   	                        return null;
+   							
    						}
     				}
+    				
+    			
     				changeUi(()->{
     					String message = new String();
     					if(mode == Mode.Training)
@@ -185,7 +195,7 @@ public class TrainingController implements Initializable{
     			}
     	  	};
 		
-	  	Task<Void> taskRecognize = new Task<Void>() {
+	  		taskRecognize = new Task<Void>() {
 			@Override
 			protected Void call() throws Exception {
 				// TODO Auto-generated method stub
@@ -196,7 +206,8 @@ public class TrainingController implements Initializable{
 							sb.wait();
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
-							e.printStackTrace();
+							sb.stopRecord();
+   	                        return null;
 						}
 			         
 			     }
@@ -276,6 +287,8 @@ public class TrainingController implements Initializable{
 		public void setMode(Mode mode) {
 			this.mode = mode;
 		}
+		
+		
 	  	
 	  	
 }

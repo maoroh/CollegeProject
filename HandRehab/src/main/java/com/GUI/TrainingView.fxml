@@ -16,18 +16,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="533.0" prefWidth="777.0" style="-fx-background-color: white;" stylesheets="file:style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.GUI.TrainingController">
+<AnchorPane fx:id="ap" prefHeight="533.0" prefWidth="777.0" style="-fx-background-color: white;" stylesheets="file:style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.GUI.TrainingController">
    <children>
-      <MenuBar layoutX="1.0" layoutY="1.0" prefHeight="29.0" prefWidth="777.0">
+         <MenuBar layoutX="1.0" layoutY="1.0" prefHeight="29.0" prefWidth="777.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem fx:id="backToMenu" mnemonicParsing="false" onAction="#menuAction" text="Back To Menu" />
+              <MenuItem fx:id="closeChoice" mnemonicParsing="false" onAction="#menuAction" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

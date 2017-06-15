@@ -10,19 +10,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType (XmlAccessType.FIELD)
 public class MovementPattern {
 	
-	private ArrayList <AnglesVector> meanFrames;
+	private ArrayList <DataVector> meanFrames;
 	
 	public MovementPattern()
 	{
-		this.meanFrames = new ArrayList<AnglesVector>();
+		this.meanFrames = new ArrayList<DataVector>();
 	}
 	
-	public AnglesVector getVector(int index)
+	public MovementPattern(ArrayList<DataVector> meanFrames)
+	{
+		this.meanFrames = meanFrames;
+	}
+	
+	public DataVector getVector(int index)
 	{
 		return this.meanFrames.get(index);
 	}
 	
-	public void addVector(AnglesVector frame)
+	public void addVector(DataVector frame)
 	{
 		this.meanFrames.add(frame);
 	}

@@ -31,14 +31,27 @@ public class SampleData {
 		return this.framesData.get(index);	
 	}
 	
-	public ArrayList <AnglesVector> getSamplesVector()
+	public ArrayList <DataVector> getSamplesVector()
 	{
-		ArrayList<AnglesVector> vectors = new ArrayList<AnglesVector>();
+		ArrayList<DataVector> vectors = new ArrayList<DataVector>();
 		
 		for(FrameData data : this.framesData)
 		{
 			data.setAnglesVector();
 			vectors.add(data.getAnglesVector());
+		}
+		
+		return vectors;
+	}
+	
+	public ArrayList <DataVector> getSamplesVector2()
+	{
+		ArrayList<DataVector> vectors = new ArrayList<DataVector>();
+		
+		for(FrameData data : this.framesData)
+		{
+			data.setAnglesVector2(StaticData.initData);
+			vectors.add(data.getAnglesVector2());
 		}
 		
 		return vectors;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.leap.AnglesVector;
+import com.leap.DataVector;
 import com.leap.BoneType;
 import com.leap.Files;
 import com.leap.AnalyzeData;
@@ -21,6 +21,5 @@ public class App
     public static void main( String[] args )
     {
     
-    	
     }
 }

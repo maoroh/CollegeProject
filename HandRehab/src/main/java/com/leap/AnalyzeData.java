@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import com.leapmotion.leap.Bone;
 import com.leapmotion.leap.Finger;
+import com.leapmotion.leap.Vector;
 import com.tools.JAXBTools;
 
 public class AnalyzeData
@@ -12,15 +13,15 @@ public class AnalyzeData
 	private static int numOfFrames ;
 
 	
-	public static AnglesVector KNNRegression(AnglesVector testingPoint , ArrayList<AnglesVector> points, int K) throws Exception
+	public static DataVector KNNRegression(DataVector testingPoint , ArrayList<DataVector> points, int K) throws Exception
 	{
-		for(AnglesVector point : points)
+		for(DataVector point : points)
 			point.setDistanceToTestingPoint(testingPoint.distanceTo(point));
 		
 		//Sort the points according to the distances
 		Collections.sort(points);
 		
-		AnglesVector mean = new AnglesVector(testingPoint.getSize());
+		DataVector mean = new DataVector(testingPoint.getSize());
 		
 		for(int i=0; i < K; i++)
 			mean.plus(points.get(i));
@@ -29,15 +30,75 @@ public class AnalyzeData
 		double mul = 1/(double)(K+1);
 		
 		mean.multiplyVec(mul);
-		
 		return mean;
 	}
+	
+	
+	
+	public static MovementPattern buildMovementPattern2(SampleSet recordedSamples) throws Exception
+	{
+		SampleSet samples = fixSampleSet(recordedSamples);
+		int size = recordedSamples.getSize();
+		ArrayList<Double> counters = new ArrayList<>();
+		counters.add(0.0);
+		counters.add(0.0);
+		counters.add(0.0);
+		counters.add(0.0);
+		counters.add(0.0);
+		counters.add(0.0);
+		counters.add(0.0);
+		counters.add(0.0);
+		counters.add(0.0);
+		counters.add(0.0);
+	
+		int K = 3;
+		counters.set(0, Double.MAX_VALUE);
+
+		for(int i = 1; i < size ; i++)
+		{
+			for (int j = 0 ; j < numOfFrames; j++)
+			{
+				 DataVector dTesting = samples.getSample(0).getFrame(j).getAnglesVector2();
+				 DataVector dCurrent = samples.getSample(i).getFrame(j).getAnglesVector2();
+				 double distance = dTesting.distanceTo(dCurrent);
+				 counters.set(i, counters.get(i) + distance);
+			}
+		}
+		
+		ArrayList<Double> temp = new ArrayList<Double>(counters);
+		Collections.sort(temp);
+		
+		SampleData newSample = new SampleData();
+	
+		int minIndex1 = counters.indexOf(temp.get(0));
+		int minIndex2 = counters.indexOf(temp.get(1));
+		int minIndex3 = counters.indexOf(temp.get(2));
+			
+		SampleData s1 = samples.getSample(minIndex1);
+		SampleData s2 = samples.getSample(minIndex2);
+		SampleData s3 = samples.getSample(minIndex3);
+			
+		SampleData sTesting = samples.getSample(0);
+		
+		for(int j = 0 ; j < numOfFrames; j++)
+		{
+			FrameData fAvg = FrameData.framesAvg(s1.getFrame(j), sTesting.getFrame(j));
+			fAvg = FrameData.framesAvg(fAvg, s2.getFrame(j));
+			fAvg = FrameData.framesAvg(fAvg, s3.getFrame(j));
+			newSample.addFrame(fAvg);
+				
+		}
+		
+		return new MovementPattern (newSample.getSamplesVector2());
+	}
+	
+	
 	
 	public static MovementPattern buildMovementPattern(SampleSet recordedSamples) throws Exception
 	{
 		SampleSet samples = fixSampleSet(recordedSamples);
 		MovementPattern mPattern = new MovementPattern();
-		ArrayList<AnglesVector> anglesVectorOfFrame = new ArrayList<AnglesVector>();
+		ArrayList<DataVector> anglesVectorOfFrame = new ArrayList<DataVector>();
 		
 		for(int i=0; i<numOfFrames; i++)
 		{
@@ -45,21 +106,23 @@ public class AnalyzeData
 			anglesVectorOfFrame.clear();
 			
 			//Loop all samples
-			for(int j=0; j<samples.getSize(); j++)
+			for(int j = 0; j < samples.getSize(); j++)
 			{
 				SampleData sampleData = samples.getSample(j);
-				sampleData.getFrame(i).setAnglesVector();
-				anglesVectorOfFrame.add(sampleData.getFrame(i).getAnglesVector());
+				
+				anglesVectorOfFrame.add(sampleData.getFrame(i).getAnglesVector2());
 			}
 			
-			AnglesVector testingPoint = anglesVectorOfFrame.get(0);
+			DataVector testingPoint = anglesVectorOfFrame.get(samples.getSize()/2);
 			
 			//Add the mean frame after KNNRegression to the pattern
-			mPattern.addVector(KNNRegression(testingPoint, anglesVectorOfFrame,3));
+			mPattern.addVector(KNNRegression(testingPoint, anglesVectorOfFrame,4));
 		}
 		
 		return mPattern;
 	} 
+	
+	
 	
 	public static SampleData avgSample (SampleData sample) throws Exception
 	{
@@ -75,7 +138,7 @@ public class AnalyzeData
 		while(true)
 		{
 			
-			if(sample.getNumOfFrames() / 2 > numOfFrames)
+			if(sample.getNumOfFrames() / 2 >= numOfFrames)
 			{
 		
 				while(index < sample.getNumOfFrames())
@@ -96,16 +159,9 @@ public class AnalyzeData
 		
 			else if(sample.getNumOfFrames() == numOfFrames) return sample;
 			
-			//This case handles sample size of numOfFrames + 1 
-			else if(sample.getNumOfFrames() == numOfFrames + 1)
-			{
-				FrameData avgFrame = FrameData.framesAvg(sample.getFrame(numOfFrames - 1),sample.getFrame(numOfFrames - 2));
-				sample.setFrame(avgFrame,numOfFrames - 1);
-				return sample;
-			}
-			
 			else
 			{
+				avgFramesData.clear();
 				index = 0;
 				int size = sample.getNumOfFrames();
 			
@@ -119,7 +175,7 @@ public class AnalyzeData
 			
 				for(int i = index ; i < sample.getNumOfFrames(); i++)
 				{
-					avgFramesData.add(sample.getFrame(index));
+					avgFramesData.add(sample.getFrame(i));
 				}
 			
 				return new SampleData(new ArrayList<FrameData>(avgFramesData));
@@ -146,20 +202,22 @@ public class AnalyzeData
 	public static void rehabActions(SampleSet rehabSamples) throws Exception
 	{
 		SampleSet trainingSet = JAXBTools.getTrainingFromXML();
-		MovementPattern rehabMovementPattern,trainingMovementPattern;
+		MovementPattern rehabMP,trainMP;
+		fixSampleSetNoise(rehabSamples);
+		fixSampleSetNoise(trainingSet);
 		int rehabMinFrameSize = findNumOfFrames (rehabSamples);
 		int trainingMinFrameSize = findNumOfFrames(trainingSet);
+		JAXBTools.saveSampleSetXML(rehabSamples , "rehabData.xml");
+		JAXBTools.saveSampleSetXML(trainingSet , "trainData.xml");
 		numOfFrames = rehabMinFrameSize < trainingMinFrameSize ? rehabMinFrameSize : trainingMinFrameSize;
-		rehabMovementPattern = buildMovementPattern(rehabSamples);
-		trainingMovementPattern = buildMovementPattern(trainingSet);
-		MovementPattern mp = new MovementPattern();
-		
-		for(int i=0; i<trainingMovementPattern.getSize(); i++)
-		{
-			mp.addVector(rehabMovementPattern.getVector(i).minus(trainingMovementPattern.getVector(i)));
-		}
-		
-		
+		SampleSet samplesRehab = fixSampleSet(rehabSamples);
+		SampleSet samplesTraining = fixSampleSet(trainingSet);
+		JAXBTools.saveSampleSetXML(samplesRehab , "rehabDataFixed.xml");
+		rehabMP = buildMovementPattern(rehabSamples);
+		trainMP = buildMovementPattern(samplesTraining);
+		JAXBTools.savePatternXML(rehabMP,"rehabMP.xml");
+		JAXBTools.savePatternXML(trainMP,"trainMP.xml");
+		Feedback.generateFeedback(rehabMP, trainMP);
 		System.out.println("Success Rehab");
 	}
 	
@@ -185,8 +243,84 @@ public class AnalyzeData
 	public static void trainingActions(SampleSet sampleSet) throws Exception {
 		// TODO Auto-generated method stub
 		numOfFrames = findNumOfFrames(sampleSet);
-		JAXBTools.saveSampleSetXML(sampleSet);
+		JAXBTools.saveSampleSetXML(sampleSet , "trainData.xml");
 	}
+	
+	
+	public static void fixSampleSetNoise(SampleSet sampleSet)
+	{
+		for(int i = 0; i < sampleSet.getSize(); i++)
+		{
+			fixSampleNoise(sampleSet.getSample(i));
+			fixSampleDataNoiseUp(sampleSet.getSample(i));
+			
+		}
+	}
+	
+	public static void fixSampleNoise(SampleData sample)
+	{
+		int i = 0;
+		while( i < sample.getNumOfFrames() - 1 )
+		{
+			FrameData frame = sample.getFrame(i);
+			FrameData frameNext = sample.getFrame(i + 1);
+			DataVector anglesVecFrame = frame.getAnglesVector2();
+			DataVector anglesVecFrameNext = frameNext.getAnglesVector2();
+			if(Math.abs(anglesVecFrameNext.getCoordinate(0) - anglesVecFrame.getCoordinate(0)) >= 0.5
+					|| Math.abs(anglesVecFrameNext.getCoordinate(1) - anglesVecFrame.getCoordinate(1)) >= 0.5
+					|| Math.abs(anglesVecFrameNext.getCoordinate(2) - anglesVecFrame.getCoordinate(2)) >= 0.5
+					|| Math.abs(anglesVecFrameNext.getCoordinate(3) - anglesVecFrame.getCoordinate(3)) >= 0.5
+					|| Math.abs(anglesVecFrameNext.getCoordinate(4) - anglesVecFrame.getCoordinate(4)) >= 0.5)
+			{
+				sample.deleteFrame(i + 1);
+				i--;
+			}
+			i++;
+		}
+	}
+	
+	public static void fixSampleDataNoiseUp(SampleData sampleData)
+	{
+		int index = 0;
+		int threshold = 9;
+		int counter = 0;
+		int i = 0;
+		while (i < sampleData.getNumOfFrames() - 1)
+		{
+			if(i + threshold > sampleData.getNumOfFrames())
+				break;
+			
+			for(int j = i ; j < i + threshold ; j++)
+			{
+				FrameData frame = sampleData.getFrame(j);
+				FrameData frameNext = sampleData.getFrame(j + 1);
+				DataVector anglesVecFrame = frame.getAnglesVector2();
+				DataVector anglesVecFrameNext = frameNext.getAnglesVector2();
+				
+				if(anglesVecFrameNext.getCoordinate(2) < anglesVecFrame.getCoordinate(2))
+				{
+					counter = 0;
+					index = j;
+					i = j + 1;
+					break;
+				}
+				counter ++;
+			
+			 }
+			
+			if(counter >= threshold)
+				break;
+		}
+		
+		for(int k = 0 ; k < index; k++)
+		{
+			sampleData.deleteFrame(0);
+		}
+		
+	}
+	
+	
+	
 	
 	
 	
