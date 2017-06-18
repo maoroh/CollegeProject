@@ -128,14 +128,14 @@ public class SampleBuilder {
         	DataVector frameAngles = fr.getAnglesVector();
         
         	try {
-        		//System.out.println(frameAngles.distanceTo(initVec));
+        		// System.out.println(frameAngles.distanceTo(initVec));
         		//System.out.println("Degree = " +printDegree(frame));
         		double distance = frameAngles.distanceTo(initVec) ;
         		fr.setDistance(distance);
 				if(distance < recThreshold && sampleCanSaved )
 				{
 						sampleCanSaved = false;
-						if(sampleData.getNumOfFrames() > 30)
+						if(sampleData.getNumOfFrames() >= 40)
 						{
 						sampleSet.addSample(sampleData);
 						sampleCount.set(sampleSet.getSize());

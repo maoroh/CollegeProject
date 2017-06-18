@@ -70,7 +70,7 @@ public class MainController extends GController implements Initializable {
 	  @FXML
 	  public void feedbackButton(ActionEvent event) throws IOException
 	  {
-		  Stage stage = (Stage) rehabButton.getScene().getWindow();
+		  	Stage stage = (Stage) rehabButton.getScene().getWindow();
 			 Parent root = FXMLLoader.load(getClass().getResource("FeedbackView.fxml"));
 			 Scene scene = new Scene(root);
 			 stage.setScene(scene);

@@ -10,7 +10,7 @@ import com.tools.JAXBTools;
 
 public class AnalyzeData
 {
-	private static int numOfFrames ;
+	private static int numOfFrames  ;
 
 	
 	public static DataVector KNNRegression(DataVector testingPoint , ArrayList<DataVector> points, int K) throws Exception
@@ -116,7 +116,7 @@ public class AnalyzeData
 			DataVector testingPoint = anglesVectorOfFrame.get(samples.getSize()/2);
 			
 			//Add the mean frame after KNNRegression to the pattern
-			mPattern.addVector(KNNRegression(testingPoint, anglesVectorOfFrame,4));
+			mPattern.addVector(KNNRegression(testingPoint, anglesVectorOfFrame,5));
 		}
 		
 		return mPattern;
@@ -241,7 +241,7 @@ public class AnalyzeData
 
 	public static void trainingActions(SampleSet sampleSet) throws Exception {
 		// TODO Auto-generated method stub
-		numOfFrames = findNumOfFrames(sampleSet);
+	
 		JAXBTools.saveSampleSetXML(sampleSet , "trainData.xml");
 	}
 	
@@ -251,7 +251,7 @@ public class AnalyzeData
 		for(int i = 0; i < sampleSet.getSize(); i++)
 		{
 			//fixSampleNoise(sampleSet.getSample(i));
-			//fixSampleDataNoiseUp(sampleSet.getSample(i));
+			fixSampleDataNoiseUp(sampleSet.getSample(i));
 			
 		}
 	}
@@ -272,7 +272,7 @@ public class AnalyzeData
 					|| Math.abs(anglesVecFrameNext.getCoordinate(4) - anglesVecFrame.getCoordinate(4)) >= 0.5)
 			{
 				sample.deleteFrame(i + 1);
-				i--;
+				
 			}
 			i++;
 		}
