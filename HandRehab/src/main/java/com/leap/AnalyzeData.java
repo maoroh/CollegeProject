@@ -34,7 +34,7 @@ public class AnalyzeData
 	}
 	
 	
-	
+	/*/
 	public static MovementPattern buildMovementPattern2(SampleSet recordedSamples) throws Exception
 	{
 		SampleSet samples = fixSampleSet(recordedSamples);
@@ -90,7 +90,7 @@ public class AnalyzeData
 		}
 		
 		return new MovementPattern (newSample.getSamplesVector2());
-	}
+	}/*/
 	
 	
 	
@@ -203,12 +203,11 @@ public class AnalyzeData
 	{
 		SampleSet trainingSet = JAXBTools.getTrainingFromXML();
 		MovementPattern rehabMP,trainMP;
-		fixSampleSetNoise(rehabSamples);
-		fixSampleSetNoise(trainingSet);
+		//fixSampleSetNoise(rehabSamples);
+		//fixSampleSetNoise(trainingSet);
 		int rehabMinFrameSize = findNumOfFrames (rehabSamples);
 		int trainingMinFrameSize = findNumOfFrames(trainingSet);
 		JAXBTools.saveSampleSetXML(rehabSamples , "rehabData.xml");
-		JAXBTools.saveSampleSetXML(trainingSet , "trainData.xml");
 		numOfFrames = rehabMinFrameSize < trainingMinFrameSize ? rehabMinFrameSize : trainingMinFrameSize;
 		SampleSet samplesRehab = fixSampleSet(rehabSamples);
 		SampleSet samplesTraining = fixSampleSet(trainingSet);
@@ -251,8 +250,8 @@ public class AnalyzeData
 	{
 		for(int i = 0; i < sampleSet.getSize(); i++)
 		{
-			fixSampleNoise(sampleSet.getSample(i));
-			fixSampleDataNoiseUp(sampleSet.getSample(i));
+			//fixSampleNoise(sampleSet.getSample(i));
+			//fixSampleDataNoiseUp(sampleSet.getSample(i));
 			
 		}
 	}

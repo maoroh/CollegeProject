@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import com.leap.Feedback;
 import com.leap.MovementPattern;
 import com.leapmotion.leap.Finger;
 import com.tools.JAXBTools;
@@ -16,7 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.MenuItem;
-
+import javafx.scene.control.TextArea;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 
@@ -52,14 +53,21 @@ public class FeedbackController extends GController implements Initializable {
 	
 	@FXML
 	private NumberAxis yAxis ;
+	
+	@FXML
+	private TextArea textArea;
 	 
 	private int fingerID;
+	
+	 MovementPattern trainMP,rehabMP;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 	   fingerID = 0;
         //populating the series with data
+	    trainMP = JAXBTools.getPatternFromXML("trainMP.xml");
+	    rehabMP = JAXBTools.getPatternFromXML("rehabMP.xml");
 	    buildChart(fingerID);
 	    lineChart.setId("chart1");
 	   
@@ -97,6 +105,10 @@ public class FeedbackController extends GController implements Initializable {
 	
 	public void buildChart(int fingerID)
 	{
+		textArea.clear();
+		textArea.appendText("1 : " + Feedback.getScore2(fingerID, trainMP, rehabMP)[0] + "\n" +
+				"2 : " +Feedback.getScore2(fingerID, trainMP, rehabMP)[1] + "\n"+ "3 : " + Feedback.getScore2(fingerID, trainMP, rehabMP)[2] + "\n" +
+		"4 : " +Feedback.getScore2(fingerID, trainMP, rehabMP)[3]);
 		lineChart.getData().remove(0,(lineChart.getData().size()));
 		lineChart.setTitle(fingerNames.get(fingerID).name());
 		XYChart.Series<Number,Number> seriesRehab = new XYChart.Series<Number,Number>();
@@ -110,7 +122,9 @@ public class FeedbackController extends GController implements Initializable {
 		for (int i = 0; i < size  ; i++)
 		{
 			double angle1 = dataRehab.getVector(i).getCoordinate(fingerID);
+			angle1 = angle1 * (180/ Math.PI);
 			double angle2 = dataTraining.getVector(i).getCoordinate(fingerID);
+			angle2 = angle2 * (180/ Math.PI);
 			addDataToSeries(seriesRehab, i , angle1);
 			addDataToSeries(seriesTrain, i , angle2);
 		}

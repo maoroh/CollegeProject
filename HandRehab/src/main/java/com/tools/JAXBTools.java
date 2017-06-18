@@ -100,14 +100,14 @@ public class JAXBTools {
 	}
 	
 	
-	public static MovementPattern getPatternFromXML() 
+	public static MovementPattern getPatternFromXML(String path) 
 	{
 		JAXBContext jaxbContext;
 		MovementPattern movementPattern = null;
 		try {
 			 jaxbContext = JAXBContext.newInstance(MovementPattern.class);
 		     Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();   
-		     movementPattern = (MovementPattern) jaxbUnmarshaller.unmarshal( new File("pattern.xml") );
+		     movementPattern = (MovementPattern) jaxbUnmarshaller.unmarshal( new File(path) );
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

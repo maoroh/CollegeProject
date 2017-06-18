@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<data>
+    <fingersTip>
+        <name>TYPE_THUMB</name>
+        <coordinates>-0.7169366912408309</coordinates>
+        <coordinates>0.6276486841115084</coordinates>
+        <coordinates>-0.2975833443078128</coordinates>
+        <distanceToTestingPoint>0.0</distanceToTestingPoint>
+    </fingersTip>
+    <fingersTip>
+        <name>TYPE_INDEX</name>
+        <coordinates>-0.6800679103894668</coordinates>
+        <coordinates>0.634123292836276</coordinates>
+        <coordinates>-0.3251443965868516</coordinates>
+        <distanceToTestingPoint>0.0</distanceToTestingPoint>
+    </fingersTip>
+    <fingersTip>
+        <name>TYPE_MIDDLE</name>
+        <coordinates>-0.6825798018412157</coordinates>
+        <coordinates>0.6359037919477983</coordinates>
+        <coordinates>-0.3218711858445948</coordinates>
+        <distanceToTestingPoint>0.0</distanceToTestingPoint>
+    </fingersTip>
+    <fingersTip>
+        <name>TYPE_RING</name>
+        <coordinates>-0.6727130589160052</coordinates>
+        <coordinates>0.6364439238201488</coordinates>
+        <coordinates>-0.32526810331778094</coordinates>
+        <distanceToTestingPoint>0.0</distanceToTestingPoint>
+    </fingersTip>
+    <fingersTip>
+        <name>TYPE_PINKY</name>
+        <coordinates>-0.6733809479258277</coordinates>
+        <coordinates>0.632420843297785</coordinates>
+        <coordinates>-0.3294254405931993</coordinates>
+        <distanceToTestingPoint>0.0</distanceToTestingPoint>
+    </fingersTip>
+</data>
