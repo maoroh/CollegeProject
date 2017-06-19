@@ -122,9 +122,9 @@ public class FeedbackController extends GController implements Initializable {
 		
 		for (int i = 0; i < size  ; i++)
 		{
-			double angle1 = dataRehab.getVector(i).getCoordinate(fingerID);
+			double angle1 = rehabMP.getVector(i).getCoordinate(fingerID);
 			angle1 = angle1 * (180/ Math.PI);
-			double angle2 = dataTraining.getVector(i).getCoordinate(fingerID);
+			double angle2 = trainMP.getVector(i).getCoordinate(fingerID);
 			angle2 = angle2 * (180/ Math.PI);
 			addDataToSeries(seriesRehab, i , angle1);
 			addDataToSeries(seriesTrain, i , angle2);
