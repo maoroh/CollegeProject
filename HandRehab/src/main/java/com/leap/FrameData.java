@@ -173,8 +173,25 @@ public class FrameData {
 		return anglesVector2;
 	}
 	
-
+	public static FrameData framesAvg(FrameData f1, FrameData f2) 
+	{
+		DataVector d1 = f1.getAnglesVector2();
+		DataVector d2 = f2.getAnglesVector2();
+		DataVector dAvg = new DataVector();
+		for( int i = 0 ; i< d1.getSize(); i++)
+		{
+			double avg = (d1.getCoordinate(i) + d2.getCoordinate(i)) / 2;
+			dAvg.addCoordinate(avg);
+		}
+		
+		
+		FrameData fd =  new FrameData();
+		fd.replaceAngles(dAvg);
+		return fd;
+	}
 	
+
+	/*/
 	public static FrameData framesAvg(FrameData f1, FrameData f2) 
 	{
 		Map<Finger.Type, FingerData> avgFingersMapData = new HashMap<Finger.Type,FingerData>();
@@ -223,7 +240,7 @@ public class FrameData {
 		fd.setAnglesVector();
 		fd.setAnglesVector2(StaticData.initData);
 		return fd;
-	}
+	}/*/
 
 	public double getDistance() {
 		return distance;
@@ -239,6 +256,11 @@ public class FrameData {
 
 	public void setTipDirections(Map<Finger.Type, Vector> tipDirections) {
 		this.tipDirections = tipDirections;
+	}
+	
+	public void replaceAngles(DataVector vec)
+	{
+		this.anglesVector2 = vec;
 	}
 
 	

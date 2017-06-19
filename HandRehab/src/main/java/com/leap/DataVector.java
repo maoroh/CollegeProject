@@ -153,5 +153,10 @@ public class DataVector implements Comparable<DataVector> {
 		return new Vector((float)this.getCoordinate(0) , (float)this.getCoordinate(1), (float)this.getCoordinate(2));
 	}
 	
+	public void clearVector()
+	{
+		this.coordinates.clear();
+	}
+	
 	
 }

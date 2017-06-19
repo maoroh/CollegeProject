@@ -59,7 +59,7 @@ public class FeedbackController extends GController implements Initializable {
 	 
 	private int fingerID;
 	
-	 MovementPattern trainMP,rehabMP;
+	MovementPattern trainMP,rehabMP;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

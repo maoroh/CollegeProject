@@ -108,7 +108,7 @@ public class SampleBuilder {
 						e.printStackTrace();
 					}
 	        		isStopped = true;
-	        		System.out.println("stopp");
+	        		
 	        		controller.removeListener(listener);
 					
 	        	}
@@ -129,7 +129,7 @@ public class SampleBuilder {
         
         	try {
         		System.out.println(frameAngles.distanceTo(initVec));
-        		//System.out.println("Degree = " +printDegree(frame));
+        		
         		double distance = frameAngles.distanceTo(initVec) ;
         		fr.setDistance(distance);
 				if(distance < recThreshold && sampleCanSaved )
@@ -161,7 +161,7 @@ public class SampleBuilder {
 						}
 					}
 				
-				else if(distance > recThreshold + 1.5 ) {
+				else if(distance > recThreshold + 1) {
 					sampleCanSaved = true;
 				}
 				
