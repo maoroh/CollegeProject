@@ -135,7 +135,7 @@ public class SampleBuilder {
 				if(distance < recThreshold && sampleCanSaved )
 				{
 						sampleCanSaved = false;
-						if(sampleData.getNumOfFrames() >= 40)
+						if(sampleData.getNumOfFrames() >= 30)
 						{
 						sampleSet.addSample(sampleData);
 						sampleCount.set(sampleSet.getSize());
@@ -161,7 +161,7 @@ public class SampleBuilder {
 						}
 					}
 				
-				else if(distance > recThreshold + 1) {
+				else if(distance > recThreshold + 0.5) {
 					sampleCanSaved = true;
 				}
 				
@@ -178,7 +178,7 @@ public class SampleBuilder {
 		ArrayList<DataVector> vectors = sampleData.getSamplesVector();
 		
 		try {
-			this.initVec = AnalyzeData.KNNRegression(vectors.get(vectors.size() / 2), vectors , 10);
+			this.initVec = AnalyzeData.KNNRegression(vectors.get(vectors.size() / 2), vectors , 15);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -217,7 +217,7 @@ public class SampleBuilder {
 					points.add(fingersTip.get(i));
 			}
 			
-			DataVector fingerTipAVG = AnalyzeData.KNNRegression(points.get(0), points, 10);
+			DataVector fingerTipAVG = AnalyzeData.KNNRegression(points.get(points.size() / 2), points, 10);
 			fingerTipAVG.setName(Finger.Type.values()[i]);
 			avgTips.add(fingerTipAVG);
 			
@@ -334,7 +334,7 @@ public class SampleBuilder {
    		 
    	 }
    	 
-   	  if(frame.hands().count() >= 1 && startMotion   ) 
+   	  if(frame.hands().count() >= 1 && startMotion ) 
    	 {
    		 return true;
    	 }

@@ -155,8 +155,6 @@ public class FrameData {
 		{
 			Vector tipDirection = fingersTip.get(type);
 			double angle = tipDirection.angleTo(initialData.getTipVector(type).toVector());
-			if(type == Finger.Type.TYPE_PINKY)
-			System.out.println("Angle = " + angle);
 			anglesVector2.addCoordinate(angle);
 		}
 		

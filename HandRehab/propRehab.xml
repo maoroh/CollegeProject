@@ -1,867 +1,523 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <MovementPattern>
     <meanFrames>
-        <coordinates>0.02465970441699028</coordinates>
-        <coordinates>-0.012789306541283907</coordinates>
-        <coordinates>-0.019758117695649474</coordinates>
-        <coordinates>-0.005703801910082518</coordinates>
-        <coordinates>0.009818365176518684</coordinates>
+        <coordinates>-0.0031851446721702925</coordinates>
+        <coordinates>-0.03486143779009582</coordinates>
+        <coordinates>-0.03956054407171905</coordinates>
+        <coordinates>-0.022744613722898044</coordinates>
+        <coordinates>-0.006028659595176594</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.0433143712580204</coordinates>
-        <coordinates>-0.021998787919680268</coordinates>
-        <coordinates>-0.028907984495162964</coordinates>
-        <coordinates>-0.003583510716756194</coordinates>
-        <coordinates>0.019424756368001228</coordinates>
+        <coordinates>0.007813278178575883</coordinates>
+        <coordinates>0.11246998457108787</coordinates>
+        <coordinates>0.15494250577336027</coordinates>
+        <coordinates>0.1888895298251318</coordinates>
+        <coordinates>0.1701641418126699</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.05588580792148909</coordinates>
-        <coordinates>-0.033661911884943635</coordinates>
-        <coordinates>-0.03578681002060574</coordinates>
-        <coordinates>0.004056744277477264</coordinates>
-        <coordinates>0.028140515089035034</coordinates>
+        <coordinates>0.016006345992353732</coordinates>
+        <coordinates>0.15507588910352382</coordinates>
+        <coordinates>0.18150672848366017</coordinates>
+        <coordinates>0.2343425871380127</coordinates>
+        <coordinates>0.23275139585081092</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.06488226975003877</coordinates>
-        <coordinates>-0.046366887787977845</coordinates>
-        <coordinates>-0.0424027293920517</coordinates>
-        <coordinates>0.008927998443444551</coordinates>
-        <coordinates>0.03522683183352149</coordinates>
+        <coordinates>0.02211430848396445</coordinates>
+        <coordinates>0.16809403387160388</coordinates>
+        <coordinates>0.17750525250596588</coordinates>
+        <coordinates>0.24808522664628152</coordinates>
+        <coordinates>0.26766018344660814</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.07260665918389955</coordinates>
-        <coordinates>-0.060155237714449555</coordinates>
-        <coordinates>-0.047035373747348785</coordinates>
-        <coordinates>0.01696854829788208</coordinates>
-        <coordinates>0.04345457752545667</coordinates>
+        <coordinates>0.03004916985081829</coordinates>
+        <coordinates>0.15648564175030139</coordinates>
+        <coordinates>0.18155352349408233</coordinates>
+        <coordinates>0.2593800056008968</coordinates>
+        <coordinates>0.29076142269853333</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.08505785589416823</coordinates>
-        <coordinates>-0.07643150041500726</coordinates>
-        <coordinates>-0.04973394920428595</coordinates>
-        <coordinates>0.03008050968249637</coordinates>
-        <coordinates>0.055785854657490974</coordinates>
+        <coordinates>0.041688336918707436</coordinates>
+        <coordinates>0.13753036714829897</coordinates>
+        <coordinates>0.18735689328069788</coordinates>
+        <coordinates>0.26830609951516354</coordinates>
+        <coordinates>0.30563930504346737</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.11265604570508</coordinates>
-        <coordinates>0.016701776534318924</coordinates>
-        <coordinates>0.01522317280371982</coordinates>
-        <coordinates>0.11337100962797797</coordinates>
-        <coordinates>0.1106539169947306</coordinates>
+        <coordinates>0.05277761417656357</coordinates>
+        <coordinates>0.12357389415226022</coordinates>
+        <coordinates>0.18880247947868117</coordinates>
+        <coordinates>0.27004154350083964</coordinates>
+        <coordinates>0.31110691830906134</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.11508610720435777</coordinates>
-        <coordinates>0.010612839212020247</coordinates>
-        <coordinates>0.049271722634633364</coordinates>
-        <coordinates>0.13278383016586304</coordinates>
-        <coordinates>0.12269576390584302</coordinates>
+        <coordinates>0.06296523630557943</coordinates>
+        <coordinates>0.12887144668797051</coordinates>
+        <coordinates>0.2036009482892665</coordinates>
+        <coordinates>0.2780511252136951</coordinates>
+        <coordinates>0.31559672775824565</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.12837332611282667</coordinates>
-        <coordinates>0.03415731092294058</coordinates>
-        <coordinates>0.08642567694187164</coordinates>
-        <coordinates>0.17499130964279175</coordinates>
-        <coordinates>0.1410954097906748</coordinates>
+        <coordinates>0.09147382649519492</coordinates>
+        <coordinates>0.18738800425443475</coordinates>
+        <coordinates>0.24137054634372473</coordinates>
+        <coordinates>0.3476876491185924</coordinates>
+        <coordinates>0.35791179386142824</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.11737242713570592</coordinates>
-        <coordinates>0.13417983924349147</coordinates>
-        <coordinates>0.19882971048355103</coordinates>
-        <coordinates>0.3007823973894119</coordinates>
-        <coordinates>0.2489905456701914</coordinates>
+        <coordinates>0.12195674504271986</coordinates>
+        <coordinates>0.2653383149845768</coordinates>
+        <coordinates>0.2917163167871211</coordinates>
+        <coordinates>0.44158722227796265</coordinates>
+        <coordinates>0.4185070253526686</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.11433798943956694</coordinates>
-        <coordinates>0.22280138358473778</coordinates>
-        <coordinates>0.2987979302803675</coordinates>
-        <coordinates>0.38999750216801954</coordinates>
-        <coordinates>0.32771714528401685</coordinates>
+        <coordinates>0.15340429111839698</coordinates>
+        <coordinates>0.35041288740711213</coordinates>
+        <coordinates>0.3716758107308103</coordinates>
+        <coordinates>0.5301235143720918</coordinates>
+        <coordinates>0.4717805502109951</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.12329569334785143</coordinates>
-        <coordinates>0.25734128057956696</coordinates>
-        <coordinates>0.30645072211821867</coordinates>
-        <coordinates>0.3869415124257405</coordinates>
-        <coordinates>0.32606908679008484</coordinates>
+        <coordinates>0.18687896400156961</coordinates>
+        <coordinates>0.4433165729329774</coordinates>
+        <coordinates>0.4591881915642784</coordinates>
+        <coordinates>0.6379434368452899</coordinates>
+        <coordinates>0.5267475953563739</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.14036475494503972</coordinates>
-        <coordinates>0.28471425361931324</coordinates>
-        <coordinates>0.3100850929816563</coordinates>
-        <coordinates>0.3873204638560612</coordinates>
-        <coordinates>0.3303875525792439</coordinates>
+        <coordinates>0.262705404700383</coordinates>
+        <coordinates>0.8035501673387626</coordinates>
+        <coordinates>0.7880336609145506</coordinates>
+        <coordinates>1.0119421748726336</coordinates>
+        <coordinates>0.8213435028939757</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.17299684757987657</coordinates>
-        <coordinates>0.32921249854067963</coordinates>
-        <coordinates>0.32826869686444593</coordinates>
-        <coordinates>0.40964519480864203</coordinates>
-        <coordinates>0.34721142053604126</coordinates>
+        <coordinates>0.24699880414472591</coordinates>
+        <coordinates>0.6819525598922982</coordinates>
+        <coordinates>0.9752491716910296</coordinates>
+        <coordinates>1.1723012846689056</coordinates>
+        <coordinates>0.8359024841531382</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.20637534682949385</coordinates>
-        <coordinates>0.39776460950573284</coordinates>
-        <coordinates>0.3788407022754351</coordinates>
-        <coordinates>0.46882718304793036</coordinates>
-        <coordinates>0.39270432790120435</coordinates>
+        <coordinates>0.23360492386084442</coordinates>
+        <coordinates>0.3677299311791988</coordinates>
+        <coordinates>1.2209567242242148</coordinates>
+        <coordinates>1.3063072005294751</coordinates>
+        <coordinates>0.8317627004410058</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.21835070724288622</coordinates>
-        <coordinates>0.3385391347110271</coordinates>
-        <coordinates>0.35547859470049537</coordinates>
-        <coordinates>0.43238950272401167</coordinates>
-        <coordinates>0.35731575886408484</coordinates>
+        <coordinates>0.26276652918938476</coordinates>
+        <coordinates>0.6508811362238396</coordinates>
+        <coordinates>1.244790017563002</coordinates>
+        <coordinates>1.2377733349742885</coordinates>
+        <coordinates>1.1677833433509581</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.23703368132313093</coordinates>
-        <coordinates>0.3554975185543298</coordinates>
-        <coordinates>0.3879029005765915</coordinates>
-        <coordinates>0.48340866466363264</coordinates>
-        <coordinates>0.38522721330324805</coordinates>
+        <coordinates>0.2736679217437595</coordinates>
+        <coordinates>0.427892727824765</coordinates>
+        <coordinates>1.428737669689213</coordinates>
+        <coordinates>1.4605674894624656</coordinates>
+        <coordinates>1.1773457735136128</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.21479249621431032</coordinates>
-        <coordinates>0.3168139358361562</coordinates>
-        <coordinates>0.371864599486192</coordinates>
-        <coordinates>0.43616736928621924</coordinates>
-        <coordinates>0.31542499363422394</coordinates>
+        <coordinates>0.30334819075752945</coordinates>
+        <coordinates>0.5111773731798137</coordinates>
+        <coordinates>1.539724946809173</coordinates>
+        <coordinates>1.5170098187751286</coordinates>
+        <coordinates>1.3804976471421604</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.2413679969807466</coordinates>
-        <coordinates>0.3434386178851127</coordinates>
-        <coordinates>0.40665504336357117</coordinates>
-        <coordinates>0.46998689572016394</coordinates>
-        <coordinates>0.3270032306512196</coordinates>
+        <coordinates>0.3235041576533662</coordinates>
+        <coordinates>0.6337321627633219</coordinates>
+        <coordinates>1.4171001193966972</coordinates>
+        <coordinates>1.4557438753082985</coordinates>
+        <coordinates>1.4252517809690908</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.2644158862531185</coordinates>
-        <coordinates>0.37604577839374537</coordinates>
-        <coordinates>0.4419219146172205</coordinates>
-        <coordinates>0.5062951743602753</coordinates>
-        <coordinates>0.3443023065725962</coordinates>
+        <coordinates>0.34605971221668114</coordinates>
+        <coordinates>0.6583892044924955</coordinates>
+        <coordinates>1.4301856271345805</coordinates>
+        <coordinates>1.4882648872760802</coordinates>
+        <coordinates>1.4692000203045248</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.2911234634617964</coordinates>
-        <coordinates>0.413856436808904</coordinates>
-        <coordinates>0.4836482654015223</coordinates>
-        <coordinates>0.548748622337977</coordinates>
-        <coordinates>0.3646288216114044</coordinates>
+        <coordinates>0.2746612378309317</coordinates>
+        <coordinates>0.5634298156210527</coordinates>
+        <coordinates>1.3207041622595432</coordinates>
+        <coordinates>1.3943722974470845</coordinates>
+        <coordinates>1.3618154015614559</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.3229359475274881</coordinates>
-        <coordinates>0.4593119186659654</coordinates>
-        <coordinates>0.5307448556025822</coordinates>
-        <coordinates>0.5933228135108948</coordinates>
-        <coordinates>0.3871886531511942</coordinates>
+        <coordinates>0.30461969803878525</coordinates>
+        <coordinates>0.5552293741362369</coordinates>
+        <coordinates>1.295858489116302</coordinates>
+        <coordinates>1.410939142595035</coordinates>
+        <coordinates>1.375712051367702</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.3287662180761496</coordinates>
-        <coordinates>0.5197578072547913</coordinates>
-        <coordinates>0.6102067604660988</coordinates>
-        <coordinates>0.6925288736820221</coordinates>
-        <coordinates>0.45871364076932264</coordinates>
+        <coordinates>0.32941929454588564</coordinates>
+        <coordinates>0.5423046137419201</coordinates>
+        <coordinates>1.270893653772216</coordinates>
+        <coordinates>1.412710399576511</coordinates>
+        <coordinates>1.3860606906933632</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.34752849861979485</coordinates>
-        <coordinates>0.5785772564510505</coordinates>
-        <coordinates>0.6827664921681086</coordinates>
-        <coordinates>0.76243557035923</coordinates>
-        <coordinates>0.5101091861724854</coordinates>
+        <coordinates>0.3490746334026151</coordinates>
+        <coordinates>0.5297192314948573</coordinates>
+        <coordinates>1.2515223193768747</coordinates>
+        <coordinates>1.40732298895813</coordinates>
+        <coordinates>1.3968389146817028</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.35120120272040367</coordinates>
-        <coordinates>0.8562463658551376</coordinates>
-        <coordinates>0.8460360566775003</coordinates>
-        <coordinates>0.9189619322617848</coordinates>
-        <coordinates>0.6518182357152302</coordinates>
+        <coordinates>0.365636159535157</coordinates>
+        <coordinates>0.5217865243173971</coordinates>
+        <coordinates>1.236271508769684</coordinates>
+        <coordinates>1.4040766579658062</coordinates>
+        <coordinates>1.4060658572213662</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.3531109678248564</coordinates>
-        <coordinates>0.986165851354599</coordinates>
-        <coordinates>0.9546038930614789</coordinates>
-        <coordinates>1.0092220952113469</coordinates>
-        <coordinates>0.7076426843802133</coordinates>
+        <coordinates>0.3787903447049196</coordinates>
+        <coordinates>0.5154786548931896</coordinates>
+        <coordinates>1.2245272989506024</coordinates>
+        <coordinates>1.4052999571704632</coordinates>
+        <coordinates>1.4139231663147982</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.3609331684807936</coordinates>
-        <coordinates>1.067107376952966</coordinates>
-        <coordinates>1.0181467657287915</coordinates>
-        <coordinates>1.0860196749369302</coordinates>
-        <coordinates>0.7503163715203602</coordinates>
+        <coordinates>0.38795033692622244</coordinates>
+        <coordinates>0.5066023745616723</coordinates>
+        <coordinates>1.216568528261752</coordinates>
+        <coordinates>1.4071445594689074</coordinates>
+        <coordinates>1.4192928938588592</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.3755914506812891</coordinates>
-        <coordinates>1.1307907576362293</coordinates>
-        <coordinates>1.0598722820480664</coordinates>
-        <coordinates>1.1534562657276788</coordinates>
-        <coordinates>0.7937026222546895</coordinates>
+        <coordinates>0.3951268143743349</coordinates>
+        <coordinates>0.496720724004825</coordinates>
+        <coordinates>1.2107797422128745</coordinates>
+        <coordinates>1.409848605349707</coordinates>
+        <coordinates>1.419272097271565</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.39325631534059846</coordinates>
-        <coordinates>1.1799149587750435</coordinates>
-        <coordinates>1.0968211367726326</coordinates>
-        <coordinates>1.204223851362864</coordinates>
-        <coordinates>0.853912462790807</coordinates>
+        <coordinates>0.3995997726777302</coordinates>
+        <coordinates>0.48824324826953197</coordinates>
+        <coordinates>1.2050191033309334</coordinates>
+        <coordinates>1.4139178190199324</coordinates>
+        <coordinates>1.421086313551635</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.40693206464250886</coordinates>
-        <coordinates>1.2247998888293903</coordinates>
-        <coordinates>1.1319158648451169</coordinates>
-        <coordinates>1.2485556552807489</coordinates>
-        <coordinates>0.9114088714122772</coordinates>
+        <coordinates>0.4011339605232805</coordinates>
+        <coordinates>0.4800095154822028</coordinates>
+        <coordinates>1.201078719901155</coordinates>
+        <coordinates>1.4192782519900817</coordinates>
+        <coordinates>1.4207773124688932</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.398927399267753</coordinates>
-        <coordinates>1.2608562236030896</coordinates>
-        <coordinates>1.1827099795142808</coordinates>
-        <coordinates>1.3171025067567825</coordinates>
-        <coordinates>0.9647589325904846</coordinates>
+        <coordinates>0.40164127563467084</coordinates>
+        <coordinates>0.47076890768334184</coordinates>
+        <coordinates>1.1976087895195926</coordinates>
+        <coordinates>1.424449833365533</coordinates>
+        <coordinates>1.4183747720335844</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.40486007307966554</coordinates>
-        <coordinates>1.2913747106989224</coordinates>
-        <coordinates>1.232849471271038</coordinates>
-        <coordinates>1.3766375531752904</coordinates>
-        <coordinates>1.01016166806221</coordinates>
+        <coordinates>0.4014125792876106</coordinates>
+        <coordinates>0.4645402526310633</coordinates>
+        <coordinates>1.1944227582847158</coordinates>
+        <coordinates>1.4283569337208935</coordinates>
+        <coordinates>1.4174064848328194</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.40149773036440217</coordinates>
-        <coordinates>1.3404241725802422</coordinates>
-        <coordinates>1.3377626265088716</coordinates>
-        <coordinates>1.484276180466016</coordinates>
-        <coordinates>1.0887973606586456</coordinates>
+        <coordinates>0.39927130834775487</coordinates>
+        <coordinates>0.4612645084229992</coordinates>
+        <coordinates>1.1924411801860257</coordinates>
+        <coordinates>1.430962905443841</coordinates>
+        <coordinates>1.420453443663888</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.4005325771868229</coordinates>
-        <coordinates>1.3713076437513034</coordinates>
-        <coordinates>1.4104406560460725</coordinates>
-        <coordinates>1.551245038708051</coordinates>
-        <coordinates>1.1382666726907094</coordinates>
+        <coordinates>0.39460039750224857</coordinates>
+        <coordinates>0.4604852190113063</coordinates>
+        <coordinates>1.1930039009689537</coordinates>
+        <coordinates>1.4356330505060662</coordinates>
+        <coordinates>1.4291285240046256</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.4082152880728245</coordinates>
-        <coordinates>1.4020863100886345</coordinates>
-        <coordinates>1.4934752906362214</coordinates>
-        <coordinates>1.6154037167628605</coordinates>
-        <coordinates>1.1887710988521576</coordinates>
+        <coordinates>0.3852319627449214</coordinates>
+        <coordinates>0.46468424290237526</coordinates>
+        <coordinates>1.2049379609530324</coordinates>
+        <coordinates>1.4501399937576012</coordinates>
+        <coordinates>1.4479819148782618</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.4105437733232975</coordinates>
-        <coordinates>1.4265264396866162</coordinates>
-        <coordinates>1.5269878233472505</coordinates>
-        <coordinates>1.6599673479795456</coordinates>
-        <coordinates>1.2218571801980336</coordinates>
+        <coordinates>0.3661618737119455</coordinates>
+        <coordinates>0.4920408051793917</coordinates>
+        <coordinates>1.2433448553822957</coordinates>
+        <coordinates>1.4900975990668617</coordinates>
+        <coordinates>1.4887929006909564</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.39277459060152375</coordinates>
-        <coordinates>1.3961623832583427</coordinates>
-        <coordinates>1.5844995702306428</coordinates>
-        <coordinates>1.634002869327863</coordinates>
-        <coordinates>1.2122173011302948</coordinates>
+        <coordinates>0.3544773970650899</coordinates>
+        <coordinates>0.5275080109295558</coordinates>
+        <coordinates>1.2837872808027988</coordinates>
+        <coordinates>1.539447389931664</coordinates>
+        <coordinates>1.5376932137276782</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.4130066571136316</coordinates>
-        <coordinates>1.607217215001583</coordinates>
-        <coordinates>1.852793050309022</coordinates>
-        <coordinates>1.8938544044891992</coordinates>
-        <coordinates>1.471795529127121</coordinates>
+        <coordinates>0.368709647901678</coordinates>
+        <coordinates>0.5885769819808881</coordinates>
+        <coordinates>1.3501064163453655</coordinates>
+        <coordinates>1.6109152884419062</coordinates>
+        <coordinates>1.617420517783256</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.4810941331088543</coordinates>
-        <coordinates>1.6910287862022717</coordinates>
-        <coordinates>1.909430993100007</coordinates>
-        <coordinates>1.9232074668010073</coordinates>
-        <coordinates>1.4846202234427133</coordinates>
+        <coordinates>0.397650451958708</coordinates>
+        <coordinates>0.7078789199775095</coordinates>
+        <coordinates>1.475390463027328</coordinates>
+        <coordinates>1.7298623922080958</coordinates>
+        <coordinates>1.7522370765834372</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.4777569559713205</coordinates>
-        <coordinates>1.92677158365647</coordinates>
-        <coordinates>1.9555467491348582</coordinates>
-        <coordinates>1.9976469526688256</coordinates>
-        <coordinates>1.5625952382882433</coordinates>
+        <coordinates>0.44497530818827097</coordinates>
+        <coordinates>0.8344723224386426</coordinates>
+        <coordinates>1.5761446166106006</coordinates>
+        <coordinates>1.9033194009086976</coordinates>
+        <coordinates>1.941135940775238</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.4647647632906834</coordinates>
-        <coordinates>1.926533800860246</coordinates>
-        <coordinates>1.9409307762980461</coordinates>
-        <coordinates>1.9825320889552431</coordinates>
-        <coordinates>1.5531812806924181</coordinates>
+        <coordinates>0.43018558770752463</coordinates>
+        <coordinates>0.8472546266789107</coordinates>
+        <coordinates>1.583714777182695</coordinates>
+        <coordinates>1.9180680158710337</coordinates>
+        <coordinates>1.965733881667694</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.49302877858281136</coordinates>
-        <coordinates>1.7725713774561882</coordinates>
-        <coordinates>1.952226084967454</coordinates>
-        <coordinates>1.9494303415218988</coordinates>
-        <coordinates>1.544769823551178</coordinates>
+        <coordinates>0.4091741375228774</coordinates>
+        <coordinates>0.8844409780870379</coordinates>
+        <coordinates>1.5912169618364196</coordinates>
+        <coordinates>1.9365042231429501</coordinates>
+        <coordinates>1.9934695475490651</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5154509879648685</coordinates>
-        <coordinates>2.0655451143781343</coordinates>
-        <coordinates>1.965012801190217</coordinates>
-        <coordinates>2.0499248057603836</coordinates>
-        <coordinates>1.6532658835252123</coordinates>
+        <coordinates>0.3818930331738694</coordinates>
+        <coordinates>0.9792082373067605</coordinates>
+        <coordinates>1.5924141875925748</coordinates>
+        <coordinates>1.9543789792196047</coordinates>
+        <coordinates>2.01799019172889</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5391970413426558</coordinates>
-        <coordinates>2.1172241990764933</coordinates>
-        <coordinates>2.0362497890988984</coordinates>
-        <coordinates>2.0982634276151657</coordinates>
-        <coordinates>1.6933725972970324</coordinates>
+        <coordinates>0.3900922532192241</coordinates>
+        <coordinates>1.2824927789021765</coordinates>
+        <coordinates>1.5213316624721807</coordinates>
+        <coordinates>1.8806205244409528</coordinates>
+        <coordinates>1.9335095557391926</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5486387126147747</coordinates>
-        <coordinates>2.118103908995787</coordinates>
-        <coordinates>2.055343377093474</coordinates>
-        <coordinates>2.106544236342112</coordinates>
-        <coordinates>1.701536387205124</coordinates>
+        <coordinates>0.37369206604261257</coordinates>
+        <coordinates>1.2999194029209569</coordinates>
+        <coordinates>1.508380082448971</coordinates>
+        <coordinates>1.8748115396812466</coordinates>
+        <coordinates>1.9205656304557202</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5512357937792937</coordinates>
-        <coordinates>2.088001653552055</coordinates>
-        <coordinates>2.054076107839743</coordinates>
-        <coordinates>2.100442881385485</coordinates>
-        <coordinates>1.709430972735087</coordinates>
+        <coordinates>0.3588618353966478</coordinates>
+        <coordinates>1.3114091228430886</coordinates>
+        <coordinates>1.4665242755354977</coordinates>
+        <coordinates>1.8259414794154725</coordinates>
+        <coordinates>1.8597302389139456</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.55907300238808</coordinates>
-        <coordinates>2.0873396930595236</coordinates>
-        <coordinates>2.0539223303397494</coordinates>
-        <coordinates>2.091028695305188</coordinates>
-        <coordinates>1.711018294095993</coordinates>
+        <coordinates>0.33805117201821394</coordinates>
+        <coordinates>1.324086759031837</coordinates>
+        <coordinates>1.3915938978339901</coordinates>
+        <coordinates>1.733433819765618</coordinates>
+        <coordinates>1.74939732868276</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5643912193675836</coordinates>
-        <coordinates>2.0865805869301157</coordinates>
-        <coordinates>2.055195500453313</coordinates>
-        <coordinates>2.0905137384931245</coordinates>
-        <coordinates>1.7147585650285082</coordinates>
+        <coordinates>0.30705984090376665</coordinates>
+        <coordinates>1.339153157268191</coordinates>
+        <coordinates>1.3276902616176767</coordinates>
+        <coordinates>1.6537582025586581</coordinates>
+        <coordinates>1.6590342510876077</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5695719706515471</coordinates>
-        <coordinates>2.0894165523350234</coordinates>
-        <coordinates>2.066004532078902</coordinates>
-        <coordinates>2.0918853854139643</coordinates>
-        <coordinates>1.7175636490186053</coordinates>
+        <coordinates>0.27266104533816155</coordinates>
+        <coordinates>1.342647590042062</coordinates>
+        <coordinates>1.284914834139127</coordinates>
+        <coordinates>1.5906451458953932</coordinates>
+        <coordinates>1.5936974852506243</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5738464233775934</coordinates>
-        <coordinates>2.0919119529426093</coordinates>
-        <coordinates>2.075130427877108</coordinates>
-        <coordinates>2.0951574916640916</coordinates>
-        <coordinates>1.7199677725632982</coordinates>
+        <coordinates>0.24326136593983833</coordinates>
+        <coordinates>1.328602028702075</coordinates>
+        <coordinates>1.2605196242398815</coordinates>
+        <coordinates>1.532929658240714</coordinates>
+        <coordinates>1.5424147156300976</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5770530141890049</coordinates>
-        <coordinates>2.0946303258339563</coordinates>
-        <coordinates>2.0795290370782213</coordinates>
-        <coordinates>2.099058670302232</coordinates>
-        <coordinates>1.7218911747137704</coordinates>
+        <coordinates>0.27869738076168754</coordinates>
+        <coordinates>1.2846773929235762</coordinates>
+        <coordinates>1.418876136628691</coordinates>
+        <coordinates>1.5283155398356492</coordinates>
+        <coordinates>1.5137900094830634</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5809220957259337</coordinates>
-        <coordinates>2.0999629733463125</coordinates>
-        <coordinates>2.0847691744565964</coordinates>
-        <coordinates>2.10464383661747</coordinates>
-        <coordinates>1.723516951004664</coordinates>
+        <coordinates>0.1840658277631591</coordinates>
+        <coordinates>1.0625479447835218</coordinates>
+        <coordinates>1.0381132334324858</coordinates>
+        <coordinates>1.1852129580047506</coordinates>
+        <coordinates>1.200952964570578</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5657127139468988</coordinates>
-        <coordinates>1.8195374111334484</coordinates>
-        <coordinates>2.0105545048912363</coordinates>
-        <coordinates>2.017417418460051</coordinates>
-        <coordinates>1.6429209013779955</coordinates>
+        <coordinates>0.1558740593459837</coordinates>
+        <coordinates>0.9783872387756876</coordinates>
+        <coordinates>0.9860600742356689</coordinates>
+        <coordinates>1.0865556851872442</coordinates>
+        <coordinates>1.0944009349843562</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5678997921446959</coordinates>
-        <coordinates>1.8215992798407872</coordinates>
-        <coordinates>2.012493068973223</coordinates>
-        <coordinates>2.0205045292774835</coordinates>
-        <coordinates>1.6455611884593964</coordinates>
+        <coordinates>0.08234929756108994</coordinates>
+        <coordinates>0.8094648817298093</coordinates>
+        <coordinates>0.8416224081049262</coordinates>
+        <coordinates>0.8446023403259311</coordinates>
+        <coordinates>0.8407478825034549</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5694004682203134</coordinates>
-        <coordinates>1.8238427837689717</coordinates>
-        <coordinates>2.015062781671683</coordinates>
-        <coordinates>2.0238525470097857</coordinates>
-        <coordinates>1.6489577690760293</coordinates>
+        <coordinates>0.054017970785767866</coordinates>
+        <coordinates>0.6870229727283728</coordinates>
+        <coordinates>0.7282451602242364</coordinates>
+        <coordinates>0.7036479746944846</coordinates>
+        <coordinates>0.6957359480094404</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.573448314021031</coordinates>
-        <coordinates>1.827421764532725</coordinates>
-        <coordinates>2.015606512626012</coordinates>
-        <coordinates>2.025427793463071</coordinates>
-        <coordinates>1.6505400935808816</coordinates>
+        <coordinates>0.09744980493222222</coordinates>
+        <coordinates>0.7779633725190149</coordinates>
+        <coordinates>0.801430763984768</coordinates>
+        <coordinates>0.7938069326704322</coordinates>
+        <coordinates>0.8351765836812688</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5745581475396951</coordinates>
-        <coordinates>1.8274914001425107</coordinates>
-        <coordinates>2.011835642158985</coordinates>
-        <coordinates>2.0263096690177917</coordinates>
-        <coordinates>1.6519266764322915</coordinates>
+        <coordinates>0.052674208453791005</coordinates>
+        <coordinates>0.5689388391694004</coordinates>
+        <coordinates>0.6116303377531558</coordinates>
+        <coordinates>0.5709124932749505</coordinates>
+        <coordinates>0.5557333635651126</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5761252281566461</coordinates>
-        <coordinates>1.8248432005445163</coordinates>
-        <coordinates>2.0060216163595515</coordinates>
-        <coordinates>2.026895746588707</coordinates>
-        <coordinates>1.65248962243398</coordinates>
+        <coordinates>0.028143325099981575</coordinates>
+        <coordinates>0.9254806858716769</coordinates>
+        <coordinates>0.9431344334235465</coordinates>
+        <coordinates>0.9104120486786837</coordinates>
+        <coordinates>0.9525844044561254</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5783336497843266</coordinates>
-        <coordinates>1.8190658316016195</coordinates>
-        <coordinates>2.0030284772316613</coordinates>
-        <coordinates>2.026486699779828</coordinates>
-        <coordinates>1.6533658504486084</coordinates>
+        <coordinates>0.010225942680264222</coordinates>
+        <coordinates>0.816180568855958</coordinates>
+        <coordinates>0.8183350260139253</coordinates>
+        <coordinates>0.769505224740891</coordinates>
+        <coordinates>0.790427067867062</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5793376751244068</coordinates>
-        <coordinates>1.810892768204212</coordinates>
-        <coordinates>1.9973479732871056</coordinates>
-        <coordinates>2.024002492427826</coordinates>
-        <coordinates>1.6529581944147744</coordinates>
+        <coordinates>0.02560723006980875</coordinates>
+        <coordinates>0.5210585807585928</coordinates>
+        <coordinates>0.5474275886446098</coordinates>
+        <coordinates>0.4973648815001298</coordinates>
+        <coordinates>0.4998885318369739</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5795994487901529</coordinates>
-        <coordinates>1.795637307067712</coordinates>
-        <coordinates>1.989460763831933</coordinates>
-        <coordinates>2.020415246486664</coordinates>
-        <coordinates>1.6525629162788391</coordinates>
+        <coordinates>0.006949988811949137</coordinates>
+        <coordinates>0.36402508298187025</coordinates>
+        <coordinates>0.38295168412036024</coordinates>
+        <coordinates>0.34382634786241073</coordinates>
+        <coordinates>0.31771241588747623</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5771023916701475</coordinates>
-        <coordinates>1.7807894349098206</coordinates>
-        <coordinates>1.9814909175038338</coordinates>
-        <coordinates>2.015910804271698</coordinates>
-        <coordinates>1.6513934234778085</coordinates>
+        <coordinates>0.0053220465868639155</coordinates>
+        <coordinates>0.2487152534285793</coordinates>
+        <coordinates>0.27420837162416173</coordinates>
+        <coordinates>0.2477706672525961</coordinates>
+        <coordinates>0.2197060792686508</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.577205840498209</coordinates>
-        <coordinates>1.7793666136761506</coordinates>
-        <coordinates>1.978693400820096</coordinates>
-        <coordinates>2.0133993178606033</coordinates>
-        <coordinates>1.6523701349894204</coordinates>
+        <coordinates>6.663382053375133E-4</coordinates>
+        <coordinates>0.1291200637817383</coordinates>
+        <coordinates>0.16041653752326962</coordinates>
+        <coordinates>0.150241856276989</coordinates>
+        <coordinates>0.11949914395809172</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5810472356776396</coordinates>
-        <coordinates>1.789650373160839</coordinates>
-        <coordinates>1.9844215735793114</coordinates>
-        <coordinates>2.0171815156936646</coordinates>
-        <coordinates>1.655531307061513</coordinates>
+        <coordinates>-0.001654872298240656</coordinates>
+        <coordinates>0.07184460163116452</coordinates>
+        <coordinates>0.09968695640563963</coordinates>
+        <coordinates>0.09544698745012287</coordinates>
+        <coordinates>0.07569876015186308</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
     <meanFrames>
-        <coordinates>0.5917840885619322</coordinates>
-        <coordinates>1.8022497817873953</coordinates>
-        <coordinates>2.007181180020173</coordinates>
-        <coordinates>2.031708975632985</coordinates>
-        <coordinates>1.6627499858538308</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.6044728544851145</coordinates>
-        <coordinates>1.8173127596577008</coordinates>
-        <coordinates>2.0305799270669618</coordinates>
-        <coordinates>2.0504311273495355</coordinates>
-        <coordinates>1.6719859441121416</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.5956322538355986</coordinates>
-        <coordinates>1.8704738343755405</coordinates>
-        <coordinates>2.0651517237226167</coordinates>
-        <coordinates>2.0556114464998245</coordinates>
-        <coordinates>1.644366254409154</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.5987208870549997</coordinates>
-        <coordinates>1.906424495081107</coordinates>
-        <coordinates>2.0945312306284904</coordinates>
-        <coordinates>2.0921364575624466</coordinates>
-        <coordinates>1.650473395983378</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.5936693934102854</coordinates>
-        <coordinates>1.9117108310262363</coordinates>
-        <coordinates>2.097758424778779</coordinates>
-        <coordinates>2.123290404677391</coordinates>
-        <coordinates>1.6795271138350167</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.5769027508795261</coordinates>
-        <coordinates>1.9905143504341443</coordinates>
-        <coordinates>2.1998147889971733</coordinates>
-        <coordinates>2.233836139241854</coordinates>
-        <coordinates>1.821022977431615</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.5084439255297184</coordinates>
-        <coordinates>1.9583019937078159</coordinates>
-        <coordinates>2.1675445958971977</coordinates>
-        <coordinates>2.186777318517367</coordinates>
-        <coordinates>1.7850315868854523</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.5163049139082432</coordinates>
-        <coordinates>2.047708543638388</coordinates>
-        <coordinates>2.2284688875079155</coordinates>
-        <coordinates>2.240383431315422</coordinates>
-        <coordinates>1.815535138050715</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.5321680245300134</coordinates>
-        <coordinates>2.092252356310685</coordinates>
-        <coordinates>2.250997814039389</coordinates>
-        <coordinates>2.2522847702105837</coordinates>
-        <coordinates>1.837335060040156</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.5230339206755161</coordinates>
-        <coordinates>2.0207443162798877</coordinates>
-        <coordinates>2.187147093315919</coordinates>
-        <coordinates>2.185173953572909</coordinates>
-        <coordinates>1.7995657821496325</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.5302300540109476</coordinates>
-        <coordinates>1.9702992265423138</coordinates>
-        <coordinates>2.154013864696026</coordinates>
-        <coordinates>2.1623365531365075</coordinates>
-        <coordinates>1.779973616202672</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.5247922725975513</coordinates>
-        <coordinates>1.8121821507811544</coordinates>
-        <coordinates>2.0434704547127085</coordinates>
-        <coordinates>2.07438821097215</coordinates>
-        <coordinates>1.7013722161451974</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.507740198324124</coordinates>
-        <coordinates>1.743351382513841</coordinates>
-        <coordinates>1.9934510712822275</coordinates>
-        <coordinates>2.0348243564367294</coordinates>
-        <coordinates>1.6590966482957201</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.508896429091692</coordinates>
-        <coordinates>1.734929544230302</coordinates>
-        <coordinates>1.9701027000943818</coordinates>
-        <coordinates>2.0260302275419235</coordinates>
-        <coordinates>1.6490982870260873</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.5070179589092731</coordinates>
-        <coordinates>1.7384492581089337</coordinates>
-        <coordinates>1.9531058197220164</coordinates>
-        <coordinates>2.0117578158775964</coordinates>
-        <coordinates>1.6518367628256478</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.48938785369197524</coordinates>
-        <coordinates>1.6854296649495761</coordinates>
-        <coordinates>1.8906350458661714</coordinates>
-        <coordinates>1.9186418503522873</coordinates>
-        <coordinates>1.5682950715223947</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.4454907812178135</coordinates>
-        <coordinates>1.5705033962925274</coordinates>
-        <coordinates>1.7614243552088737</coordinates>
-        <coordinates>1.7761037598053613</coordinates>
-        <coordinates>1.4660638272762299</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.4418437220156193</coordinates>
-        <coordinates>1.2935200855135918</coordinates>
-        <coordinates>1.4811133071780205</coordinates>
-        <coordinates>1.4705777615308762</coordinates>
-        <coordinates>1.1951634188493092</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.44138095155358315</coordinates>
-        <coordinates>1.2315733060240746</coordinates>
-        <coordinates>1.422329100469748</coordinates>
-        <coordinates>1.4104465593894322</coordinates>
-        <coordinates>1.1314036945501962</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.3857952939967314</coordinates>
-        <coordinates>1.301689865688483</coordinates>
-        <coordinates>1.2784190103411674</coordinates>
-        <coordinates>1.2310438305139542</coordinates>
-        <coordinates>0.9750379025936127</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.36090399945775664</coordinates>
-        <coordinates>1.2456669832269351</coordinates>
-        <coordinates>1.2231988434990246</coordinates>
-        <coordinates>1.1770408103863397</coordinates>
-        <coordinates>0.9169621368249257</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.324105117470026</coordinates>
-        <coordinates>1.1998305842280388</coordinates>
-        <coordinates>1.178573173781236</coordinates>
-        <coordinates>1.1403082559506097</coordinates>
-        <coordinates>0.8749763468901315</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.2650330451627573</coordinates>
-        <coordinates>1.0364322289824486</coordinates>
-        <coordinates>1.070303571720918</coordinates>
-        <coordinates>1.009930357336998</coordinates>
-        <coordinates>0.7273713548978169</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.23284145072102544</coordinates>
-        <coordinates>0.9872528339425723</coordinates>
-        <coordinates>1.0135568802555401</coordinates>
-        <coordinates>0.9583428551753361</coordinates>
-        <coordinates>0.6742448806762695</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.20003280540307364</coordinates>
-        <coordinates>0.9407334153850873</coordinates>
-        <coordinates>0.964613638818264</coordinates>
-        <coordinates>0.9129717896382012</coordinates>
-        <coordinates>0.6285519103209176</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.18575921033819517</coordinates>
-        <coordinates>1.076330674191316</coordinates>
-        <coordinates>1.07302375882864</coordinates>
-        <coordinates>1.0465706338485081</coordinates>
-        <coordinates>0.7623725235462189</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.1528042936697602</coordinates>
-        <coordinates>1.0653787776827812</coordinates>
-        <coordinates>1.0339983627200127</coordinates>
-        <coordinates>1.0060556481281915</coordinates>
-        <coordinates>0.7288793722788491</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.13105673467119536</coordinates>
-        <coordinates>1.0052429214119911</coordinates>
-        <coordinates>0.966823123395443</coordinates>
-        <coordinates>0.9416776448488235</coordinates>
-        <coordinates>0.6932184398174286</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.19882182031869886</coordinates>
-        <coordinates>0.975916566948096</coordinates>
-        <coordinates>1.1771315857768059</coordinates>
-        <coordinates>1.1573537240425744</coordinates>
-        <coordinates>0.9112883607546487</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.1409729247291883</coordinates>
-        <coordinates>0.8319823518395424</coordinates>
-        <coordinates>0.8652723357081413</coordinates>
-        <coordinates>0.8288928518692651</coordinates>
-        <coordinates>0.6251026193300881</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.129158283273379</coordinates>
-        <coordinates>0.7865813449025154</coordinates>
-        <coordinates>0.81279635677735</coordinates>
-        <coordinates>0.784405305981636</coordinates>
-        <coordinates>0.5840327839056649</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.1136221227546533</coordinates>
-        <coordinates>0.757610522210598</coordinates>
-        <coordinates>0.7733916466434796</coordinates>
-        <coordinates>0.7527371744314829</coordinates>
-        <coordinates>0.5524087846279144</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.1030698431034883</coordinates>
-        <coordinates>0.7529810244838397</coordinates>
-        <coordinates>0.7567981258034706</coordinates>
-        <coordinates>0.7218048473199208</coordinates>
-        <coordinates>0.5118084649244943</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.07444969688852629</coordinates>
-        <coordinates>0.48426593591769534</coordinates>
-        <coordinates>0.7880061094959576</coordinates>
-        <coordinates>0.7606275131305058</coordinates>
-        <coordinates>0.5158673723538716</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.03738358865181604</coordinates>
-        <coordinates>0.39721977959076565</coordinates>
-        <coordinates>0.6982158993681271</coordinates>
-        <coordinates>0.6807753096024195</coordinates>
-        <coordinates>0.43811506032943726</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.044421357413132995</coordinates>
-        <coordinates>0.4355685338377952</coordinates>
-        <coordinates>0.6856209511558214</coordinates>
-        <coordinates>0.6453346361716588</coordinates>
-        <coordinates>0.3647936681906382</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.005941018462181091</coordinates>
-        <coordinates>0.39460805803537363</coordinates>
-        <coordinates>0.5544828151663144</coordinates>
-        <coordinates>0.5220542798439661</coordinates>
-        <coordinates>0.2657794157663981</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>-0.004141172394156456</coordinates>
-        <coordinates>0.2820378864804904</coordinates>
-        <coordinates>0.3575065955519676</coordinates>
-        <coordinates>0.3528597503900528</coordinates>
-        <coordinates>0.20889712373415625</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>-0.010887635871767998</coordinates>
-        <coordinates>0.2069033458828926</coordinates>
-        <coordinates>0.2340535894036293</coordinates>
-        <coordinates>0.2607437074184418</coordinates>
-        <coordinates>0.16205345590909315</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>-0.013546482970317214</coordinates>
-        <coordinates>0.16469560315211612</coordinates>
-        <coordinates>0.16925242294867832</coordinates>
-        <coordinates>0.20278290907541907</coordinates>
-        <coordinates>0.1248615185419718</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>-0.011400839934746415</coordinates>
-        <coordinates>0.12525583058595657</coordinates>
-        <coordinates>0.11154410988092422</coordinates>
-        <coordinates>0.14314598590135574</coordinates>
-        <coordinates>0.07709237933158875</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>-0.002276527384916932</coordinates>
-        <coordinates>0.09151551375786465</coordinates>
-        <coordinates>0.0715676223238309</coordinates>
-        <coordinates>0.09166015436251956</coordinates>
-        <coordinates>0.04892350236574805</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.007113322615623474</coordinates>
-        <coordinates>0.0639643793304761</coordinates>
-        <coordinates>0.04887349158525467</coordinates>
-        <coordinates>0.049846502641836765</coordinates>
-        <coordinates>0.037970393896102905</coordinates>
-        <distanceToTestingPoint>0.0</distanceToTestingPoint>
-    </meanFrames>
-    <meanFrames>
-        <coordinates>0.015463652710119874</coordinates>
-        <coordinates>0.04417240619659424</coordinates>
-        <coordinates>0.03574457516272861</coordinates>
-        <coordinates>0.03672976295153296</coordinates>
-        <coordinates>0.03445049126942945</coordinates>
+        <coordinates>-0.0036476761102676447</coordinates>
+        <coordinates>0.02976867556571955</coordinates>
+        <coordinates>0.05663735270500181</coordinates>
+        <coordinates>0.05449967235326769</coordinates>
+        <coordinates>0.049928665161132785</coordinates>
         <distanceToTestingPoint>0.0</distanceToTestingPoint>
     </meanFrames>
 </MovementPattern>

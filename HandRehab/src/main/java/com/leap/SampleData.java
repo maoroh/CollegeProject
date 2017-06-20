@@ -50,7 +50,7 @@ public class SampleData {
 		
 		for(FrameData data : this.framesData)
 		{
-			data.setAnglesVector2(StaticData.initData);
+			//data.setAnglesVector2(StaticData.initData);
 			vectors.add(data.getAnglesVector2());
 		}
 		
