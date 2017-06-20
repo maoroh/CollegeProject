@@ -66,7 +66,9 @@ public class Feedback {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			diffs [i] = 100 - (Math.abs(sumTrain - sumRehab) / sumTrain) * 100;
+			double div = sumTrain > sumRehab ? sumTrain : sumRehab;
+			double a = Math.abs(sumTrain - sumRehab) / div ;
+			diffs [i] = 100 - a * 100;
 			
 		}
 		

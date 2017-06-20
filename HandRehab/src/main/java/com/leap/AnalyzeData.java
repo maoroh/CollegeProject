@@ -58,7 +58,7 @@ public class AnalyzeData
 			DataVector testingPoint = anglesVectorOfFrame.get(samples.getSize()/2);
 			
 			//Add the mean frame after KNNRegression to the pattern
-			mPattern.addVector(KNNRegression(testingPoint, anglesVectorOfFrame,3));
+			mPattern.addVector(KNNRegression(testingPoint, anglesVectorOfFrame,4));
 		}
 		
 		return mPattern;
@@ -157,8 +157,7 @@ public class AnalyzeData
 		SampleSet rehabFixed = fixSampleSet(rehabSet);
 		SampleSet trainingFixed = fixSampleSet(trainingSet);
 		JAXBTools.saveSampleSetXML(rehabFixed , "rehabDataFixed.xml");
-		smoothSampleSet(rehabFixed);
-		smoothSampleSet(trainingFixed);
+		
 		rehabMP = buildMovementPattern(rehabFixed);
 		trainMP = buildMovementPattern(trainingFixed);
 		JAXBTools.savePatternXML(rehabMP,"rehabMP.xml");
