@@ -148,8 +148,8 @@ public class AnalyzeData
 	{
 		SampleSet trainingSet = JAXBTools.getTrainingFromXML();
 		MovementPattern rehabMP,trainMP;
-		smoothSampleSet(rehabSet);
-		smoothSampleSet(trainingSet);
+		//smoothSampleSet(rehabSet);
+		//smoothSampleSet(trainingSet);
 		int rehabMinFrameSize = findNumOfFrames (rehabSet);
 		int trainingMinFrameSize = findNumOfFrames(trainingSet);
 		JAXBTools.saveSampleSetXML(rehabSet , "rehabData.xml");
