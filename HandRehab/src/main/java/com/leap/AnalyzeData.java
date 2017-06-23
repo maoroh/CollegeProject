@@ -23,11 +23,10 @@ public class AnalyzeData
 		
 		DataVector mean = new DataVector(testingPoint.getSize());
 		
-		for(int i= points.size() - 1 ; i > points.size() - 1 - K ; i--)
+		for(int i= 0 ; i < K ; i++)
 			mean.plus(points.get(i));
-		mean.plus(testingPoint);
 		
-		double mul = 1/(double)(K+1);
+		double mul = 1/(double)K;
 		
 		mean.multiplyVec(mul);
 		return mean;
@@ -58,14 +57,29 @@ public class AnalyzeData
 			DataVector testingPoint = anglesVectorOfFrame.get(samples.getSize()/2);
 			
 			//Add the mean frame after KNNRegression to the pattern
-			mPattern.addVector(KNNRegression(testingPoint, anglesVectorOfFrame,4));
+			mPattern.addVector(KNNRegression(testingPoint, anglesVectorOfFrame , 4));
 		}
 		
 		return mPattern;
 	} 
 	
 	
-	
+	public static SampleData resizeSample(SampleData sample)
+	{
+		ArrayList<FrameData> resizedSample = new ArrayList<FrameData>();
+		int factor = sample.getNumOfFrames() / numOfFrames ;
+		int mod = sample.getNumOfFrames() % numOfFrames;
+		int index = 0;
+		while (index < sample.getNumOfFrames() && resizedSample.size() < numOfFrames)
+		{
+			resizedSample.add(sample.getFrame(index));
+			index += factor;
+		}
+		
+		
+		return new SampleData(resizedSample);
+		
+	}
 	public static SampleData avgSample (SampleData sample) throws Exception
 	{
 		
@@ -86,11 +100,20 @@ public class AnalyzeData
 				while(index < sample.getNumOfFrames())
 				{
 					FrameData avgFrame;
+					/*/
 					if(index != sample.getNumOfFrames() - 1 && index != 0) 
 					{
 						avgFrame = FrameData.framesAvg(sample.getFrame(index - 1),sample.getFrame(index));
 						avgFrame = FrameData.framesAvg(avgFrame,sample.getFrame(index + 1));
 					}
+					else avgFrame = sample.getFrame(index);
+					avgFramesData.add(avgFrame);
+					index += 2;/*/
+					
+					
+					 if(index != sample.getNumOfFrames() - 1 ) 
+						avgFrame = FrameData.framesAvg(sample.getFrame(index),sample.getFrame(index + 1));
+					
 					else avgFrame = sample.getFrame(index);
 					avgFramesData.add(avgFrame);
 					index += 2;
@@ -148,16 +171,20 @@ public class AnalyzeData
 	{
 		SampleSet trainingSet = JAXBTools.getTrainingFromXML();
 		MovementPattern rehabMP,trainMP;
-		//smoothSampleSet(rehabSet);
-		//smoothSampleSet(trainingSet);
+		calcAngles(rehabSet);
+		calcAngles(trainingSet);
+	
+		smoothSampleSet(rehabSet);
+		smoothSampleSet(trainingSet);
 		int rehabMinFrameSize = findNumOfFrames (rehabSet);
 		int trainingMinFrameSize = findNumOfFrames(trainingSet);
 		JAXBTools.saveSampleSetXML(rehabSet , "rehabData.xml");
 		numOfFrames = rehabMinFrameSize < trainingMinFrameSize ? rehabMinFrameSize : trainingMinFrameSize;
 		SampleSet rehabFixed = fixSampleSet(rehabSet);
 		SampleSet trainingFixed = fixSampleSet(trainingSet);
+		//smoothSampleSet(rehabFixed);
+		//smoothSampleSet(trainingFixed);
 		JAXBTools.saveSampleSetXML(rehabFixed , "rehabDataFixed.xml");
-		
 		rehabMP = buildMovementPattern(rehabFixed);
 		trainMP = buildMovementPattern(trainingFixed);
 		JAXBTools.savePatternXML(rehabMP,"rehabMP.xml");
@@ -184,6 +211,19 @@ public class AnalyzeData
 		return minFrames;
 		
 	}
+	
+	
+	public static void calcAngles(SampleSet samples)
+	{
+		
+		for(int i = 0 ; i < samples.getSize(); i ++)
+		{
+			SampleData sample = samples.getSample(i);
+			Data initialData = sample.getFrame(0).getData();
+			for(int j = 0 ; j < sample.getNumOfFrames(); j++)
+				sample.getFrame(j).setAnglesVector2(initialData);
+		}
+	}
 
 	public static void trainingActions(SampleSet sampleSet) throws Exception {
 		// TODO Auto-generated method stub
@@ -196,14 +236,14 @@ public class AnalyzeData
 	{
 		for(int i = 0; i < sampleSet.getSize(); i++)
 		{
-			//fixSampleDataNoiseUp(sampleSet.getSample(i));
+			fixSampleDataNoiseUp(sampleSet.getSample(i));
 			
 		}
 	}
 	
 
 	
-	public static void fixSampleDataNoiseUp(SampleData sampleData)
+	public static int fixSampleDataNoiseUp(SampleData sampleData)
 	{
 		int index = 0;
 		int threshold = 9;
@@ -241,6 +281,8 @@ public class AnalyzeData
 			sampleData.deleteFrame(0);
 		}
 		
+		return index;
+		
 	}
 	
 	public static void smoothSampleSet(SampleSet sampleSet)
@@ -255,7 +297,7 @@ public class AnalyzeData
 	public static void smoothSample(SampleData sample)
 	{
 		double [] weights = {0.015625,0.09375,0.234375,0.3125,0.234375,0.09375,0.015625};
-		
+	
 		FrameData currentFrame;
 		
 			for (int j = 3; j < sample.getNumOfFrames() - 3 ; j++)

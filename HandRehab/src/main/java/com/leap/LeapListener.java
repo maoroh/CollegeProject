@@ -58,7 +58,6 @@ public class LeapListener extends Listener {
     public void onFrame(Controller controller) {
     	
     	Frame frame = controller.frame();
-    	//this.setCurrentFrame(frame);
     	sampleBuilder.newFrame(frame);
 
     }

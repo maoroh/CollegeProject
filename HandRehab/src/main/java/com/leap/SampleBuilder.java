@@ -124,7 +124,7 @@ public class SampleBuilder {
         	numOfFrames++;
         	FrameData fr = handleFrame(frame);
         	fr.setAnglesVector();
-        	fr.setAnglesVector2(avgData);
+        	//fr.setAnglesVector2(StaticData.initData);
         	DataVector frameAngles = fr.getAnglesVector();
         
         	try {
@@ -178,7 +178,7 @@ public class SampleBuilder {
 		ArrayList<DataVector> vectors = sampleData.getSamplesVector();
 		
 		try {
-			this.initVec = AnalyzeData.KNNRegression(vectors.get(vectors.size() / 2), vectors , 15);
+			this.initVec = AnalyzeData.KNNRegression(vectors.get(vectors.size() / 2), vectors , 10);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -218,7 +218,8 @@ public class SampleBuilder {
 			}
 			
 			DataVector fingerTipAVG = AnalyzeData.KNNRegression(points.get(points.size() / 2), points, 10);
-			fingerTipAVG.setName(Finger.Type.values()[i]);
+			Finger.Type type = Finger.Type.values()[i];
+			fingerTipAVG.setName(type);
 			avgTips.add(fingerTipAVG);
 			
 		}
@@ -334,7 +335,7 @@ public class SampleBuilder {
    		 
    	 }
    	 
-   	  if(frame.hands().count() >= 1 && startMotion ) 
+   	  if(frame.hands().count() >= 1 && startMotion  ) 
    	 {
    		 return true;
    	 }

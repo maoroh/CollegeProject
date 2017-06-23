@@ -68,7 +68,9 @@ public class DataVector implements Comparable<DataVector> {
 	@Override
 	public int compareTo(DataVector o) {
 		// TODO Auto-generated method stub
-		return (int)(this.getDistanceToTestingPoint() -o.getDistanceToTestingPoint());
+		if (this.getDistanceToTestingPoint() > o.getDistanceToTestingPoint()) return 1;
+		else if (this.getDistanceToTestingPoint() < o.getDistanceToTestingPoint()) return -1;
+		else return 0;
 	}
 
 	public double getDistanceToTestingPoint() {
@@ -83,7 +85,7 @@ public class DataVector implements Comparable<DataVector> {
 	{
 		if(this.getSize() != a.getSize()) throw new InputMismatchException("Vectors are not in the same size");
 		
-		for(int i=0; i<this.getSize(); i++)
+		for(int i=0; i< this.getSize(); i++)
 			this.setCoordinate(i, this.getCoordinate(i) + a.getCoordinate(i));	
 
 	}

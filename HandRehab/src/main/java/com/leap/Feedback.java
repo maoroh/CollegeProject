@@ -23,55 +23,39 @@ public class Feedback {
 		
 	}
 	
-	public static double[] getScore(int fingerID , MovementPattern trainMP, MovementPattern rehabMP)
-	{
-		double minAngleTrain = trainMP.getMinAngle(fingerID);
-		double maxAngleTrain = trainMP.getMaxAngle(fingerID);
-		double minAngleRehab = rehabMP.getMinAngle(fingerID);
-		double maxAngleRehab = rehabMP.getMaxAngle(fingerID);
-		double minDiff = 100 - (Math.abs(minAngleTrain - minAngleRehab) / minAngleTrain) * 100;
-		double maxDiff = 100 - (Math.abs(maxAngleTrain - maxAngleRehab) / maxAngleTrain) * 100;
-		double arr [] = new double[2];
-		arr[0] = minDiff;
-		arr[1] = maxDiff;
-		
-		return arr;
-	}
 	
-	public static double[] getScore2(int fingerID , MovementPattern trainMP, MovementPattern rehabMP)
+	public static ArrayList <double [] > getScore(MovementPattern trainMP, MovementPattern rehabMP)
 	{
 		int numOfFrames = trainMP.getSize();
 		int groupSize = numOfFrames / 4; 
 		
-		double sumTrain = 0;
-		double sumRehab = 0;
-		double distance = 0;
-		double [] diffs = new double [4];
-		for (int i = 0; i < 4; i++)
-		{
-			DataVector group1 = new DataVector();
-			DataVector group2 = new DataVector();
-			for(int j = 0; j < groupSize; j++)
-			{
-				
-				sumTrain += trainMP.getVector(j + i * groupSize).getCoordinate(fingerID);
-				sumRehab += rehabMP.getVector(j + i * groupSize).getCoordinate(fingerID);
-				group1.addCoordinate(trainMP.getVector(j + i * groupSize).getCoordinate(fingerID));
-				group2.addCoordinate(rehabMP.getVector(j + i * groupSize).getCoordinate(fingerID));
-			}
-			
-			try {
-				 distance = group1.distanceTo(group2);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			double div = sumTrain > sumRehab ? sumTrain : sumRehab;
-			double a = Math.abs(sumTrain - sumRehab) / div ;
-			diffs [i] = 100 - a * 100;
-			
-		}
+		double sumTrain ,sumRehab;
+
+		ArrayList <double [] > diffs = new ArrayList<double [] >(); 
 		
+		for (int fingerID = 0 ; fingerID < 5; fingerID++ )
+		{
+			double [] diffFinger = new double [4];
+			
+			
+			for (int i = 0; i < 4; i++)
+			{
+				sumTrain = 0;
+				sumRehab = 0;
+				
+				for(int j = 0; j < groupSize; j++)
+				{
+				
+					sumTrain += trainMP.getVector(j + i * groupSize).getCoordinate(fingerID);
+					sumRehab += rehabMP.getVector(j + i * groupSize).getCoordinate(fingerID);
+				}
+		
+				double div = sumTrain > sumRehab ? sumTrain : sumRehab;
+				double a = Math.abs(sumTrain - sumRehab) / div ;
+				diffFinger [i] = 100 - a * 100;
+			}
+			diffs.add(diffFinger);
+		}
 		return diffs;
 	}
 	

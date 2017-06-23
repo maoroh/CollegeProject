@@ -117,7 +117,7 @@ public class FrameData {
 			//Add angles of each bone to the another bones
 			//Fingers
 			
-			/*/
+			
 			for(Finger.Type type: Finger.Type.values())
 			{
 				FingerData fingerData = fingersData.get(type);
@@ -141,7 +141,7 @@ public class FrameData {
 					anglesVector.addCoordinate(proximalDirection.angleTo(metacarpalDirection));
 				}
 			  
-			}/*/
+			}
 			this.anglesVector = anglesVector;
 	}
 	
@@ -259,6 +259,22 @@ public class FrameData {
 	public void replaceAngles(DataVector vec)
 	{
 		this.anglesVector2 = vec;
+	}
+	
+	public Data getData()
+	{
+		ArrayList <DataVector> fingersTip = new ArrayList<DataVector>();
+		
+		
+		for(Finger.Type finger : Finger.Type.values())
+		{
+			Vector tipDirection = this.tipDirections.get(finger);
+			DataVector fingerTip = DataVector.convertToDataVector(tipDirection);
+			fingerTip.setName(finger);
+			fingersTip.add(fingerTip);
+		}
+		
+		return new Data(fingersTip);
 	}
 
 	

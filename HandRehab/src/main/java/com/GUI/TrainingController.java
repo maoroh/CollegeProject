@@ -84,7 +84,7 @@ public class TrainingController extends GController implements Initializable{
 		isExerciseShowed = false;
 		//startRecordBtn.setDisable(true);
 		sb = new SampleBuilder();
-		
+		fadeTransition(ap);
 		if(sb.getLeapProperty().getValue())
 		{
 			leapStatusLbl.setTextFill(Color.web("#16d713"));
