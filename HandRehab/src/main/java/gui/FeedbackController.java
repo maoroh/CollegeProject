@@ -10,10 +10,14 @@ import java.util.ResourceBundle;
 import com.leapmotion.leap.Finger;
 
 import entity.MovementPattern;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,6 +26,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import tools.FeedbackGenerator;
 import tools.JAXBTools;
@@ -33,15 +38,15 @@ import javafx.scene.control.Button;
 @SuppressWarnings("unchecked")
 public class FeedbackController extends GController implements Initializable {
 
-	public static final Map <Integer ,  Finger.Type> fingerNames;
+	public static final Map <Integer ,  String> fingerNames;
 	static
 		  {
-			fingerNames = new HashMap<Integer, Finger.Type>();
-			fingerNames.put(0, Finger.Type.values()[0]);
-			fingerNames.put(1, Finger.Type.values()[1]);
-			fingerNames.put(2, Finger.Type.values()[2]);
-			fingerNames.put(3, Finger.Type.values()[3]);
-			fingerNames.put(4, Finger.Type.values()[4]);
+			fingerNames = new HashMap<Integer, String>();
+			fingerNames.put(0, "Thumb Finger");
+			fingerNames.put(1, "Index Finger");
+			fingerNames.put(2, "Middle Finger");
+			fingerNames.put(3, "Ring Finger");
+			fingerNames.put(4, "Pinky Finger");
 		
 		   }
 	
@@ -88,29 +93,73 @@ public class FeedbackController extends GController implements Initializable {
 	
 	ArrayList <double [] > feedbackScores;
 	
+	 VBox box ;
+	
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
+
+		
 		fadeTransition(ap);
 		String filename = location.getFile().substring(location.getFile().lastIndexOf('/')+1, location.getFile().length());
 	    fingerID = 0;
-	    trainMP = JAXBTools.getPatternFromXML("trainMP.xml");
-	    rehabMP = JAXBTools.getPatternFromXML("rehabMP.xml");
 	   
-	    feedbackScores = FeedbackGenerator.getScore(trainMP, rehabMP);
 	    if(filename.equals("FeedbackView.fxml"))
 	    {
-	    buildChart(fingerID);
-	    lineChart.setId("chart1");
+	    	loadData(e -> {
+	    		
+	    		ap.getChildren().remove(box);
+				ap.setDisable(false);
+				buildChart(fingerID);});
 	    }
 	    else 
 	    {
-	    	
-	    	showFinalScores();
+	    	loadData(e -> {
+	    		ap.getChildren().remove(box);
+				ap.setDisable(false);
+				showFinalScores();});
+	    
 	    }
 	  
 	}
 	
+	private void loadData(EventHandler<WorkerStateEvent> eventHandler) {
+		// TODO Auto-generated method stub
+		 ProgressIndicator pi = new ProgressIndicator();
+		 box = new VBox(pi);
+         box.setAlignment(Pos.BOTTOM_CENTER);
+         box.setLayoutX(350);
+         box.setLayoutY(200);
+         // Grey Background
+         ap.setDisable(true);
+         ap.getChildren().add(box);
+		
+		
+		Task<Void> getResults = new Task<Void>(){
+
+			@Override
+			protected Void call() throws Exception {
+				// TODO Auto-generated method stub
+				 	trainMP = JAXBTools.getPatternFromXML("trainMP.xml");
+				 	updateProgress(1, 3);
+				    rehabMP = JAXBTools.getPatternFromXML("rehabMP.xml");
+				    updateProgress(2, 3);
+				    feedbackScores = FeedbackGenerator.getScore(trainMP, rehabMP);
+				    updateProgress(3, 3);
+					return null;
+			}
+			
+		};
+		pi.progressProperty().bind(getResults.progressProperty());
+		
+		
+		new Thread(getResults).start();
+		
+		getResults.setOnSucceeded(eventHandler);
+		
+	}
+
 	@FXML
 	 public void nextFingerChart(ActionEvent event) throws IOException
 	 {
@@ -155,20 +204,17 @@ public class FeedbackController extends GController implements Initializable {
 		 
 		textArea.clear();
 		double [] feedback = feedbackScores.get(fingerID);
-		textArea.appendText("1 : " + feedback[0] + "\n" +
-				"2 : " +feedback[1] + "\n"+ "3 : " +feedback[2] + "\n" + "4 : " +feedback[3]);
+		textArea.appendText("1 : " + String.format("%.2f" ,feedback[0]) + "%"  +  "\n" +
+				"2 : " +String.format("%.2f" ,feedback[1]) + "%" + "\n"+ "3 : " +String.format("%.2f" ,feedback[2])+ "%" + "\n" + "4 : " +String.format("%.2f" ,feedback[3])+ "%" );
 		lineChart.getData().remove(0,(lineChart.getData().size()));
-		lineChart.setTitle(fingerNames.get(fingerID).name());
+		lineChart.setTitle(fingerNames.get(fingerID));
 		XYChart.Series<Number,Number> seriesRehab = new XYChart.Series<Number,Number>();
 		seriesRehab.setName("Rehab");
 		XYChart.Series<Number,Number> seriesTrain = new XYChart.Series<Number,Number>();
-		
 		seriesTrain.setName("Training");
-		MovementPattern dataRehab = JAXBTools.getDataXML("propRehab");
-		int size = dataRehab.getSize();
-		MovementPattern dataTraining  = JAXBTools.getDataXML("propTraining");
+		int size = trainMP.getSize();
 		lineChart.getData().addAll(seriesRehab, seriesTrain);
-		
+
 		for (int i = 0; i < size  ; i++)
 		{	
 			double angle1 = rehabMP.getVector(i).getCoordinate(fingerID);
@@ -214,7 +260,7 @@ public class FeedbackController extends GController implements Initializable {
 		if(progress > 0 && progress < 25)
 			indicator.setStyle(" -fx-progress-color: red;");
 		else if (progress >= 25 && progress < 50)
-			indicator.setStyle(" -fx-progress-color: yellow;");
+			indicator.setStyle(" -fx-progress-color: #f1ea00;");
 		else if (progress >= 50 && progress < 75)
 			indicator.setStyle(" -fx-progress-color: orange;");
 		else if (progress >= 75 && progress < 100)

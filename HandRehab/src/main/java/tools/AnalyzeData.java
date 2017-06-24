@@ -16,7 +16,7 @@ import entity.SampleSet;
 
 public class AnalyzeData
 {
-	private static int numOfFrames ;
+	private static int numOfFrames  = 60 ;
 
 	
 	public static DataVector KNNRegression(DataVector testingPoint , ArrayList<DataVector> points, int K) throws Exception
@@ -167,11 +167,9 @@ public class AnalyzeData
 		smoothSampleSet(trainingSet);
 		int rehabMinFrameSize = findNumOfFrames (rehabSet);
 		int trainingMinFrameSize = findNumOfFrames(trainingSet);
-		JAXBTools.saveSampleSetXML(rehabSet , "rehabData.xml");
-		numOfFrames = rehabMinFrameSize < trainingMinFrameSize ? rehabMinFrameSize : trainingMinFrameSize;
+		//numOfFrames = rehabMinFrameSize < trainingMinFrameSize ? rehabMinFrameSize : trainingMinFrameSize;
 		SampleSet rehabFixed = fixSampleSet(rehabSet);
 		SampleSet trainingFixed = fixSampleSet(trainingSet);
-		JAXBTools.saveSampleSetXML(rehabFixed , "rehabDataFixed.xml");
 		rehabMP = buildMovementPattern(rehabFixed);
 		trainMP = buildMovementPattern(trainingFixed);
 		JAXBTools.savePatternXML(rehabMP,"rehabMP.xml");
