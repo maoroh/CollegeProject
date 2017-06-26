@@ -1,4 +1,4 @@
-package gui;
+package controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import tools.SampleBuilder;
+import leap.SampleBuilder;
 
 public class MainController extends GController implements Initializable {
 	
@@ -52,7 +52,7 @@ public class MainController extends GController implements Initializable {
 	 public void trainingButton(ActionEvent event) throws IOException
 	 {
 		 Stage stage = (Stage) rehabButton.getScene().getWindow();
-		 Parent root = FXMLLoader.load(getClass().getResource("TrainingView.fxml"));
+		 Parent root = FXMLLoader.load(getClass().getResource("/view/TrainingView.fxml"));
 		 Scene scene = new Scene(root);
 	     stage.setScene(scene);
 
@@ -62,7 +62,7 @@ public class MainController extends GController implements Initializable {
 	  public void RehabButton(ActionEvent event) throws IOException
 	  {
 		 Stage stage = (Stage) rehabButton.getScene().getWindow();
-		 Parent root = FXMLLoader.load(getClass().getResource("RehabView.fxml"));
+		 Parent root = FXMLLoader.load(getClass().getResource("/view/RehabView.fxml"));
 		 Scene scene = new Scene(root);
 		 stage.setScene(scene);
 	  }
@@ -71,7 +71,7 @@ public class MainController extends GController implements Initializable {
 	  public void feedbackButton(ActionEvent event) throws IOException
 	  {
 		  	Stage stage = (Stage) rehabButton.getScene().getWindow();
-			 Parent root = FXMLLoader.load(getClass().getResource("FeedbackView.fxml"));
+			 Parent root = FXMLLoader.load(getClass().getResource("/view/FeedbackView.fxml"));
 			 Scene scene = new Scene(root);
 			 stage.setScene(scene);
 	  }

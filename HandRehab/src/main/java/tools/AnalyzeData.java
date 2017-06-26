@@ -16,7 +16,7 @@ import entity.SampleSet;
 
 public class AnalyzeData
 {
-	private static int numOfFrames  = 60 ;
+	private static int numOfFrames ;
 
 	
 	public static DataVector KNNRegression(DataVector testingPoint , ArrayList<DataVector> points, int K) throws Exception
@@ -57,7 +57,7 @@ public class AnalyzeData
 			{
 				SampleData sampleData = samples.getSample(j);
 				
-				anglesVectorOfFrame.add(sampleData.getFrame(i).getAnglesVector2());
+				anglesVectorOfFrame.add(sampleData.getFrame(i).getAnglesVectorTips());
 			}
 			
 			DataVector testingPoint = anglesVectorOfFrame.get(samples.getSize()/2);
@@ -163,11 +163,13 @@ public class AnalyzeData
 		MovementPattern rehabMP,trainMP;
 		calcAngles(rehabSet);
 		calcAngles(trainingSet);
+		//removeBeginSet(rehabSet);
+		//removeBeginSet(trainingSet);
 		smoothSampleSet(rehabSet);
 		smoothSampleSet(trainingSet);
-		int rehabMinFrameSize = findNumOfFrames (rehabSet);
-		int trainingMinFrameSize = findNumOfFrames(trainingSet);
-		//numOfFrames = rehabMinFrameSize < trainingMinFrameSize ? rehabMinFrameSize : trainingMinFrameSize;
+		int rehabMinFrameSize = findMinSampleFrames (rehabSet);
+		int trainingMinFrameSize = findMinSampleFrames(trainingSet);
+		numOfFrames = rehabMinFrameSize < trainingMinFrameSize ? rehabMinFrameSize : trainingMinFrameSize;
 		SampleSet rehabFixed = fixSampleSet(rehabSet);
 		SampleSet trainingFixed = fixSampleSet(trainingSet);
 		rehabMP = buildMovementPattern(rehabFixed);
@@ -180,7 +182,7 @@ public class AnalyzeData
 	
 
 
-	public static int findNumOfFrames(SampleSet samples)
+	public static int findMinSampleFrames(SampleSet samples)
 	{
 		
 		int minFrames = samples.getSample(0).getNumOfFrames();
@@ -204,20 +206,52 @@ public class AnalyzeData
 		for(int i = 0 ; i < samples.getSize(); i ++)
 		{
 			SampleData sample = samples.getSample(i);
-			InitialData initialData = sample.getFrame(0).getData();
+			InitialData initialData = sample.getFrame(0).getTipsAngles();
 			for(int j = 0 ; j < sample.getNumOfFrames(); j++)
-				sample.getFrame(j).setAnglesVector2(initialData);
+				sample.getFrame(j).setAnglesVectorTips(initialData);
 		}
 	}
 
-	public static void trainingActions(SampleSet sampleSet) throws Exception {
+	public static void trainingActions(SampleSet trainingSet) throws Exception {
 		// TODO Auto-generated method stub
 	
-		JAXBTools.saveSampleSetXML(sampleSet , "trainData.xml");
+		JAXBTools.saveSampleSetXML(trainingSet , "trainData.xml");
 	}
 	
-
-
+	/*/
+	public static void removeBeginSet(SampleSet samples)
+	{
+		for(int i = 0 ; i < samples.getSize(); i++)
+		{
+			SampleData sd = samples.getSample(i);
+			removeBegin(sd);
+		}
+	}/*/
+	
+	/*/
+	public static void removeBegin(SampleData sample)
+	{
+		int counter = 0;
+		int index = 0;
+		for (int i = 0; i < sample.getNumOfFrames(); i++)
+		{
+			FrameData fd = sample.getFrame(i);
+			FrameData fdNext = sample.getFrame(i+1);
+			DataVector anglesTip = fd.getAnglesVectorTips();
+			DataVector anglesTipNext = fdNext.getAnglesVectorTips();
+			if (anglesTipNext.getCoordinate(2) > anglesTip.getCoordinate(2) + 0.5)
+				counter++;
+			else index = i;
+			if(counter >= 10) 
+				break;
+		}
+		
+		for(int i = 0; i < index; i++)
+		{
+			sample.deleteFrame(i);
+		}
+	}/*/
+	
 	
 	public static int fixSampleDataNoiseUp(SampleData sampleData)
 	{
@@ -234,8 +268,8 @@ public class AnalyzeData
 			{
 				FrameData frame = sampleData.getFrame(j);
 				FrameData frameNext = sampleData.getFrame(j + 1);
-				DataVector anglesVecFrame = frame.getAnglesVector2();
-				DataVector anglesVecFrameNext = frameNext.getAnglesVector2();
+				DataVector anglesVecFrame = frame.getAnglesVectorTips();
+				DataVector anglesVecFrameNext = frameNext.getAnglesVectorTips();
 				
 				if(anglesVecFrameNext.getCoordinate(2) < anglesVecFrame.getCoordinate(2))
 				{
@@ -285,13 +319,13 @@ public class AnalyzeData
 				
 				for(int i = 0; i < 5; i++)
 				{
-					double frame0 = sample.getFrame(j-3).getAnglesVector2().getCoordinate(i);
-					double frame1 = sample.getFrame(j-2).getAnglesVector2().getCoordinate(i);
-					double frame2 = sample.getFrame(j-1).getAnglesVector2().getCoordinate(i);
-					double frame3 = sample.getFrame(j).getAnglesVector2().getCoordinate(i);
-					double frame4 = sample.getFrame(j+1).getAnglesVector2().getCoordinate(i);
-					double frame5 = sample.getFrame(j+2).getAnglesVector2().getCoordinate(i);
-					double frame6 = sample.getFrame(j+3).getAnglesVector2().getCoordinate(i);
+					double frame0 = sample.getFrame(j-3).getAnglesVectorTips().getCoordinate(i);
+					double frame1 = sample.getFrame(j-2).getAnglesVectorTips().getCoordinate(i);
+					double frame2 = sample.getFrame(j-1).getAnglesVectorTips().getCoordinate(i);
+					double frame3 = sample.getFrame(j).getAnglesVectorTips().getCoordinate(i);
+					double frame4 = sample.getFrame(j+1).getAnglesVectorTips().getCoordinate(i);
+					double frame5 = sample.getFrame(j+2).getAnglesVectorTips().getCoordinate(i);
+					double frame6 = sample.getFrame(j+3).getAnglesVectorTips().getCoordinate(i);
 					
 					frame0 = frame0 * weights[0];
 					frame1 = frame1 * weights[1];

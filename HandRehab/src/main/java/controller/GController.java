@@ -1,4 +1,4 @@
-package gui;
+package controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -53,7 +53,7 @@ public class GController implements Initializable {
 		if(mItem == backToMenu)
 		{
 			 Stage stage = (Stage) ap.getScene().getWindow();
-			 Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
+			 Parent root = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
 			 Scene scene = new Scene(root);
 		     stage.setScene(scene);
 		     if(taskRecognize != null &&  taskRecording != null)

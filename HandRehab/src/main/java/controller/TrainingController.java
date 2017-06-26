@@ -1,4 +1,4 @@
-package gui;
+package controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,7 +36,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import tools.SampleBuilder;
+import leap.SampleBuilder;
 
 public class TrainingController extends GController implements Initializable{
 	
@@ -215,7 +215,7 @@ public class TrainingController extends GController implements Initializable{
 	        	   timeline.stop();
 	        	   
 	        	  while(!sb.isStopped())
-	        		  updateProgress(sb.getNumOfFrames(), SampleBuilder.numOfRecognizeFrames);
+	        		  updateProgress(sb.getNumOfFrames(), SampleBuilder.numOfCalibFrames);
 	        	   
 	        	   //Start Record
 	        	   System.out.println("Start Recording");
@@ -245,7 +245,7 @@ public class TrainingController extends GController implements Initializable{
 	  	
 	  	protected void BackToMenu() throws IOException {
 	  		 Stage stage = (Stage) button.getScene().getWindow();
-			 Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
+			 Parent root = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
 			 Scene scene = new Scene(root);
 			 stage.setScene(scene);
 			 sb = null ;

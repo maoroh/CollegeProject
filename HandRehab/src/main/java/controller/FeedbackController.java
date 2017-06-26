@@ -1,4 +1,4 @@
-package gui;
+package controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -101,7 +101,7 @@ public class FeedbackController extends GController implements Initializable {
 		// TODO Auto-generated method stub
 
 		
-		fadeTransition(ap);
+		//fadeTransition(ap);
 		String filename = location.getFile().substring(location.getFile().lastIndexOf('/')+1, location.getFile().length());
 	    fingerID = 0;
 	   
@@ -179,7 +179,7 @@ public class FeedbackController extends GController implements Initializable {
 	private void showReview() throws IOException
 	{
 		 Stage stage = (Stage) nextFingerBtn.getScene().getWindow();
-		 Parent root = FXMLLoader.load(getClass().getResource("FeedbackReview.fxml"));
+		 Parent root = FXMLLoader.load(getClass().getResource("/view/FeedbackReview.fxml"));
 		 Scene scene = new Scene(root);
 		 stage.setScene(scene);
 	}

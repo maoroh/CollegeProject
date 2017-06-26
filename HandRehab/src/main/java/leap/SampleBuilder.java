@@ -1,4 +1,4 @@
-package tools;
+package leap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,19 +16,18 @@ import com.leapmotion.leap.Pointable;
 import com.leapmotion.leap.PointableList;
 import com.leapmotion.leap.Vector;
 
+import controller.MainController;
 import entity.BoneType;
 import entity.DataVector;
 import entity.FingerData;
 import entity.FrameData;
-import entity.InitialData;
 import entity.Mode;
 import entity.SampleData;
 import entity.SampleSet;
-import gui.MainController;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import leap.LeapListener;
+import tools.AnalyzeData;
 
 public class SampleBuilder {
 	private LeapListener listener;
@@ -48,8 +47,7 @@ public class SampleBuilder {
 	private boolean recognize = false;
 	private Mode mode ;
 	private static final double minSpeed = 40;
-	private InitialData avgData;
-	public static final int numOfRecognizeFrames = 100;
+	public static final int numOfCalibFrames = 100;
 	
 	public SampleBuilder()
 	{
@@ -85,18 +83,18 @@ public class SampleBuilder {
 	{
 		if(recording)
 		{
-			recordNewFrame(frame);
+			handleNewFrame(frame);
 		}
 		else if(recognize)
 		{
-			recordNewFrameRecognize(frame);
+			handleCalibrationFrame(frame);
 		}
 	}
 	
-	private void recordNewFrameRecognize(Frame frame) {
+	private void handleCalibrationFrame(Frame frame) {
 		// TODO Auto-generated method stub
 		  
-	        if(checkFrame2(frame))
+	        if(checkFrameCalib(frame))
 	        {
 	        	//Notify thread
 	        	synchronized (SampleBuilder.this) {
@@ -104,10 +102,10 @@ public class SampleBuilder {
 	    			SampleBuilder.this.notify();
 	    		}
 	        	numOfFrames++;
-	        	handleFrame(frame);
+	        	buildNewFrame(frame);
 	        	
 	        
-	        	if(numOfFrames == numOfRecognizeFrames)
+	        	if(numOfFrames == numOfCalibFrames)
 	        	{
 	        		try {
 						buildInitial();
@@ -124,13 +122,13 @@ public class SampleBuilder {
 	        	
 	}
 
-	public void recordNewFrame(Frame frame)
+	private void handleNewFrame(Frame frame)
 	{
 		
         if(checkFrame(frame) )
         {
         	numOfFrames++;
-        	FrameData fr = handleFrame(frame);
+        	FrameData fr = buildNewFrame(frame);
         	fr.setAnglesVector();
         	//fr.setAnglesVector2(StaticData.initData);
         	DataVector frameAngles = fr.getAnglesVector();
@@ -181,7 +179,7 @@ public class SampleBuilder {
 	}
 	 
 
-	protected void buildInitial() throws Exception {
+	private void buildInitial() throws Exception {
 		// TODO Auto-generated method stub
 		ArrayList<DataVector> vectors = sampleData.getSamplesVector();
 		
@@ -239,7 +237,7 @@ public class SampleBuilder {
 	
 	
 
-	protected FrameData handleFrame(Frame currentFrame) {
+	private FrameData buildNewFrame(Frame currentFrame) {
 		// TODO Auto-generated method stub
 
 	   	 PointableList pointableList = currentFrame.pointables();
@@ -276,24 +274,11 @@ public class SampleBuilder {
             
         }
         
-        FrameData timeStamp = new FrameData(numOfFrames,fingersData,hand.palmNormal(),tipDirections);
+        FrameData timeStamp = new FrameData(fingersData,hand.palmNormal(),tipDirections);
         sampleData.addFrame(timeStamp);
         return timeStamp;
 	}
 	
-	public Vector getVec ()
-	{
-		   listener.onFrame(controller);
-	        if(listener.getCurrentFrame() != null)
-	        {
-	        	 HandList hands = listener.getCurrentFrame().hands();
-	 			Hand hand = hands.get(0);
-	 			return hand.palmNormal();
-	        }
-	        return new Vector(0,0,0);
-	       
-				
-	}
 	
 	public boolean isStopped()
 	{
@@ -353,7 +338,7 @@ public class SampleBuilder {
 	}
 	
 	
-	private boolean checkFrame2(Frame frame)
+	private boolean checkFrameCalib(Frame frame)
 	{
 
    	 PointableList pointableList = frame.pointables();

@@ -40,35 +40,4 @@ public class MovementPattern {
 		return this.meanFrames.size();
 	}
 	
-	public double getMaxAngle(int fingerID)
-	{
-		double maxAngle = Double.MIN_VALUE;
-				
-		for(DataVector dv : meanFrames)
-		{
-			double angle = dv.getCoordinate(fingerID);
-			if (angle > maxAngle) 
-				maxAngle = angle;
-		}
-		
-		return maxAngle;
-
-	}
-	
-	public double getMinAngle(int fingerID)
-	{
-		double minAngle = Double.MAX_VALUE;
-				
-		for(DataVector dv : meanFrames)
-		{
-			double angle = dv.getCoordinate(fingerID);
-			if (angle < minAngle) 
-				minAngle = angle;
-		}
-		
-		return minAngle;
-
-	}
-
-
 }

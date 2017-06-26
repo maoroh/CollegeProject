@@ -44,20 +44,6 @@ public class SampleData {
 		return vectors;
 	}
 	
-	public ArrayList <DataVector> getSamplesVector2()
-	{
-		ArrayList<DataVector> vectors = new ArrayList<DataVector>();
-		
-		for(FrameData data : this.framesData)
-		{
-			//data.setAnglesVector2(StaticData.initData);
-			vectors.add(data.getAnglesVector2());
-		}
-		
-		return vectors;
-	}
-	
-	
 	
 	public void setFrames(ArrayList<FrameData> framesData)
 	{

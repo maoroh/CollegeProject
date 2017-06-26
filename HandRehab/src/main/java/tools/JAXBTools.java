@@ -16,15 +16,7 @@ import entity.SampleSet;
 
 
 public class JAXBTools {
-	
-	public static final Map <String , String> filePaths;
-	static
-		  {
-				filePaths = new HashMap<String, String>();
-				filePaths.put("propRehab", "propRehab.xml");
-				filePaths.put("propTraining", "propTraining.xml");
-		   }
-	
+
 	
 	public static void savePatternXML(MovementPattern movementPattern , String name) 
 	{
@@ -42,42 +34,6 @@ public class JAXBTools {
 		}
        
  
-	}
-	
-	public static void saveDataXML(InitialData data , String name) 
-	{
-    	JAXBContext jaxbContext;
-    	Marshaller jaxbMarshaller;
-		try {
-			 jaxbContext = JAXBContext.newInstance(InitialData.class);
-		     jaxbMarshaller = jaxbContext.createMarshaller();
-		     jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		     jaxbMarshaller.marshal(data, new File(name));
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-       
- 
-	}
-	
-	public static InitialData getDataFromXML() 
-	{
-		JAXBContext jaxbContext;
-		InitialData data = null;
-		try {
-			 jaxbContext = JAXBContext.newInstance(InitialData.class);
-		     Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();  
-		     File file = new File("data.xml");
-		     if(file.exists())
-		    	 data = (InitialData) jaxbUnmarshaller.unmarshal( new File("data.xml") );
-		     else data = null;
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-        return data;
 	}
 	
 	
@@ -132,22 +88,7 @@ public class JAXBTools {
         return sampleSet;
 	}
 	
-	
-	public static MovementPattern getDataXML(String name) 
-	{
-		JAXBContext jaxbContext;
-		MovementPattern mp = null;
-		try {
-			 jaxbContext = JAXBContext.newInstance(MovementPattern.class);
-		     Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();   
-		     mp = (MovementPattern) jaxbUnmarshaller.unmarshal( new File(filePaths.get(name)) );
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-        return mp;
-	}
 }
 
 
