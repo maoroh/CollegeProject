@@ -38,6 +38,11 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import leap.SampleBuilder;
 
+/**
+ *  Handle the actions from the Training view,extends GController.
+ * @author maor
+ *
+ */
 public class TrainingController extends GController implements Initializable{
 	
 	@FXML
@@ -75,7 +80,9 @@ public class TrainingController extends GController implements Initializable{
 	private Mode mode;
 	
 	
-
+	/**
+	 * Initialize all the variables of the controller 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("Controller");
@@ -112,7 +119,12 @@ public class TrainingController extends GController implements Initializable{
 	}
 	
 	
-	
+		/**
+		 * Handle the Show Exercise button event action, this method will create an ImageView in the screen 
+		 * that will display the exercise. 
+		 * @param event - ActionEvent object.
+		 * @throws IOException
+		 */
 		@FXML
 		 protected void showExercise(ActionEvent event) throws IOException
 		 {
@@ -131,7 +143,14 @@ public class TrainingController extends GController implements Initializable{
 					
 			isExerciseShowed = true;
 		 }
-	  
+		
+
+		/**
+		 * 	This method checks if isExerciseShowed is true:
+		 * If true  - call recordSamples method , if false - it show an alert to the user.
+		 * @param event - ActionEvent object.
+		 * @throws IOException
+		 */
 	  	@FXML
 	  	protected void startRecord(ActionEvent event) 
 		 {
@@ -147,6 +166,10 @@ public class TrainingController extends GController implements Initializable{
 	  		
 		 }
 	  	
+		/**
+		 * Handle the Start Record button event action, this method will create 2 tasks , first for the calibration process and the other 
+		 * for the recording process using the SampleBuilder class.
+		 */
 	  	protected void recordSamples()
 	  	{
 	  		
@@ -198,7 +221,7 @@ public class TrainingController extends GController implements Initializable{
 			@Override
 			protected Void call() throws Exception {
 				// TODO Auto-generated method stub
-				 sb.initRecognize();
+				 sb.initCalibration();
 				 synchronized (sb) {
 			         while (!sb.isStatic())
 						try {
@@ -243,6 +266,10 @@ public class TrainingController extends GController implements Initializable{
 	  	}
 	  	
 	  	
+	  	/**
+	  	 * This method loads the Main Menu screen.
+	  	 * @throws IOException - if FXMLLoader failed.
+	  	 */
 	  	protected void BackToMenu() throws IOException {
 	  		 Stage stage = (Stage) button.getScene().getWindow();
 			 Parent root = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
@@ -251,11 +278,22 @@ public class TrainingController extends GController implements Initializable{
 			 sb = null ;
 		}
 
+	  	/**
+	  	 * This method running the runnable object in the UI Thread using Platform.runLater.
+	  	 * @param runnable - The runnable object to run in the UI Thread.
+	  	 */
 		protected void changeUi(Runnable runnable)
 	  	{
 	 	   Platform.runLater(runnable);
 	  	}
 	  	
+		/**
+		 * Creating new text animation.
+		 * @param node - The JavaFX element.
+		 * @param time - Animation duration.
+		 * @param opacityVal - the final opacity value.
+		 * @param handler - The handler to rum after the animation is finished.
+		 */
 	  	protected void createTextAnimation(Node node, int time, double opacityVal , EventHandler <ActionEvent> handler)
 	  	{
 	  		    Timeline timeline = new Timeline();
@@ -266,6 +304,14 @@ public class TrainingController extends GController implements Initializable{
 	            timeline.play();
 	  	}
 	  	
+	  	/**
+	  	 * Creating new image animation.
+	  	 * @param node - The JavaFX element.
+		 * @param time - Animation duration.
+		 * @param opacityVal - the final opacity value.
+		 * @param handler - The handler to rum after the animation is finished.
+	  	 * @return the TimeLine object.
+	  	 */
 	  	protected Timeline createImgAnimation(Node node, int time, double opacityVal , EventHandler <ActionEvent> handler)
 	  	{
 	  		    Timeline timeline = new Timeline();
@@ -279,10 +325,18 @@ public class TrainingController extends GController implements Initializable{
 	            return timeline;
 	  	}
 
+	  	/**
+	  	 * Mode getter.
+	  	 * @return the mode.
+	  	 */
 		public Mode getMode() {
 			return mode;
 		}
 
+		/**
+		 * Mode setter.
+		 * @param mode
+		 */
 		public void setMode(Mode mode) {
 			this.mode = mode;
 		}

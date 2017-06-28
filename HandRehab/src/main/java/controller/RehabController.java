@@ -5,7 +5,11 @@ import java.util.ResourceBundle;
 
 import entity.Mode;
 
-
+/**
+ *  Handle the actions from the Rehabilitation view, extends TrainingController.
+ * @author maor
+ *
+ */
 public class RehabController extends TrainingController {
 	
 	@Override

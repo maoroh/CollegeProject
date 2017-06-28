@@ -28,6 +28,18 @@
 }
 
 
+.chart-legend-item-symbol.default-color0{
+	-fx-background-color: #fa0000;
+	 -fx-background-radius: 0;
+}
+
+.chart-legend-item-symbol.default-color1{
+	-fx-background-color: #00cd00;
+	 -fx-background-radius: 0;
+}
+
+
+
 
 
 

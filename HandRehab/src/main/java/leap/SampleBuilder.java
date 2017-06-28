@@ -3,9 +3,6 @@ package leap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import com.leapmotion.leap.Bone;
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Finger;
@@ -15,8 +12,6 @@ import com.leapmotion.leap.HandList;
 import com.leapmotion.leap.Pointable;
 import com.leapmotion.leap.PointableList;
 import com.leapmotion.leap.Vector;
-
-import controller.MainController;
 import entity.BoneType;
 import entity.DataVector;
 import entity.FingerData;
@@ -27,8 +22,14 @@ import entity.SampleSet;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import tools.AnalyzeData;
+import utility.AnalyzeData;
 
+/**
+ * SampleBuilder.
+ * This class is responsible for recording all the training/rehabilitation samples data using the Leap controller.
+ * @author maor
+ *
+ */
 public class SampleBuilder {
 	private LeapListener listener;
  	private Controller controller;
@@ -44,11 +45,14 @@ public class SampleBuilder {
 	private static final double recThreshold = 0.9;
 	private static final int numOfSamples = 15;
 	private boolean recording = false;
-	private boolean recognize = false;
+	private boolean calibration = false;
 	private Mode mode ;
 	private static final double minSpeed = 40;
 	public static final int numOfCalibFrames = 100;
 	
+	/**
+	 * Initialize new SampleBuilder object.
+	 */
 	public SampleBuilder()
 	{
 	 	controller = new Controller();
@@ -58,6 +62,10 @@ public class SampleBuilder {
 		
 	}
 	
+	/**
+	 * Initialize recording process.
+	 * @param mode - Training/ Rehablitation.
+	 */
 	public void initRecording(Mode mode)
 	{
 		 isStopped = false;
@@ -69,9 +77,12 @@ public class SampleBuilder {
 		
 	}
 	
-	public void initRecognize()
+	/**
+	 * Initialize Calibration process.
+	 */
+	public void initCalibration()
 	{
-		recognize = true;
+		calibration = true;
 		isStopped = false;
 		numOfFrames = 0;
 		sampleData = new SampleData();
@@ -79,18 +90,29 @@ public class SampleBuilder {
 	}
 	
 	
+	/**
+	 * Checking if the current process is calibration or recording and handle this frame.
+	 * @param frame - The frame from the LeapListener.
+	 */
 	public void newFrame(Frame frame)
 	{
 		if(recording)
 		{
 			handleNewFrame(frame);
 		}
-		else if(recognize)
+		else if(calibration)
 		{
 			handleCalibrationFrame(frame);
 		}
 	}
 	
+	/**
+	 * Handle calibration frame.
+	 * Checks if the patient hand in front of the leap :
+	 * if true - Notify to the waiting thread , build the frame with the necessary elements and add this frmae to the sample.
+	 * if numOfFrames = numOfCalibFrames - stop the recording and build the initial data vector, else continue getting frames.
+	 * @param frame - The frame from the LeapListener.
+	 */
 	private void handleCalibrationFrame(Frame frame) {
 		// TODO Auto-generated method stub
 		  
@@ -122,6 +144,14 @@ public class SampleBuilder {
 	        	
 	}
 
+	/**
+	 * Handle recording frame.
+	 * Checks if the frame is a valid frame :
+	 * if true - build the frame with the necessary elements , set the angles vector of this frame and add this frame to the sample.
+	 * if this frame distance from the initialFrame less than the recThreshold - create a new sample.
+	 * else continue getting frames for current sample.
+	 * @param frame - The Frame from the LeapListener.
+	 */
 	private void handleNewFrame(Frame frame)
 	{
 		
@@ -130,7 +160,6 @@ public class SampleBuilder {
         	numOfFrames++;
         	FrameData fr = buildNewFrame(frame);
         	fr.setAnglesVector();
-        	//fr.setAnglesVector2(StaticData.initData);
         	DataVector frameAngles = fr.getAnglesVector();
         
         	try {
@@ -179,6 +208,10 @@ public class SampleBuilder {
 	}
 	 
 
+	/**
+	 * Build the initialFrame for recognize the end of a sample.
+	 * @throws Exception  - KNNRegression exception.
+	 */
 	private void buildInitial() throws Exception {
 		// TODO Auto-generated method stub
 		ArrayList<DataVector> vectors = sampleData.getSamplesVector();
@@ -186,57 +219,16 @@ public class SampleBuilder {
 		try {
 			this.initVec = AnalyzeData.KNNRegression(vectors.get(vectors.size() / 2), vectors , 15);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		/*/
-		ArrayList <InitialData> fingersFramesTip = new ArrayList<InitialData>();
-		
-		for(int i = 0 ; i < sampleData.getNumOfFrames(); i++)
-		{
-			FrameData frameData = sampleData.getFrame(i);
-			
-			Map<Finger.Type, Vector> fingersTip = frameData.getTipDirections();
-			
-			ArrayList <DataVector> fingersTipData = new ArrayList<DataVector>();
-			
-			  for (Finger.Type finger : Finger.Type.values()) {
-				  	Vector tipDirection = fingersTip.get(finger);
-				  	DataVector tipDirectionData = DataVector.convertToDataVector(tipDirection);
-				  	tipDirectionData.setName(finger);
-				  	fingersTipData.add(tipDirectionData);
-				  }
-			  
-			  fingersFramesTip.add(new InitialData(fingersTipData));
-			 
-		}
-		
-		ArrayList <DataVector> points = new ArrayList <DataVector> ();
-		ArrayList <DataVector> avgTips = new ArrayList<DataVector>(); 
-
-		for(int i = 0 ; i < Finger.Type.values().length ; i++)
-		{
-			for(int j = 0 ; j < fingersFramesTip.size() ; j++)
-			{
-					ArrayList<DataVector> fingersTip = fingersFramesTip.get(j).getFingersTip();
-					points.add(fingersTip.get(i));
-			}
-			
-			DataVector fingerTipAVG = AnalyzeData.KNNRegression(points.get(points.size() / 2), points, 10);
-			Finger.Type type = Finger.Type.values()[i];
-			fingerTipAVG.setName(type);
-			avgTips.add(fingerTipAVG);
-			
-		}
-		
-		avgData = new InitialData(avgTips);/*/
-		
 	}
 	
-	
-	
 
+	/**
+	 * Taking the neccessary elements from the Leap Frame data.
+	 * @param currentFrame - the Frame from the LeapListener.
+	 * @return FrameData with the specific elements we need for the algorithm.
+	 */
 	private FrameData buildNewFrame(Frame currentFrame) {
 		// TODO Auto-generated method stub
 
@@ -280,18 +272,26 @@ public class SampleBuilder {
 	}
 	
 	
+	/**
+	 * isStopped getter.
+	 * @return isStopped value.
+	 */
 	public boolean isStopped()
 	{
 		return this.isStopped ;
 	}
 	
+	/**
+	 * This method checks if the patient in a static movement or not.
+	 * @param speed - an array of speed values .
+	 * @return true - if static , false - if not static.
+	 */
 	private boolean staticMovement(ArrayList<Vector> speed) {
 		// TODO Auto-generated method stub
 		 double speedInterval = minSpeed ;
 		 for(int i=0; i<speed.size(); i++)
 		 {
 			 double currentSpeed = Math.sqrt(Math.pow(speed.get(i).getX(), 2) + Math.pow(speed.get(i).getY(), 2) + Math.pow(speed.get(i).getZ(), 2));
-			// System.out.println("Speed : " + currentSpeed);
 			 if(currentSpeed > speedInterval)
 			 {
 				 return false;
@@ -300,6 +300,16 @@ public class SampleBuilder {
 		return true;
 	}
 	
+	/**
+	 * This method checks if current frame is a static frame or not and if it's valid .
+	 * First it checks the if the patient in a static movement:
+	 * If true - return false.
+	 * If false - set startMotion to true (recognize the start of the movement) and return true.
+	 * the validation of the frame is according to the hands count from the leap data.
+	 * @param frame - The frame from the LeapListener.
+	 * @return true - if the frame is valid and the patient start move.
+	 * false - if the frame is not valid or the patient is static.
+	 */
 	private boolean checkFrame(Frame frame)
 	{
 
@@ -338,6 +348,13 @@ public class SampleBuilder {
 	}
 	
 	
+	/**
+	 * This method check if the current frame is a static frame or not and if it's valid in the calibration mode.
+	 * When the method recognize the hand of the patient in a static state in the first time it will return true.
+	 * @param frame - The frame from the LeapListener.
+	 * @return true - if the patient in a static state and in front of the leap motion controller(the frame is valid).
+	 * false - if the patient not in a static state or the frame is not valid.
+	 */
 	private boolean checkFrameCalib(Frame frame)
 	{
 
@@ -368,32 +385,54 @@ public class SampleBuilder {
    	  
 	}
 
+	/**
+	 * isStatic getter.
+	 * @return isStatic value.
+	 */
 	public boolean isStatic() {
 		return isStatic;
 	}
 	
 
 
+	/**
+	 * isStatic setter.
+	 * @param isStatic - set isStatic value.
+	 */
 	public void setStatic(boolean isStatic) {
 		this.isStatic = isStatic;
 	}
 	
+	/**
+	 * numOfFrames getter.
+	 * @return numOfFrames value.
+	 */
 	public int getNumOfFrames()
 	{
 		return this.numOfFrames;
 	}
 	
+	/**
+	 * sampleCount property getter.
+	 * @return sampleCount property value.
+	 */
 	public IntegerProperty getIntegerProperty()
 	{
 		return this.sampleCount;
 	}
 	
-	
+	/**
+	 * LeapStatusProperty getter.
+	 * @return LeapStatusProperty value.
+	 */
 	public BooleanProperty getLeapProperty()
 	{
 		return listener.getLeapStatusProperty();
 	}
 	
+	/**
+	 * Remove the listener from the leap controller and stop getting new frames.
+	 */
 	public void stopRecord()
 	{
 		controller.removeListener(listener);

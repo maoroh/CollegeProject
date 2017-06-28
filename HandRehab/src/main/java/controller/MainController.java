@@ -4,60 +4,61 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.imageio.ImageIO;
-
-import com.leapmotion.leap.Vector;
-
-import javafx.application.Platform;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import leap.SampleBuilder;
 
+/**
+ * Main Controller Class 
+ * Handle the actions from the Main Menu view, extends TrainingController.
+ * @author maor
+ *
+ */
 public class MainController extends GController implements Initializable {
 	
 	@FXML
 	Button rehabButton;
 	
 	@FXML
+	Button trainingButton;
+	
+	@FXML
+	Button feedbackButton;
+
+	@FXML
 	ImageView bg;
 	
 	@FXML
 	Label label;
-	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
-	}
-	  
 	 
+	
+	/**
+	 * Handle the ActionEvent from the Training button option.
+	 * @param event 
+	 * @throws IOException
+	 */
 	  @FXML
 	 public void trainingButton(ActionEvent event) throws IOException
 	 {
-		 Stage stage = (Stage) rehabButton.getScene().getWindow();
+		 Stage stage = (Stage) trainingButton.getScene().getWindow();
 		 Parent root = FXMLLoader.load(getClass().getResource("/view/TrainingView.fxml"));
 		 Scene scene = new Scene(root);
 	     stage.setScene(scene);
 
 	 }
 	  
+	  /**
+	   * Handle the ActionEvent from the Rehabilitation button option.
+	   * @param event
+	   * @throws IOException
+	   */
 	  @FXML
 	  public void RehabButton(ActionEvent event) throws IOException
 	  {
@@ -67,10 +68,15 @@ public class MainController extends GController implements Initializable {
 		 stage.setScene(scene);
 	  }
 	  
+	  /**
+	   * Handle the ActionEvent from the Feedback button option.
+	   * @param event
+	   * @throws IOException
+	   */
 	  @FXML
 	  public void feedbackButton(ActionEvent event) throws IOException
 	  {
-		  	Stage stage = (Stage) rehabButton.getScene().getWindow();
+		  	Stage stage = (Stage) feedbackButton.getScene().getWindow();
 			 Parent root = FXMLLoader.load(getClass().getResource("/view/FeedbackView.fxml"));
 			 Scene scene = new Scene(root);
 			 stage.setScene(scene);

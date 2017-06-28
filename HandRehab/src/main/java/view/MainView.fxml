@@ -34,7 +34,7 @@
       </MenuBar>
       <Button fx:id="rehabButton" layoutX="43.0" layoutY="158.0" mnemonicParsing="false" onAction="#RehabButton" prefHeight="29.0" prefWidth="118.0" text="Rehabilitation" />
       <Button fx:id="trainingButton" layoutX="43.0" layoutY="111.0" mnemonicParsing="false" onAction="#trainingButton" prefHeight="29.0" prefWidth="118.0" text="Training" />
-      <Button fx:id="feedbacksButton" layoutX="43.0" layoutY="202.0" mnemonicParsing="false" onAction="#feedbackButton" prefHeight="29.0" prefWidth="118.0" text="Your Feedbacks" />
+      <Button fx:id="feedbackButton" layoutX="43.0" layoutY="202.0" mnemonicParsing="false" onAction="#feedbackButton" prefHeight="29.0" prefWidth="118.0" text="Your Feedbacks" />
       <Label fx:id="label" layoutX="289.0" layoutY="54.0" prefHeight="41.0" prefWidth="202.0" text="Main Menu" textFill="#f8f5f5">
          <font>
             <Font size="31.0" />
