@@ -14,7 +14,8 @@ import com.leapmotion.leap.Vector;
 import com.leapmotion.leap.Bone;
 
 /**
- * 
+ * FingerData
+ * Stores all the finger data from the Leap Motion Controller.
  * @author maor
  *
  */
@@ -29,17 +30,29 @@ public class FingerData {
 	{
 		
 	}
+	/**
+	 * Initialize new FingerData object with a Map of bones directions.
+	 * @param bonesDirectionToPalm - the bonesDirections map.
+	 */
 	public FingerData( Map <BoneType, Vector> bonesDirectionToPalm)
 	{
 		this.setBonesDirectionToPalm(bonesDirectionToPalm);
 		
 	
 	}
+	
+	/**
+	 * bonesDirections getter.
+	 * @return bonesDirections Map.
+	 */
 	public Map <BoneType, Vector> getBonesDirection() {
 		return bonesDirection;
 	}
 	
-	
+	/**
+	 * bonesDirection setter.
+	 * @param bonesDirectionToPalm - the Map to set.
+	 */
 	public void setBonesDirectionToPalm(Map <BoneType, Vector> bonesDirectionToPalm) {
 		this.bonesDirection = bonesDirectionToPalm;
 	}

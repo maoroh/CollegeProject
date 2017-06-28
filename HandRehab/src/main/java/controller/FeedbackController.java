@@ -9,7 +9,9 @@ import java.util.ResourceBundle;
 
 import com.leapmotion.leap.Finger;
 
+import entity.Feedback;
 import entity.MovementPattern;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
@@ -28,14 +30,18 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import tools.FeedbackGenerator;
-import tools.JAXBTools;
+import utility.AnalyzeData;
+import utility.JAXBTools;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 
-
-@SuppressWarnings("unchecked")
+/**
+ * Feedback Controller class.
+ * Handle the actions from the Feedback view, extends Gcontroller.
+ * @author maor
+ *
+ */
 public class FeedbackController extends GController implements Initializable {
 
 	public static final Map <Integer ,  String> fingerNames;
@@ -91,17 +97,19 @@ public class FeedbackController extends GController implements Initializable {
 	
 	MovementPattern trainMP,rehabMP;
 	
-	ArrayList <double [] > feedbackScores;
+	Feedback feedbackScores;
 	
 	 VBox box ;
 	
-	
+	/**
+	 * Initialize all class members.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 
 		
-		//fadeTransition(ap);
+		fadeTransition(ap);
 		String filename = location.getFile().substring(location.getFile().lastIndexOf('/')+1, location.getFile().length());
 	    fingerID = 0;
 	   
@@ -124,6 +132,11 @@ public class FeedbackController extends GController implements Initializable {
 	  
 	}
 	
+	/**
+	 * This method creates JavaFX task for reading the trainMP,rehabMP XML files and generating the feedback into
+	 *  feedbackScores list.
+	 * @param eventHandler - the handler to rum after the task is finished.
+	 */
 	private void loadData(EventHandler<WorkerStateEvent> eventHandler) {
 		// TODO Auto-generated method stub
 		 ProgressIndicator pi = new ProgressIndicator();
@@ -145,7 +158,7 @@ public class FeedbackController extends GController implements Initializable {
 				 	updateProgress(1, 3);
 				    rehabMP = JAXBTools.getPatternFromXML("rehabMP.xml");
 				    updateProgress(2, 3);
-				    feedbackScores = FeedbackGenerator.getScore(trainMP, rehabMP);
+				    feedbackScores = AnalyzeData.generateFeedback(trainMP, rehabMP);
 				    updateProgress(3, 3);
 					return null;
 			}
@@ -160,6 +173,11 @@ public class FeedbackController extends GController implements Initializable {
 		
 	}
 
+	/**
+	 * This method change the line Chart to the next finger data chart.
+	 * @param event - ActionEvent object.
+	 * @throws IOException
+	 */
 	@FXML
 	 public void nextFingerChart(ActionEvent event) throws IOException
 	 {
@@ -175,7 +193,11 @@ public class FeedbackController extends GController implements Initializable {
 		
 	 }
 	
-	
+	/**
+	 * This method loads the final results view and replacing the Scene with FeedbackReview FXML file.
+	 * @param event - ActionEvent object.
+	 * @throws IOException
+	 */
 	private void showReview() throws IOException
 	{
 		 Stage stage = (Stage) nextFingerBtn.getScene().getWindow();
@@ -184,6 +206,11 @@ public class FeedbackController extends GController implements Initializable {
 		 stage.setScene(scene);
 	}
 
+	/**
+	 * This method change the line Chart to the previous finger data chart.
+	 * @param event - ActionEvent object.
+	 * @throws IOException
+	 */
 	@FXML
 	 public void prevFingerChart(ActionEvent event) throws IOException
 	 {
@@ -191,21 +218,33 @@ public class FeedbackController extends GController implements Initializable {
 			buildChart(--fingerID);
 	 }
 	
+	/**
+	 * Add new point to the line chart.
+	 * @param series - Rehabilitation or Training series.
+	 * @param x - x value.
+	 * @param y - y value.
+	 */
 	public void addDataToSeries(XYChart.Series<Number,Number> series, int x, double y)
 	{
 		 series.getData().add(new XYChart.Data<Number,Number>(x,y));
 	}
 	
 	
+	/**
+	 * Build the line chart according to the finger id.
+	 * @param fingerID - the fingerID value (0-4).
+	 */
+	@SuppressWarnings("unchecked")
 	public void buildChart(int fingerID)
 	{
 		 if(fingerID == 4)
 				nextFingerBtn.setText("View Review");
 		 
 		textArea.clear();
-		double [] feedback = feedbackScores.get(fingerID);
-		textArea.appendText("1 : " + String.format("%.2f" ,feedback[0]) + "%"  +  "\n" +
-				"2 : " +String.format("%.2f" ,feedback[1]) + "%" + "\n"+ "3 : " +String.format("%.2f" ,feedback[2])+ "%" + "\n" + "4 : " +String.format("%.2f" ,feedback[3])+ "%" );
+		double [] feedback = feedbackScores.getFeedback(fingerID);
+		textArea.appendText("Matching percentage by the parts of the movement: \n");
+		textArea.appendText("First Part : " + String.format("%.2f" ,feedback[0]) + "%"  +  "\n" +
+				"Second Part : " +String.format("%.2f" ,feedback[1]) + "%" + "\n"+ "Third Part : " +String.format("%.2f" ,feedback[2])+ "%" + "\n" + "Fourth Part : " +String.format("%.2f" ,feedback[3])+ "%" );
 		lineChart.getData().remove(0,(lineChart.getData().size()));
 		lineChart.setTitle(fingerNames.get(fingerID));
 		XYChart.Series<Number,Number> seriesRehab = new XYChart.Series<Number,Number>();
@@ -213,8 +252,10 @@ public class FeedbackController extends GController implements Initializable {
 		XYChart.Series<Number,Number> seriesTrain = new XYChart.Series<Number,Number>();
 		seriesTrain.setName("Training");
 		int size = trainMP.getSize();
+		
+		 
 		lineChart.getData().addAll(seriesRehab, seriesTrain);
-
+		
 		for (int i = 0; i < size  ; i++)
 		{	
 			double angle1 = rehabMP.getVector(i).getCoordinate(fingerID);
@@ -227,19 +268,24 @@ public class FeedbackController extends GController implements Initializable {
 		seriesTrain.getNode().setStyle("-fx-stroke:#00cd00");
 		seriesRehab.getNode().setStyle("-fx-stroke:#fa0000");
 		
-	     lineChart.setCreateSymbols(false);	 
+	     lineChart.setCreateSymbols(false);	
+	    
 	}
 	
+	/**
+	 * Update progress indicators of the final scores according to the feedback.
+	 */
 	private void showFinalScores()
 	{
 		double [] fingerScore = new double[5];
 		int index = 0;
-		for (double [] score: feedbackScores)
+		for (int i = 0 ; i < feedbackScores.getSize(); i++ )
 		{
+			double [] score = feedbackScores.getFeedback(i);
 			fingerScore[index] = 0;
-			for(int i = 0 ; i < score.length ; i++)
+			for(int j = 0 ; j  < score.length ; j++)
 			{
-				fingerScore[index] += score[i];
+				fingerScore[index] += score[j];
 			}
 			fingerScore[index] = fingerScore[index] / 4;
 			index ++ ;
@@ -255,6 +301,11 @@ public class FeedbackController extends GController implements Initializable {
 		
 	}
 	
+	/**
+	 * Set style and progress of indicator.
+	 * @param indicator - The indicator object.
+	 * @param progress - the progress of the indicator according to the feedback.
+	 */
 	private void setIndicatorStyle(ProgressIndicator indicator , double progress)
 	{
 		if(progress > 0 && progress < 25)

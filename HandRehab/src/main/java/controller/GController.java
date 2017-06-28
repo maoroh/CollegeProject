@@ -20,6 +20,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Abstract JavaFX Controller , that implements Initializable interface.
+ * @author maor
+ *
+ */
 public class GController implements Initializable {
 
 	@FXML
@@ -35,12 +40,11 @@ public class GController implements Initializable {
 	
 	protected Task<Void> taskRecording;
 	
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+	/**
+	 * Handle Menu Actions.
+	 * @param event - The menu event object.
+	 * @throws IOException
+	 */
 	@FXML
 	 public void menuAction(ActionEvent event) throws IOException
 	 {
@@ -65,6 +69,10 @@ public class GController implements Initializable {
 		}
 	 }
 	
+	/**
+	 * Creating Fade transition between views in a duration of 1500ms.
+	 * @param e
+	 */
 	 protected void fadeTransition(Node e){
 	        FadeTransition x=new FadeTransition(new Duration(1500),e);
 	        x.setFromValue(0);
@@ -73,5 +81,11 @@ public class GController implements Initializable {
 	        x.setInterpolator(Interpolator.LINEAR);
 	        x.play();
 	    }
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

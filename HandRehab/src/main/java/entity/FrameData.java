@@ -15,8 +15,14 @@ import com.leapmotion.leap.Finger;
 import com.leapmotion.leap.Vector;
 import com.leapmotion.leap.Finger.Type;
 
-import tools.JAXBTools;
+import utility.JAXBTools;
 
+/**
+ * FrameData
+ * Stores all the related Leap Motion Frame data.
+ * @author maor
+ *
+ */
 @XmlRootElement
 @XmlAccessorType (XmlAccessType.FIELD)
 
@@ -34,39 +40,43 @@ public class FrameData {
 		
 	}
 	
+	/**
+	 * Initialize new FrameData object.
+	 * @param fingersData - Map of FingerData elements according to Finger.Type key.
+	 * @param palmDirection - the palm direction vector.
+	 * @param tipDirections - Map of Vector elements according to Finger.Type key.
+	 */
 	public FrameData(Map<Finger.Type,FingerData> fingersData, Vector palmDirection, Map<Finger.Type, Vector> tipDirections)
 	{
-		this.setFingersData(fingersData);
-		this.setPalmDirection(palmDirection);
+		this.fingersData = fingersData;
+		this.palmDirection = palmDirection;
 		this.setTipDirections(tipDirections);
 		this.anglesVector = null;
+		this.anglesVectorTips= null;
 		
 	}
-	
-	public FrameData(Map<Finger.Type,FingerData> fingersData, Vector palmDirection)
-	{
-		this.setFingersData(fingersData);
-		this.setPalmDirection(palmDirection);
-		this.anglesVector = null;
-	}
 
+	/**
+	 * FingersData Map getter.
+	 * @return the fingersData map.
+	 */
 	public Map<Finger.Type,FingerData> getFingersData() {
 		return fingersData;
 	}
 
-	public void setFingersData(Map<Finger.Type,FingerData> fingersData) {
-		this.fingersData = fingersData;
-	}
-
+	/**
+	 * Palm direction getter.
+	 * @return
+	 */
 	public Vector getPalmDirection() {
 		return palmDirection;
 	}
 
-	public void setPalmDirection(Vector palmDirection) {
-		this.palmDirection = palmDirection;
-	}
-
-	
+	/**
+	 * Set the angles vector of current frame.
+	 * Calculate for each tipDirection of a finger the angle with the palmDirection and add them to anglesVector DataVector.
+	 * Calculate for each distal bone direction the angle with the palmDirection and add them to anglesVector DataVector.
+	 */
 	public void setAnglesVector() {
 		
 			Map<Finger.Type, Vector> fingersTip = this.getTipDirections();
@@ -105,6 +115,10 @@ public class FrameData {
 	}
 	
 	
+	/**
+	 * Calculate for each tipDirection of a finger the angle with the initialData tipDirection of the same finger. 
+	 * @param initialData - initial state of fingers , it stores all the tip directions in this state.
+	 */
 	public void setAnglesVectorTips(InitialData initialData) {
 		Map<Finger.Type, Vector> fingersTip = this.getTipDirections();
 		
@@ -121,15 +135,28 @@ public class FrameData {
 	}
 
 
-
+	/**
+	 * anglesVector getter.
+	 * @return anglesVector.
+	 */
 	public DataVector getAnglesVector() {
 		return anglesVector;
 	}
 	
+	/**
+	 * anglesVectorTips getter.
+	 * @return anglesVectorTips.
+	 */
 	public DataVector getAnglesVectorTips() {
 		return anglesVectorTips;
 	}
 	
+	/**
+	 * Find the mean of 2 frames.
+	 * @param f1 - the first frame data.
+	 * @param f2 - the second frame data.
+	 * @return - the mean frame.
+	 */
 	public static FrameData framesAvg(FrameData f1, FrameData f2) 
 	{
 		DataVector d1 = f1.getAnglesVectorTips();
@@ -147,28 +174,51 @@ public class FrameData {
 		return fd;
 	}
 	
-
+	/**
+	 * Distance getter.
+	 * @return the distance.
+	 */
 	public double getDistance() {
 		return distance;
 	}
 
+	/**
+	 * Distance setter.
+	 * @param distance - the distance value.
+	 */
 	public void setDistance(double distance) {
 		this.distance = distance;
 	}
 
+	/**
+	 * tipDirections getter.
+	 * @return the tipDirections map.
+	 */
 	public Map<Finger.Type, Vector> getTipDirections() {
 		return tipDirections;
 	}
 
+	/**
+	 * tipDirections setter.
+	 * @param tipDirections - the map of tips.
+	 */
 	public void setTipDirections(Map<Finger.Type, Vector> tipDirections) {
 		this.tipDirections = tipDirections;
 	}
 	
+	/**
+	 * sets the value of anglesVectorTips to another value.
+	 * @param vec - the DataVector values.
+	 */
 	public void replaceAngles(DataVector vec)
 	{
 		this.anglesVectorTips = vec;
 	}
 	
+	/**
+	 * Get Tips directions in this frame.
+	 * @return InitialData object that stores all the tips directions.
+	 */
 	public InitialData getTipsAngles()
 	{
 		ArrayList <DataVector> fingersTip = new ArrayList<DataVector>();
