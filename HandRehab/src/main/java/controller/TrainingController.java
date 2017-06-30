@@ -128,7 +128,7 @@ public class TrainingController extends GController implements Initializable{
 		@FXML
 		 protected void showExercise(ActionEvent event) throws IOException
 		 {
-			exerciseImg.setImage(new Image("handAnim.gif"));
+			exerciseImg.setImage(new Image("images/handAnim.gif"));
 			exerciseImg.setRotate(90);
 			createTextAnimation(exerciseImg, 4700 , 0.8, 
 					(ae)->{
@@ -184,7 +184,7 @@ public class TrainingController extends GController implements Initializable{
 	  	{
 	  		
 	  		progressIndicator.setVisible(true);
-	  		exerciseImg.setImage(new Image("hand.gif"));
+	  		exerciseImg.setImage(new Image("images/hand.gif"));
 	  		exerciseImg.setRotate(0);
 	  		
 	  		Timeline timeline = createImgAnimation(exerciseImg, 800, 0, null);
@@ -253,7 +253,7 @@ public class TrainingController extends GController implements Initializable{
 	        	   //Start Record
 	        	   System.out.println("Start Recording");
 	        	   
-	        	   changeUi(()->{exerciseImg.setImage(new Image("handAnim.gif"));
+	        	   changeUi(()->{exerciseImg.setImage(new Image("images/handAnim.gif"));
 	       					     exerciseImg.setRotate(90);
 	       					  createTextAnimation(trainingStatusLbl, 450, 0, (as) -> {
 		      	 	            	trainingStatusLbl.setOpacity(1);
@@ -282,7 +282,7 @@ public class TrainingController extends GController implements Initializable{
 	  	 */
 	  	protected void BackToMenu() throws IOException {
 	  		 Stage stage = (Stage) button.getScene().getWindow();
-			 Parent root = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
+			 Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainView.fxml"));
 			 Scene scene = new Scene(root);
 			 stage.setScene(scene);
 			 sb = null ;

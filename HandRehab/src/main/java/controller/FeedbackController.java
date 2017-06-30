@@ -201,7 +201,7 @@ public class FeedbackController extends GController implements Initializable {
 	private void showReview() throws IOException
 	{
 		 Stage stage = (Stage) nextFingerBtn.getScene().getWindow();
-		 Parent root = FXMLLoader.load(getClass().getResource("/view/FeedbackReview.fxml"));
+		 Parent root = FXMLLoader.load(getClass().getResource("/fxml/FeedbackReview.fxml"));
 		 Scene scene = new Scene(root);
 		 stage.setScene(scene);
 	}

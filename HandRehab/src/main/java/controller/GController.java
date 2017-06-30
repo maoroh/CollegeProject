@@ -57,7 +57,7 @@ public class GController implements Initializable {
 		if(mItem == backToMenu)
 		{
 			 Stage stage = (Stage) ap.getScene().getWindow();
-			 Parent root = FXMLLoader.load(getClass().getResource("/view/MainView.fxml"));
+			 Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainView.fxml"));
 			 Scene scene = new Scene(root);
 		     stage.setScene(scene);
 		     if(taskRecognize != null &&  taskRecording != null)

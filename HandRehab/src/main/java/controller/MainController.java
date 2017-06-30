@@ -48,7 +48,7 @@ public class MainController extends GController implements Initializable {
 	 public void trainingButton(ActionEvent event) throws IOException
 	 {
 		 Stage stage = (Stage) trainingButton.getScene().getWindow();
-		 Parent root = FXMLLoader.load(getClass().getResource("/view/TrainingView.fxml"));
+		 Parent root = FXMLLoader.load(getClass().getResource("/fxml/TrainingView.fxml"));
 		 Scene scene = new Scene(root);
 	     stage.setScene(scene);
 
@@ -63,7 +63,7 @@ public class MainController extends GController implements Initializable {
 	  public void RehabButton(ActionEvent event) throws IOException
 	  {
 		 Stage stage = (Stage) rehabButton.getScene().getWindow();
-		 Parent root = FXMLLoader.load(getClass().getResource("/view/RehabView.fxml"));
+		 Parent root = FXMLLoader.load(getClass().getResource("/fxml/RehabView.fxml"));
 		 Scene scene = new Scene(root);
 		 stage.setScene(scene);
 	  }
@@ -77,7 +77,7 @@ public class MainController extends GController implements Initializable {
 	  public void feedbackButton(ActionEvent event) throws IOException
 	  {
 		  	Stage stage = (Stage) feedbackButton.getScene().getWindow();
-			 Parent root = FXMLLoader.load(getClass().getResource("/view/FeedbackView.fxml"));
+			 Parent root = FXMLLoader.load(getClass().getResource("/fxml/FeedbackView.fxml"));
 			 Scene scene = new Scene(root);
 			 stage.setScene(scene);
 	  }
