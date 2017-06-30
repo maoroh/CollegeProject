@@ -128,7 +128,7 @@ public class TrainingController extends GController implements Initializable{
 		@FXML
 		 protected void showExercise(ActionEvent event) throws IOException
 		 {
-			exerciseImg.setImage(new Image("file:handAnim.gif"));
+			exerciseImg.setImage(new Image("handAnim.gif"));
 			exerciseImg.setRotate(90);
 			createTextAnimation(exerciseImg, 4700 , 0.8, 
 					(ae)->{
@@ -154,13 +154,23 @@ public class TrainingController extends GController implements Initializable{
 	  	@FXML
 	  	protected void startRecord(ActionEvent event) 
 		 {
-	  		if (!isExerciseShowed)
+	  		 if (!sb.getLeapProperty().get())
+	  		{
+	  			Alert alert = new Alert(AlertType.ERROR);
+	            alert.setTitle("Message");
+	            alert.setHeaderText("The Leap Motion Controller is not connected! please check the connection.");
+	            alert.showAndWait();
+	  		}
+	  		
+	  		 else if (!isExerciseShowed)
 	  		{
 	  			Alert alert = new Alert(AlertType.ERROR);
 	            alert.setTitle("Message");
 	            alert.setHeaderText("You must view the exercise first.");
 	            alert.showAndWait();
 	  		}
+	  		
+	  		
 	  		
 	  		else recordSamples();
 	  		
@@ -174,7 +184,7 @@ public class TrainingController extends GController implements Initializable{
 	  	{
 	  		
 	  		progressIndicator.setVisible(true);
-	  		exerciseImg.setImage(new Image("file:hand.gif"));
+	  		exerciseImg.setImage(new Image("hand.gif"));
 	  		exerciseImg.setRotate(0);
 	  		
 	  		Timeline timeline = createImgAnimation(exerciseImg, 800, 0, null);
@@ -243,7 +253,7 @@ public class TrainingController extends GController implements Initializable{
 	        	   //Start Record
 	        	   System.out.println("Start Recording");
 	        	   
-	        	   changeUi(()->{exerciseImg.setImage(new Image("file:handAnim.gif"));
+	        	   changeUi(()->{exerciseImg.setImage(new Image("handAnim.gif"));
 	       					     exerciseImg.setRotate(90);
 	       					  createTextAnimation(trainingStatusLbl, 450, 0, (as) -> {
 		      	 	            	trainingStatusLbl.setOpacity(1);
