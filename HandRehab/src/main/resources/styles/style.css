@@ -1,0 +1,47 @@
+
+.text-area {
+    -fx-background-color: transparent;
+}
+
+.text-area.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area.scroll-pane.viewport{
+    -fx-background-color: transparent;
+}
+
+
+.text-area.scroll-pane.content{
+    -fx-background-color: transparent;
+}
+
+.text-area.content {
+    -fx-background-color: transparent;
+}
+.split-pane:vertical > .split-pane-divider {
+   -fx-background-color: transparent;
+}
+
+.split-pane-divider {
+  -fx-padding: 0 ;
+}
+
+
+.chart-legend-item-symbol.default-color0{
+	-fx-background-color: #fa0000;
+	 -fx-background-radius: 0;
+}
+
+.chart-legend-item-symbol.default-color1{
+	-fx-background-color: #00cd00;
+	 -fx-background-radius: 0;
+}
+
+
+
+
+
+
+
+
