@@ -14,10 +14,19 @@ import entity.MovementPattern;
 import entity.SampleSet;
 
 
-
+/**
+ * XML Utilty class using JAXB Java Library.
+ * @author maor
+ *
+ */
 public class JAXBTools {
 
 	
+	/**
+	 * Saving a MovementPattern object in a XML File format.
+	 * @param movementPattern - the MovementPattern object.
+	 * @param name - the name of the file.
+	 */
 	public static void savePatternXML(MovementPattern movementPattern , String name) 
 	{
     	JAXBContext jaxbContext;
@@ -26,7 +35,6 @@ public class JAXBTools {
 			 jaxbContext = JAXBContext.newInstance(MovementPattern.class);
 		     jaxbMarshaller = jaxbContext.createMarshaller();
 		     jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		     jaxbMarshaller.marshal(movementPattern, System.out);
 		     jaxbMarshaller.marshal(movementPattern, new File(name));
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
@@ -37,6 +45,11 @@ public class JAXBTools {
 	}
 	
 	
+	/**
+	 * Saving sample set data in a XML File format.
+	 * @param sampleSet - the SampleSet object.
+	 * @param name - the name of the file.
+	 */
 	public static void saveSampleSetXML(SampleSet sampleSet , String name) 
 	{
     	JAXBContext jaxbContext;
@@ -45,7 +58,6 @@ public class JAXBTools {
 			 jaxbContext = JAXBContext.newInstance(SampleSet.class);
 		     jaxbMarshaller = jaxbContext.createMarshaller();
 		     jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		     //jaxbMarshaller.marshal(sampleSet, System.out);
 		     jaxbMarshaller.marshal(sampleSet, new File(name));
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
@@ -56,6 +68,11 @@ public class JAXBTools {
 	}
 	
 	
+	/**
+	 * Get MovementPattern object from XML File.
+	 * @param path - The path of the XML File.
+	 * @return MovementPattern object.
+	 */
 	public static MovementPattern getPatternFromXML(String path) 
 	{
 		JAXBContext jaxbContext;
@@ -72,6 +89,10 @@ public class JAXBTools {
         return movementPattern;
 	}
 	
+	/**
+	 * Get SampleSet object from XML File.
+	 * @return SampleSet object.
+	 */
 	public static SampleSet getTrainingFromXML() 
 	{
 		JAXBContext jaxbContext;

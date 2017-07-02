@@ -15,11 +15,24 @@ import entity.MovementPattern;
 import entity.SampleData;
 import entity.SampleSet;
 
+/**
+ * Analyze utility class.
+ * Handle all the analyze functions.
+ * @author maor
+ *
+ */
 public class AnalyzeData
 {
-	private static int numOfFrames ;
+	private static int numOfFrames  ;
 
-	
+	/**
+	 * Apply KNN Regression algorithm on the points array according to the testing point.
+	 * @param testingPoint - the testing point.
+	 * @param points - the dataset.
+	 * @param K - the number of neighbors.
+	 * @return the mean frame according to the K neighbors.
+	 * @throws Exception if the vectors are not in the same size.
+	 */
 	public static DataVector KNNRegression(DataVector testingPoint , ArrayList<DataVector> points, int K) throws Exception
 	{
 		for(DataVector point : points)
@@ -42,7 +55,13 @@ public class AnalyzeData
 	
 	
 	
-	
+	/**
+	 * Creates an array of frames consists of each frame timestamp from each sample.
+	   After we have the array, we using KNN Regression for finding the “accurate” mean of each frame according all the samples.
+	 * @param samples - The samples set.
+	 * @return MovementPattern that represents the patient movement.
+	 * @throws Exception 
+	 */
 	public static MovementPattern buildMovementPattern(SampleSet samples) throws Exception
 	{
 		MovementPattern mPattern = new MovementPattern();
@@ -70,7 +89,12 @@ public class AnalyzeData
 		return mPattern;
 	} 
 	
-
+	/**
+	 * Resize a sample according numOfFrames value using an average of closing frames.
+	 * @param sample - The sample.
+	 * @return resized sample with numOfFrames size.
+	 * @throws Exception if sample size is smaller then numOfFrames.
+	 */
 	public static SampleData avgSample (SampleData sample) throws Exception
 	{
 		
@@ -136,7 +160,12 @@ public class AnalyzeData
 	}
 	
 	
-	
+	/**
+	 * Resize all the samples in a set.
+	 * @param samplesSet - the samples set needs to be resized.
+	 * @return a resized samples set that each sample size is numOfFrames. 
+	 * @throws Exception
+	 */
 	public static SampleSet fixSampleSet(SampleSet samplesSet) throws Exception
 	{
 	   SampleSet fixedSampleSet  = new SampleSet();
@@ -149,17 +178,24 @@ public class AnalyzeData
 	   return fixedSampleSet;
 	}
 	
-	
+	/**
+	 * Loading the training set from XML and creating the angles vector for the Rehab Set and Training Set.
+	 * Smoothing the data sets using smoothSampleSet method.
+	 * Finding the minimum sample size.
+	 * Fix the samples size according to this minimum.
+	 * Generate Movement patterns.
+	 * Save the movement patterns in XML Files.
+	 * @param rehabSet - the record Rehab data set.
+	 * @throws Exception
+	 */
 	public static void rehabActions(SampleSet rehabSet) throws Exception
 	{
 		SampleSet trainingSet = JAXBTools.getTrainingFromXML();
 		MovementPattern rehabMP,trainMP;
 		calcAngles(rehabSet);
 		calcAngles(trainingSet);
-		//removeBeginSet(rehabSet);
-		//removeBeginSet(trainingSet);
-		smoothSampleSet(rehabSet);
-		smoothSampleSet(trainingSet);
+		//smoothSampleSet(rehabSet);
+		//smoothSampleSet(trainingSet);
 		int rehabMinFrameSize = findMinSampleFrames (rehabSet);
 		int trainingMinFrameSize = findMinSampleFrames(trainingSet);
 		numOfFrames = rehabMinFrameSize < trainingMinFrameSize ? rehabMinFrameSize : trainingMinFrameSize;
@@ -172,7 +208,11 @@ public class AnalyzeData
 	}
 	
 
-
+	/**
+	 * Finding the minimum sample size.
+	 * @param samples - The sample set.
+	 * @return the minimum sample size in this set.
+	 */
 	public static int findMinSampleFrames(SampleSet samples)
 	{
 		
@@ -190,7 +230,12 @@ public class AnalyzeData
 		
 	}
 	
-	
+	/**
+	 * Calculate the angles vector for each sample.
+	 * The angles vector in each frame is build according the first frame in the sample.
+	 * Each angle is between tip direction in the current frame and the tip direction in the initial frame.
+	 * @param samples - The sample set.
+	 */
 	public static void calcAngles(SampleSet samples)
 	{
 		
@@ -203,6 +248,11 @@ public class AnalyzeData
 		}
 	}
 
+	/**
+	 * Saving the training data set after the training phase is finished.
+	 * @param trainingSet - The sample set.
+	 * @throws Exception
+	 */
 	public static void trainingActions(SampleSet trainingSet) throws Exception {
 		// TODO Auto-generated method stub
 	
@@ -210,7 +260,10 @@ public class AnalyzeData
 	}
 	
 	
-	
+	/**
+	 * Smoothing sample set using smoothSample method.
+	 * @param sampleSet - the sample set.
+	 */
 	public static void smoothSampleSet(SampleSet sampleSet)
 	{
 		for(int i = 0 ; i < sampleSet.getSize(); i++)
@@ -219,7 +272,10 @@ public class AnalyzeData
 		}
 	}
 	
-	
+	/**
+	 * Apply an average filter on a sample using Binomial distribution.
+	 * @param sample - the sample data.
+	 */
 	public static void smoothSample(SampleData sample)
 	{
 		double [] weights = {0.015625,0.09375,0.234375,0.3125,0.234375,0.09375,0.015625};
@@ -259,6 +315,12 @@ public class AnalyzeData
 			}	
 	}
 	
+	/**
+	 * Generating a feedback according to the movement patterns difference.
+	 * @param trainMP - The training movement pattern.
+	 * @param rehabMP - The rehabilitation movement pattern.
+	 * @return a Feedback object that contain the feedback results.
+	 */
 	public static Feedback generateFeedback(MovementPattern trainMP, MovementPattern rehabMP)
 	{
 		int numOfFrames = trainMP.getSize();

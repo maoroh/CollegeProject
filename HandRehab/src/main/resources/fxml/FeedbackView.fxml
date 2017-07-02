@@ -10,7 +10,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="ap" prefHeight="533.0" prefWidth="779.0" style="-fx-background-color: white;" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FeedbackController">
+<AnchorPane fx:id="ap" prefHeight="533.0" prefWidth="779.0" style="-fx-background-color: white;" stylesheets="@/styles/style.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FeedbackController">
    <children>
       <MenuBar layoutX="1.0" layoutY="1.0" prefHeight="29.0" prefWidth="777.0">
         <menus>
@@ -27,7 +27,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <LineChart fx:id="lineChart" layoutX="79.0" layoutY="37.0" prefHeight="324.0" prefWidth="595.0" stylesheets="file:/resources/style.css">
+      <LineChart fx:id="lineChart" layoutX="79.0" layoutY="37.0" prefHeight="324.0" prefWidth="595.0" stylesheets="@/styles/style.css">
         <xAxis>
           <NumberAxis label="Frame" side="BOTTOM" fx:id="xAxis" />
         </xAxis>

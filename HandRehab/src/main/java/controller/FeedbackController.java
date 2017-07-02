@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -108,7 +109,6 @@ public class FeedbackController extends GController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 
-		
 		fadeTransition(ap);
 		String filename = location.getFile().substring(location.getFile().lastIndexOf('/')+1, location.getFile().length());
 	    fingerID = 0;

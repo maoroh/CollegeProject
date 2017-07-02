@@ -10,8 +10,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -76,10 +78,23 @@ public class MainController extends GController implements Initializable {
 	  @FXML
 	  public void feedbackButton(ActionEvent event) throws IOException
 	  {
-		  	Stage stage = (Stage) feedbackButton.getScene().getWindow();
+		  File trainMPFile = new File("trainMP.xml");
+			File rehabMPFile = new File("trainMP.xml");
+			if(trainMPFile.exists() && rehabMPFile.exists())
+			{
+			 Stage stage = (Stage) feedbackButton.getScene().getWindow();
 			 Parent root = FXMLLoader.load(getClass().getResource("/fxml/FeedbackView.fxml"));
 			 Scene scene = new Scene(root);
 			 stage.setScene(scene);
+			}
+			
+			else
+			{
+				Alert alert = new Alert(AlertType.ERROR);
+	            alert.setTitle("Message");
+	            alert.setHeaderText("Data not found!");
+	            alert.showAndWait();
+			}
 	  }
 
 
