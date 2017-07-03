@@ -194,8 +194,8 @@ public class AnalyzeData
 		MovementPattern rehabMP,trainMP;
 		calcAngles(rehabSet);
 		calcAngles(trainingSet);
-		//smoothSampleSet(rehabSet);
-		//smoothSampleSet(trainingSet);
+		smoothSampleSet(rehabSet);
+		smoothSampleSet(trainingSet);
 		int rehabMinFrameSize = findMinSampleFrames (rehabSet);
 		int trainingMinFrameSize = findMinSampleFrames(trainingSet);
 		numOfFrames = rehabMinFrameSize < trainingMinFrameSize ? rehabMinFrameSize : trainingMinFrameSize;

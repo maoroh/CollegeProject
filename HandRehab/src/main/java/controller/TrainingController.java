@@ -85,6 +85,7 @@ public class TrainingController extends GController implements Initializable{
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		this.location = location;
 		System.out.println("Controller");
 		this.setMode(Mode.Training);
 		isExerciseShowed = false;

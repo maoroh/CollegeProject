@@ -108,7 +108,7 @@ public class FeedbackController extends GController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-
+		this.location = location;
 		fadeTransition(ap);
 		String filename = location.getFile().substring(location.getFile().lastIndexOf('/')+1, location.getFile().length());
 	    fingerID = 0;
